@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ProyectoFinal.Datos.Repository
 {
-    public class TblInstitucionRepository :ItblInstitucionRepository
+    public class TblInstitucionRepository :ITblInstitucionRepository
     {
         private readonly ProyectoFinalDatabase _database;
         public TblInstitucionRepository(ProyectoFinalDatabase database)

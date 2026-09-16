@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProyectoFinal.Negocio.DTOs.TblArea;
+using ProyectoFinal.Negocio.DTOs.TblDetalleEvaluacion;
 using ProyectoFinal.Negocio.DTOs.TblEvento;
 using ProyectoFinal.Negocio.DTOs.TblPremiacion;
 using ProyectoFinal.Negocio.Interfaces;

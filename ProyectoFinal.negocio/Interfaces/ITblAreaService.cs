@@ -1,4 +1,4 @@
-﻿using ProyectoFinal.Negocio.DTOs.TblArea;
+﻿using ProyectoFinal.Negocio.DTOs.TblDetalleEvaluacion;
 using System;
 using System.Collections.Generic;
 using System.Text;

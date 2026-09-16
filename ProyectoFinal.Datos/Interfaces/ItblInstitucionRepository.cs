@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ProyectoFinal.Datos.Interfaces
 {
-    public interface ItblInstitucionRepository
+    public interface ITblInstitucionRepository
     {
         public Task<int> Crear(TblInstitucion institucion);
         public Task<int> Actualizar(TblInstitucion institucion);

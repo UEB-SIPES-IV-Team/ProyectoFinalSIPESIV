@@ -13,8 +13,8 @@ namespace ProyectoFinal.Negocio.Services
 {
     public class TblInstitucionService : ITblInstitucionService
     {
-        private readonly ItblInstitucionRepository _tblInstitucionRepository;
-        public TblInstitucionService(ItblInstitucionRepository tblInstitucionRepository)
+        private readonly ITblInstitucionRepository _tblInstitucionRepository;
+        public TblInstitucionService(ITblInstitucionRepository tblInstitucionRepository)
         {
             _tblInstitucionRepository = tblInstitucionRepository;
         }

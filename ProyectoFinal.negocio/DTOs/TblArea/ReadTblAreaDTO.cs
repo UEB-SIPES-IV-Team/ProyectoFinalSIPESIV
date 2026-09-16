@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ProyectoFinal.Negocio.DTOs.TblArea
+namespace ProyectoFinal.Negocio.DTOs.TblDetalleEvaluacion
 {
     public class ReadTblAreaDTO
     {

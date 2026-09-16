@@ -1,7 +1,7 @@
 ﻿using ProyectoFinal.Datos.Entities;
 using ProyectoFinal.Datos.Interfaces;
 using ProyectoFinal.Datos.Repository;
-using ProyectoFinal.Negocio.DTOs.TblArea;
+using ProyectoFinal.Negocio.DTOs.TblDetalleEvaluacion;
 using ProyectoFinal.Negocio.DTOs.TblUnidadOrganizativa;
 using ProyectoFinal.Negocio.Interfaces;
 using System;
@@ -10,11 +10,11 @@ using System.Text;
 
 namespace ProyectoFinal.Negocio.Services
 {
-    public class TblaAreaService : ITblAreaService
+    public class TblAreaService : ITblAreaService
     {
         private readonly ITblAreaRepository _tblAreaRepository;
 
-        public TblaAreaService(ITblAreaRepository tblAreaRepository)
+        public TblAreaService(ITblAreaRepository tblAreaRepository)
         {
             _tblAreaRepository = tblAreaRepository;
         }

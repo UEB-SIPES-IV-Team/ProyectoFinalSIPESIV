@@ -1,5 +1,4 @@
 ﻿using ProyectoFinal.Negocio.DTOs.TblEvento;
-using ProyectoFinal.Negocio.DTOs.TblPersona;
 using System;
 using System.Collections.Generic;
 using System.Text;

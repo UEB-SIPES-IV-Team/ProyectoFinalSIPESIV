@@ -1,4 +1,4 @@
-﻿using ProyectoFinal.Negocio.DTOs.TblPersona;
+﻿
 using ProyectoFinal.Negocio.DTOs.TblPremiacion;
 using System;
 using System.Collections.Generic;

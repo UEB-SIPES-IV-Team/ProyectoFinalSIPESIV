@@ -1,16 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProyectoFinal.Negocio.DTOs.TblArea;
+using ProyectoFinal.Negocio.DTOs.TblDetalleEvaluacion;
 using ProyectoFinal.Negocio.Interfaces;
 using ProyectoFinal.Negocio.Services;
 
-
 namespace ProyectoFinal.Controllers
 {
-
     [Route("api/[controller]")]
     [ApiController]
     public class TblAreaController : ControllerBase
-    {
+    {      
         private readonly ITblAreaService _tblAreaService;
         public TblAreaController(ITblAreaService tblAreaService)
         {

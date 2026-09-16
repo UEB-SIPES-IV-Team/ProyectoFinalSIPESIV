@@ -2,7 +2,6 @@
 using ProyectoFinal.Datos.Interfaces;
 using ProyectoFinal.Datos.Repository;
 using ProyectoFinal.Negocio.DTOs.TblEvaluacionJurado;
-using ProyectoFinal.Negocio.DTOs.TblPersona;
 using ProyectoFinal.Negocio.Interfaces;
 using System;
 using System.Collections.Generic;

@@ -1,7 +1,5 @@
 ﻿using ProyectoFinal.Datos.Entities;
 using ProyectoFinal.Datos.Interfaces;
-using ProyectoFinal.Negocio.DTOs.TblEvento;
-using ProyectoFinal.Negocio.DTOs.TblPersona;
 using ProyectoFinal.Negocio.DTOs.TblPremiacion;
 using ProyectoFinal.Negocio.Interfaces;
 using System;

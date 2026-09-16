@@ -1,7 +1,5 @@
 ﻿using ProyectoFinal.Datos.Entities;
 using ProyectoFinal.Datos.Interfaces;
-using ProyectoFinal.Datos.Repository;
-using ProyectoFinal.Negocio.DTOs.TblPersona;
 using ProyectoFinal.Negocio.DTOs.TblProyectoXPersona;
 using ProyectoFinal.Negocio.Interfaces;
 using System;

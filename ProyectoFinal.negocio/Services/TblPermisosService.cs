@@ -51,10 +51,10 @@ namespace ProyectoFinal.Negocio.Services
             await _tblPermisosRepository.Eliminar(idPermisos);
         }
 
-        public async Task<TblPermisosReadDto?> ObtenerPorId(int idPermisos)
+        public async Task<TblPermisosReadDto> ObtenerPorId(int idPermisos)
         {
             var result = await _tblPermisosRepository.ObtenerPorId(idPermisos);
-            if (result is null) return null;
+            if (result is null) throw new InvalidOperationException("Permisos not found");
 
             return new TblPermisosReadDto
             {

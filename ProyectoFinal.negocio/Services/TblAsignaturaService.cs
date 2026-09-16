@@ -2,7 +2,7 @@
 using ProyectoFinal.Datos.Interfaces;
 using ProyectoFinal.Datos.Repository;
 using ProyectoFinal.Negocio.DTOs.TblAsignatura;
-using ProyectoFinal.Negocio.DTOs.TblArea;
+using ProyectoFinal.Negocio.DTOs.TblDetalleEvaluacion;
 using ProyectoFinal.Negocio.Interfaces;
 using System;
 using System.Collections.Generic;
