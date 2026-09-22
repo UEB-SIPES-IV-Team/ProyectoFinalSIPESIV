@@ -7,11 +7,10 @@ namespace ProyectoFinal.Datos.Interfaces
 {
     public interface ITblEvaluacionJuradoRepository
     {
-        //CRUD
-        public Task Crear(TblEvaluacionJurado evaluacionJurado);
-        public Task<TblEvaluacionJurado> ObtenerPorId(int idEvaluacionJurado);
-        public Task<List<TblEvaluacionJurado>> ObtenerTodos();
+        public Task<int> Crear(TblEvaluacionJurado evaluacion); // Cambiar Task por Task<int>
         public Task Actualizar(TblEvaluacionJurado evaluacionJurado);
         public Task Eliminar(int idEvaluacionJurado);
+        public Task<TblEvaluacionJurado> ObtenerPorId(int idEvaluacionJurado);
+        public Task<List<TblEvaluacionJurado>> ObtenerTodos();
     }
 }

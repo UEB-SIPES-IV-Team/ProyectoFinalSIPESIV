@@ -17,7 +17,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task Actualizar(TblEvaluacionJurado evaluacionJurado)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblEvaluacionJurado
+            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblevaluacionjurado_actualizar", new TblEvaluacionJurado
             {
                 lEvaluacionJurado_id = evaluacionJurado.lEvaluacionJurado_id,
                 lProyecto_id = evaluacionJurado.lProyecto_id,
@@ -27,19 +27,21 @@ namespace ProyectoFinal.Datos.Repository
             });
         }
 
-        public async Task Crear(TblEvaluacionJurado evaluacionJurado)
+        public async Task<int> Crear(TblEvaluacionJurado evaluacion)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblEvaluacionJurado
+            IEnumerable<int> resultado = await _database.GetData<int>("fn_tblevaluacionjurado_crear", new
             {
-                sEvaluacionJurado_fecha = evaluacionJurado.sEvaluacionJurado_fecha,
-                sEvaluacionJurado_obs = evaluacionJurado.sEvaluacionJurado_obs
+                lProyecto_id = evaluacion.lProyecto_id,
+                lJurado_id = evaluacion.lJurado_id,
+                sEvaluacionJurado_fecha = evaluacion.sEvaluacionJurado_fecha,
+                sEvaluacionJurado_obs = evaluacion.sEvaluacionJurado_obs
             });
-
+            return resultado.FirstOrDefault();
         }
 
         public async Task Eliminar(int idEvaluacionJurado)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblEvaluacionJurado
+            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblevaluacionjurado_eliminar", new TblEvaluacionJurado
             {
                 lEvaluacionJurado_id = idEvaluacionJurado
             });
@@ -47,7 +49,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<TblEvaluacionJurado> ObtenerPorId(int idEvaluacionJurado)
         {
-            IEnumerable<TblEvaluacionJurado> personaResult = await _database.GetData<TblEvaluacionJurado>("", new TblEvaluacionJurado
+            IEnumerable<TblEvaluacionJurado> personaResult = await _database.GetData<TblEvaluacionJurado>("fn_tblevaluacionjurado_obtenerporid", new TblEvaluacionJurado
             {
                 lEvaluacionJurado_id = idEvaluacionJurado
             });
@@ -56,7 +58,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<List<TblEvaluacionJurado>> ObtenerTodos()
         {
-            IEnumerable<TblEvaluacionJurado> personaResult = await _database.GetData<TblEvaluacionJurado>("");
+            IEnumerable<TblEvaluacionJurado> personaResult = await _database.GetData<TblEvaluacionJurado>("fn_tblevaluacionjurado_obtenertodos");
             return personaResult.ToList();
         }
     }

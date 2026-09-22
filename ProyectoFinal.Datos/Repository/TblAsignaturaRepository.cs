@@ -18,9 +18,10 @@ namespace ProyectoFinal.Datos.Repository
         {
             IEnumerable<int> resultado = await _database.GetData<int>("fn_tblasignatura_crear", new
             {
-                lArea = asignatura.lArea_id,
+                lArea_id = asignatura.lArea_id,
                 lAsignatura_slog = asignatura.lAsignatura_slog,
                 lAsignatura_nm = asignatura.lAsignatura_nm,
+                bEstado = asignatura.bEstado
             });
             return resultado.FirstOrDefault();
         }

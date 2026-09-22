@@ -16,7 +16,7 @@ namespace ProyectoFinal.Datos.Repository
         }
         public async Task Actualizar(TblVisitante visitante)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblVisitante
+            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblvisitante_actualizar", new TblVisitante
             {
                 lVisitante_id = visitante.lVisitante_id,
                 lEvento_id = visitante.lEvento_id,
@@ -30,7 +30,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task Crear(TblVisitante visitante)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblVisitante
+            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblvisitante_crear", new TblVisitante
             {
                 sVisitante_nm = visitante.sVisitante_nm,
                 sVisitante_ci = visitante.sVisitante_ci,
@@ -42,7 +42,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task Eliminar(int idVisitante)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblVisitante
+            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblvisitante_eliminar", new TblVisitante
             {
                 lVisitante_id = idVisitante
             });
@@ -50,7 +50,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<TblVisitante> ObtenerPorId(int idVisitante)
         {
-            IEnumerable<TblVisitante> personaResult = await _database.GetData<TblVisitante>("", new TblVisitante
+            IEnumerable<TblVisitante> personaResult = await _database.GetData<TblVisitante>("fn_tblvisitante_obtenerporid", new TblVisitante
             {
                 lVisitante_id = idVisitante
             });
@@ -59,7 +59,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<List<TblVisitante>> ObtenerTodos()
         {
-            IEnumerable<TblVisitante> personaResult = await _database.GetData<TblVisitante>("");
+            IEnumerable<TblVisitante> personaResult = await _database.GetData<TblVisitante>("fn_tblvisitante_obtenertodos");
             return personaResult.ToList();
         }
     }

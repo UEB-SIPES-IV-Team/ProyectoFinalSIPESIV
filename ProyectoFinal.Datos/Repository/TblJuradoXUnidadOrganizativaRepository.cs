@@ -10,7 +10,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public TblJuradoXUnidadOrganizativaRepository(ProyectoFinalDatabase database)
         {
-            _database = database; // Corregida la asignación
+            _database = database; 
         }
 
         public async Task Crear(TblJuradoXUnidadOrganizativa juradoXUnidad)

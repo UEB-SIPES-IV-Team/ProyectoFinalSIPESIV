@@ -10,8 +10,8 @@ namespace ProyectoFinal.Negocio.DTOs.TblEvento
         public string sEvento_nm { get; set; }
         public string sAnio { get; set; }
         public string sGestion { get; set; }
-        public DateOnly sFecha_ini { get; set; }
-        public DateOnly sFecha_fin {  get; set; }
+        public DateTime sFecha_ini { get; set; }
+        public DateTime sFecha_fin {  get; set; }
         public bool sEvento_estado {  get; set; }
 
     }

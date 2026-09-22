@@ -16,7 +16,7 @@ namespace ProyectoFinal.Datos.Repository
         }
         public async Task Actualizar(TblPEvaluacion evaluacion)
         {
-            IEnumerable<int> evaluacionResult = await _database.GetData<int>("", new TblPEvaluacion
+            IEnumerable<int> evaluacionResult = await _database.GetData<int>("fn_tblpevaluacion_actualizar", new TblPEvaluacion
             {
                 lPEvaluacion_id = evaluacion.lPEvaluacion_id,
                 sPEvaluacion_nm = evaluacion.sPEvaluacion_nm,
@@ -26,7 +26,7 @@ namespace ProyectoFinal.Datos.Repository
         }
         public async Task Crear(TblPEvaluacion evaluacion)
         {
-            IEnumerable<int> evaluacionResult = await _database.GetData<int>("", new TblPEvaluacion
+            IEnumerable<int> evaluacionResult = await _database.GetData<int>("fn_tblpevaluacion_crear", new TblPEvaluacion
             {
                 sPEvaluacion_nm = evaluacion.sPEvaluacion_nm,
                 sPEvaluacion_desc = evaluacion.sPEvaluacion_desc,
@@ -37,7 +37,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task Eliminar(int idEvaluacion)
         {
-            IEnumerable<int> evaluacionResult = await _database.GetData<int>("", new TblPEvaluacion
+            IEnumerable<int> evaluacionResult = await _database.GetData<int>("fn_tblpevaluacion_eliminar", new TblPEvaluacion
             {
                 lPEvaluacion_id = idEvaluacion
             });
@@ -45,7 +45,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<TblPEvaluacion> ObtenerPorId(int idEvaluacion)
         {
-            IEnumerable<TblPEvaluacion> evaluacionResult = await _database.GetData<TblPEvaluacion>("", new TblPEvaluacion
+            IEnumerable<TblPEvaluacion> evaluacionResult = await _database.GetData<TblPEvaluacion>("fn_tblpevaluacion_obtenerporid", new TblPEvaluacion
             {
                 lPEvaluacion_id = idEvaluacion
             });
@@ -54,7 +54,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<List<TblPEvaluacion>> ObtenerTodos()
         {
-            IEnumerable<TblPEvaluacion> evaluacionResult = await _database.GetData<TblPEvaluacion>("");
+            IEnumerable<TblPEvaluacion> evaluacionResult = await _database.GetData<TblPEvaluacion>("fn_tblpevaluacion_obtenertodos");
             return evaluacionResult.ToList();
         }
 

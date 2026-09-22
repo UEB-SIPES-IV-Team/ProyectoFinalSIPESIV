@@ -16,7 +16,7 @@ namespace ProyectoFinal.Datos.Repository
         }
         public async Task Actualizar(TblPersona persona)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblPersona
+            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblpersona_actualizar", new TblPersona
             {
                 lPersona_id = persona.lPersona_id,
                 sPersona_nm = persona.sPersona_nm,
@@ -29,7 +29,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task Crear(TblPersona persona)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblPersona
+            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblpersona_crear", new TblPersona
             {
                 sPersona_nm = persona.sPersona_nm,
                 sPersona_aps = persona.sPersona_aps,
@@ -41,7 +41,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task Eliminar(int idPersona)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblPersona
+            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblpersona_eliminar", new TblPersona
             {
                 lPersona_id = idPersona
             });
@@ -49,7 +49,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<TblPersona> ObtenerPorId(int idPersona)
         {
-            IEnumerable<TblPersona> personaResult = await _database.GetData<TblPersona>("", new TblPersona
+            IEnumerable<TblPersona> personaResult = await _database.GetData<TblPersona>("fn_tblpersona_obtenerporid", new TblPersona
             {
                 lPersona_id = idPersona
             });
@@ -58,7 +58,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<List<TblPersona>> ObtenerTodos()
         {
-            IEnumerable<TblPersona> personaResult = await _database.GetData<TblPersona>("");
+            IEnumerable<TblPersona> personaResult = await _database.GetData<TblPersona>("fn_tblpersona_obtenertodos");
             return personaResult.ToList();
         }
     }

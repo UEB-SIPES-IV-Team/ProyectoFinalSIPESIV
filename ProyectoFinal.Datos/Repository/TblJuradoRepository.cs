@@ -16,7 +16,7 @@ namespace ProyectoFinal.Datos.Repository
         }
         public async Task Actualizar(TblJurado jurado)
         {
-            IEnumerable<int> juradoResult = await _database.GetData<int>("", new TblJurado
+            IEnumerable<int> juradoResult = await _database.GetData<int>("fn_tbljurado_actualizar", new TblJurado
             {
                 lJurado_id = jurado.lJurado_id,
                 lPersona_id = jurado.lPersona_id,
@@ -24,18 +24,20 @@ namespace ProyectoFinal.Datos.Repository
                 sJurado_gral = jurado.sJurado_gral
             });
         }
-        public async Task Crear(TblJurado jurado)
+        public async Task<int> Crear(TblJurado jurado)
         {
-            IEnumerable<int> juradoResult = await _database.GetData<int>("", new TblJurado
+            IEnumerable<int> resultado = await _database.GetData<int>("fn_tbljurado_crear", new
             {
-                lPersona_id = jurado.lPersona_id,
-                sJurado_institucion = jurado.sJurado_institucion,
-                sJurado_gral = jurado.sJurado_gral
+                ljurado_id = jurado.lJurado_id,
+                lpersona_id = jurado.lPersona_id,
+                sjurado_institucion = jurado.sJurado_institucion,
+                sjurado_gral = jurado.sJurado_gral
             });
+            return resultado.FirstOrDefault();
         }
         public async Task Eliminar(int idJurado)
         {
-            IEnumerable<int> juradoResult = await _database.GetData<int>("", new TblJurado
+            IEnumerable<int> juradoResult = await _database.GetData<int>("fn_tbljurado_eliminar", new TblJurado
             {
                 lJurado_id = idJurado
             });
@@ -43,7 +45,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<TblJurado> ObtenerPorId(int idJurado)
         {
-            IEnumerable<TblJurado> juradoResult = await _database.GetData<TblJurado>("", new TblJurado
+            IEnumerable<TblJurado> juradoResult = await _database.GetData<TblJurado>("fn_tbljurado_obtenerporid", new TblJurado
             {
                 lJurado_id = idJurado
             });
@@ -52,7 +54,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<List<TblJurado>> ObtenerTodos()
         {
-            IEnumerable<TblJurado> juradoResult = await _database.GetData<TblJurado>("");
+            IEnumerable<TblJurado> juradoResult = await _database.GetData<TblJurado>("fn_tbljurado_obtenertodos");
             return juradoResult.ToList();
         }
     }

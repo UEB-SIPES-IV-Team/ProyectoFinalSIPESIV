@@ -16,7 +16,7 @@ namespace ProyectoFinal.Datos.Repository
         }
         public async Task Actualizar(TblEvaluacionVisitante evaluacionVisitante)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblEvaluacionVisitante
+            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblevaluacionvisitante_actualizar", new TblEvaluacionVisitante
             {
                 lEvaluacion_id = evaluacionVisitante.lEvaluacion_id,
                 lProyecto_id = evaluacionVisitante.lProyecto_id,
@@ -29,7 +29,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task Crear(TblEvaluacionVisitante evaluacionVisitante)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblEvaluacionVisitante
+            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblevaluacionvisitante_crear", new TblEvaluacionVisitante
             {
                 sPuntaje = evaluacionVisitante.sPuntaje,
                 sEvaluacion_fecha = evaluacionVisitante.sEvaluacion_fecha,
@@ -39,7 +39,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task Eliminar(int idEvaluacionVisitante)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("", new TblEvaluacionVisitante
+            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblevaluacionvisitante_eliminar", new TblEvaluacionVisitante
             {
                 lEvaluacion_id = idEvaluacionVisitante
             });
@@ -47,7 +47,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<TblEvaluacionVisitante> ObtenerPorId(int idEvaluacionVisitante)
         {
-            IEnumerable<TblEvaluacionVisitante> personaResult = await _database.GetData<TblEvaluacionVisitante>("", new TblEvaluacionVisitante
+            IEnumerable<TblEvaluacionVisitante> personaResult = await _database.GetData<TblEvaluacionVisitante>("fn_tblevaluacionvisitante_obtenerporid", new TblEvaluacionVisitante
             {
                 lEvaluacion_id = idEvaluacionVisitante
             });
@@ -56,7 +56,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<List<TblEvaluacionVisitante>> ObtenerTodos()
         {
-            IEnumerable<TblEvaluacionVisitante> personaResult = await _database.GetData<TblEvaluacionVisitante>("");
+            IEnumerable<TblEvaluacionVisitante> personaResult = await _database.GetData<TblEvaluacionVisitante>("fn_tblevaluacionvisitante_obtenertodos");
             return personaResult.ToList();
         }
     }
