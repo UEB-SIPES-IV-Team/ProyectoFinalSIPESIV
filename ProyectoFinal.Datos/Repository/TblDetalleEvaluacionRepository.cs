@@ -37,19 +37,24 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task Eliminar(int idDetalleEvaluacion)
         {
-            IEnumerable<int> detalleEvaluacionResult = await _database.GetData<int>("fn_tbldetalleevaluacion_eliminar", new TblDetalleEvaluacion
+            // ✅ CORREGIDO: Objeto anónimo con un solo parámetro
+            await _database.GetData<int>("fn_tbldetalleevaluacion_eliminar", new
             {
-                lDetalleEvaluacion_id = idDetalleEvaluacion
+                ldetalleevaluacionid = idDetalleEvaluacion
             });
         }
 
         public async Task<TblDetalleEvaluacion> ObtenerPorId(int idDetalleEvaluacion)
         {
-            IEnumerable<TblDetalleEvaluacion> detalleEvaluacionResult = await _database.GetData<TblDetalleEvaluacion>("fn_tbldetalleevaluacion_obtenerporid", new TblDetalleEvaluacion
-            {
-                lDetalleEvaluacion_id = idDetalleEvaluacion
-            });
-            return detalleEvaluacionResult.FirstOrDefault();
+            IEnumerable<TblDetalleEvaluacion> resultado = await _database.GetData<TblDetalleEvaluacion>(
+                "fn_tbldetalleevaluacion_obtenerporid",
+                new
+                {
+                    ldetalleevaluacionid = idDetalleEvaluacion
+                }
+            );
+
+            return resultado.FirstOrDefault();
         }
         public async Task<List<TblDetalleEvaluacion>> ObtenerTodos()
         {

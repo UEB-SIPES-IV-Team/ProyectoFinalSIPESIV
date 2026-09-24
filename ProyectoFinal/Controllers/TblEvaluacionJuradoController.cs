@@ -36,8 +36,8 @@ namespace ProyectoFinal.Controllers
                 try
                 {
                     await _tblEvaluacionJuradoService.Actualizar(evaluacionJurado);
-                    return NoContent();
-                }
+                    return StatusCode(201, new { message = "Evaluación de jurado actualizada correctamente" });
+            }
                 catch (Exception ex)
                 {
                     return StatusCode(500, new { message = ex.Message });
@@ -49,8 +49,8 @@ namespace ProyectoFinal.Controllers
                 try
                 {
                     await _tblEvaluacionJuradoService.Eliminar(idEvaluacionJurado);
-                    return NoContent();
-                }
+                    return StatusCode(201, new { message = "Evaluación de jurado eliminada correctamente" });
+            }
                 catch (Exception ex)
                 {
                     return StatusCode(500, new { message = ex.Message });

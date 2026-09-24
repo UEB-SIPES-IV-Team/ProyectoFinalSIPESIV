@@ -33,7 +33,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblParametroService.Actualizar(parametro);
-                return NoContent();
+                return StatusCode(201, new { message = "Parametro actualizado correctamente" });
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblParametroService.Eliminar(idParametro);
-                return NoContent();
+                return StatusCode(201, new { message = "Parametro eliminado correctamente" });
             }
             catch (Exception ex)
             {

@@ -32,7 +32,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblDetalleEvaluacionService.Actualizar(detalleEvaluacion);
-                return NoContent();
+                return StatusCode(201, new { message = "Detalle de evaluación actualizado correctamente" });
             }
             catch (Exception ex)
             {
@@ -45,14 +45,14 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblDetalleEvaluacionService.Eliminar(idDetalleEvaluacion);
-                return NoContent();
+                return StatusCode(201, new { message = "Detalle de evaluación eliminado correctamente" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        [HttpGet("ObtenerPorId")]
+        [HttpGet("ObtenerPorId/{idDetalleEvaluacion}")]
         public async Task<ActionResult> ObtenerPorId(int idDetalleEvaluacion)
         {
             try

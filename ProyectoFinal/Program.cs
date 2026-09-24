@@ -12,6 +12,8 @@ builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
 
+Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+
 
 // Base de datos
 builder.Services.AddScoped<ProyectoFinalDatabase>();

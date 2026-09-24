@@ -68,7 +68,7 @@ namespace ProyectoFinal.Negocio.Services
 
         public async Task<List<ReadTblDetalleEvaluacionDTO>> ObtenerDetallesEvaluacion()
         {
-            var detallesEvaluacion = await _tblDetalleEvaluacionRepository.ObtenerTodos(); // Asegúrate si en el repo es ObtenerTodos() u ObtenerDetallesEvaluacion()
+            var detallesEvaluacion = await _tblDetalleEvaluacionRepository.ObtenerTodos(); 
 
             return detallesEvaluacion.Select(de => new ReadTblDetalleEvaluacionDTO
             {

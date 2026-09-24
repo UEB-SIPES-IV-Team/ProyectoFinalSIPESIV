@@ -21,7 +21,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblJuradoXUnidadOrganizativaService.Crear(jurado);
-                return StatusCode(201, new { message = "Jurado creado correctamente" });
+                return StatusCode(201, new { message = "Jurado U.O. creado correctamente" });
             }
             catch (Exception ex)
             {
@@ -34,7 +34,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblJuradoXUnidadOrganizativaService.Actualizar(jurado);
-                return NoContent();
+                return StatusCode(201, new { message = "Jurado U.O. actualizado  correctamente" });
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblJuradoXUnidadOrganizativaService.Eliminar(idJurado);
-                return NoContent();
+                return StatusCode(201, new { message = "Jurado U.O. eliminado correctamente" });
             }
             catch (Exception ex)
             {

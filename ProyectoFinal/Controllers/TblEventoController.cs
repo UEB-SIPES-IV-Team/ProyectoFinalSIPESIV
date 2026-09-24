@@ -33,7 +33,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblEventoService.Actualizar(evento);
-                return NoContent();
+                return StatusCode(201, new { message = "Evento actualizado correctamente" });
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblEventoService.Eliminar(idEvento);
-                return NoContent();
+                return StatusCode(201, new { message = "Evento eliminado correctamente" });
             }
             catch (Exception ex)
             {

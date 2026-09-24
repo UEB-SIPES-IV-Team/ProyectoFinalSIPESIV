@@ -39,7 +39,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task Eliminar(int idEvaluacionVisitante)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblevaluacionvisitante_eliminar", new TblEvaluacionVisitante
+             await _database.GetData<int>("fn_tblevaluacionvisitante_eliminar", new TblEvaluacionVisitante
             {
                 lEvaluacion_id = idEvaluacionVisitante
             });

@@ -39,11 +39,12 @@ namespace ProyectoFinal.Datos.Repository
             return resultado.FirstOrDefault();
         }
 
+        
         public async Task Eliminar(int idEvaluacionJurado)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblevaluacionjurado_eliminar", new TblEvaluacionJurado
+            await _database.GetData<int>("fn_tblevaluacionjurado_eliminar", new
             {
-                lEvaluacionJurado_id = idEvaluacionJurado
+                levaluacionjuradoid = idEvaluacionJurado
             });
         }
 

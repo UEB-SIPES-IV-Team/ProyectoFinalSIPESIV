@@ -30,19 +30,19 @@ namespace ProyectoFinal.Controllers
         public async Task<ActionResult> Eliminar(int idPermisos)
         {
             await _tblPermisosService.Eliminar(idPermisos);
-            return NoContent();
+            return StatusCode(201, new { message = "Permisos eliminado correctamente" });
         }
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(TblPermisosCreateDto permisos)
         {
             await _tblPermisosService.Crear(permisos);
-            return Created();
+            return StatusCode(201, new { message = "Permisos creado correctamente" }); ;
         }
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(TblPermisosUpdateDto permisos)
         {
             await _tblPermisosService.Actualizar(permisos);
-            return NoContent();
+            return StatusCode(201, new { message = "Permisos actualizados correctamente" });
         }
     }
 }

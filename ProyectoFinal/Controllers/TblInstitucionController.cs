@@ -33,7 +33,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblInstitucionService.Actualizar(institucion);
-                return NoContent();
+                return StatusCode(201, new { message = "Institucion actualizada correctamente" });
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblInstitucionService.Eliminar(idInstitucion);
-                return NoContent();
+                return StatusCode(201, new { message = "Institucion eliminada correctamente" });
             }
             catch (Exception ex)
             {

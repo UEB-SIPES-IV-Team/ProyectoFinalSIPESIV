@@ -10,6 +10,6 @@ namespace ProyectoFinal.Negocio.DTOs.TblAsignatura
         public int lArea_id { get; set; }
         public string lAsignatura_slog { get; set; }
         public string lAsignatura_nm { get; set; }
-
+        public bool bEstado { get; set; }
     }
 }

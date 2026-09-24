@@ -8,7 +8,7 @@ namespace ProyectoFinal.Negocio.DTOs.TblEvaluacionJurado
     {
         public int lProyecto_id { get; set; }
         public int lJurado_id { get; set; }
-        public DateTime sEvaluacionJurado_fecha { get; set; }
+        public DateTime? sEvaluacionJurado_fecha { get; set; }
         public string sEvaluacionJurado_obs { get; set; }
     }
 }

@@ -34,7 +34,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblEvaluacionVisitanteService.Actualizar(visitante);
-                return NoContent();
+                return StatusCode(201, new { message = "Evaluación de visitante Actualizada correctamente" });
             }
             catch (Exception ex)
             {
@@ -47,7 +47,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblEvaluacionVisitanteService.Eliminar(idEvaluacionVisitante);
-                return NoContent();
+                return StatusCode(201, new { message = "Evaluación de visitante eliminada correctamente" });
             }
             catch (Exception ex)
             {

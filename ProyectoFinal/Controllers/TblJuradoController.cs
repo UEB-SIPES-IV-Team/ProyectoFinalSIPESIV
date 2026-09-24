@@ -33,7 +33,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblJuradoService.Actualizar(jurado);
-                return NoContent();
+                return StatusCode(201, new { message = "Jurado actualizado correctamente" });
             }
             catch (Exception ex)
             {
@@ -46,7 +46,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblJuradoService.Eliminar(idJurado);
-                return NoContent();
+                return StatusCode(201, new { message = "Jurado eliminado correctamente" });
             }
             catch (Exception ex)
             {

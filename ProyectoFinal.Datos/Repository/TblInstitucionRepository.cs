@@ -18,9 +18,10 @@ namespace ProyectoFinal.Datos.Repository
         {
             IEnumerable<int> resultado = await _database.GetData<int>("fn_tblinstitucion_crear", new
             {
-                lParametro_id = institucion.lParametro_id,
-                sInstitucion_slug = institucion.sInstitucion_slug,
-                sInstitucion_nm = institucion.sInstitucion_nm,
+                lparametro_id = institucion.lParametro_id,
+                sinstitucion_slug = institucion.sInstitucion_slug,
+                sinstitucion_nm = institucion.sInstitucion_nm,
+                binstitucion_estado = institucion.bInstitucion_estado
             });
             return resultado.FirstOrDefault();
         }

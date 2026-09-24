@@ -33,7 +33,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblSubParametroService.Actualizar(subParametro);
-                return NoContent();
+                return StatusCode(201, new { message = "SubParametro Actualizado correctamente" });
             }
             catch (Exception ex)
             {
@@ -41,12 +41,42 @@ namespace ProyectoFinal.Controllers
             }
         }
         [HttpDelete("Eliminar")]
-        public async Task<ActionResult> Eliminar(int idSubParametro)
+        public async Task<IActionResult> Eliminar([FromBody] DeleteTblSubParametroDTO dto)
         {
             try
             {
-                await _tblSubParametroService.Eliminar(idSubParametro);
-                return NoContent();
+                await _tblSubParametroService.Eliminar(dto.lSubParametro_id);
+                return Ok(new { message = "Eliminado correctamente" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
+      
+        [HttpGet("ObtenerTodos")] 
+        public async Task<IActionResult> ObtenerTodos()
+        {
+            try
+            {
+                var resultado = await _tblSubParametroService.ObtenerSubParametros();
+                return Ok(resultado);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
+        [HttpGet("ObtenerPorId/{idSubParametro}")]
+        public async Task<IActionResult> ObtenerPorId([FromRoute] int idSubParametro)
+        {
+            try
+            {
+                var resultado = await _tblSubParametroService.ObtenerPorId(idSubParametro);
+                if (resultado == null)
+                    return NotFound(new { message = "Subparámetro no encontrado" });
+
+                return Ok(resultado);
             }
             catch (Exception ex)
             {

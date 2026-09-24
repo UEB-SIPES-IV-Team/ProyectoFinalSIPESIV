@@ -33,7 +33,8 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblAsignaturaService.Actualizar(asignatura);
-                return NoContent();
+                return StatusCode(201, new { message = "Asignatura actualizada correctamente" });
+             
             }
             catch (Exception ex)
             {
@@ -41,25 +42,27 @@ namespace ProyectoFinal.Controllers
             }
         }
         [HttpDelete("Eliminar")]
-        public async Task<ActionResult> Eliminar(int idAsignatura)
+        public async Task<ActionResult> Eliminar([FromBody] DeleteTblAsignaturaDTO dto)
         {
             try
             {
-                await _tblAsignaturaService.Eliminar(idAsignatura);
-                return NoContent();
+                await _tblAsignaturaService.Eliminar(dto.lAsignatura_id);
+                return StatusCode(200, new { message = "Eliminado correctamente" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        [HttpGet("ObtenerPorId")]
+        [HttpGet("ObtenerPorId/{idAsignatura}")]
         public async Task<ActionResult> ObtenerPorId(int idAsignatura)
         {
             try
             {
                 var asignatura = await _tblAsignaturaService.ObtenerPorId(idAsignatura);
-                if (asignatura == null) return NotFound(new { message = $"La asignatura con Id {idAsignatura} no existe" });
+                if (asignatura == null)
+                    return NotFound(new { message = $"La asignatura con Id {idAsignatura} no existe" });
+
                 return Ok(asignatura);
             }
             catch (Exception ex)

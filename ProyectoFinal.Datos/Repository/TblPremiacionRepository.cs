@@ -13,15 +13,17 @@ namespace ProyectoFinal.Datos.Repository
             _database = database;
         }
 
-        public async Task Crear(TblPremiacion premiacion)
+        public async Task<int> Crear(TblPremiacion premiacion)
         {
-            IEnumerable<int> premiacionResult = await _database.GetData<int>("fn_tblpremiacion_crear", new
+            IEnumerable<int> resultado = await _database.GetData<int>("fn_tblpremiacion_crear", new
             {
+                lpremiacion_id = premiacion.lPremiacion_id,
                 lproyecto_id = premiacion.lProyecto_id,
                 levento_id = premiacion.lEvento_id,
                 spremiacion_tipo = premiacion.sPremiacion_tipo,
-                sposicion = premiacion.sPosicion
+                sposicion = Convert.ToInt32(premiacion.sPosicion)
             });
+            return resultado.FirstOrDefault();
         }
 
         public async Task Actualizar(TblPremiacion premiacion)

@@ -8,10 +8,10 @@ namespace ProyectoFinal.Datos.Interfaces
     public interface ITblJuradoRepository
     {
         // CRUD
-        public Task Crear(TblJurado jurado);
-        public Task<TblJurado> ObtenerPorId(int idJurado);
+        public Task<int> Crear(TblJurado jurado); // Cambiar 'Task' por 'Task<int>'
+        public Task<TblJurado> ObtenerPorId(int lJurado_id);
         public Task<List<TblJurado>> ObtenerTodos();
         public Task Actualizar(TblJurado jurado);
-        public Task Eliminar(int idJurado);
+        public Task Eliminar(int lJurado_id);
     }
 }

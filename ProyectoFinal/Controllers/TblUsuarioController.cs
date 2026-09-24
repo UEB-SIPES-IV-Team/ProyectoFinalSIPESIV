@@ -4,8 +4,8 @@ using ProyectoFinal.Negocio.Interfaces;
 
 namespace ProyectoFinal.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class TblUsuarioController : ControllerBase
     {
         private readonly ITblUsuarioService _tblUsuarioService;
@@ -13,35 +13,45 @@ namespace ProyectoFinal.Controllers
         {
             _tblUsuarioService = tblUsuarioService;
         }
-        [HttpGet("ObtenerUsuarios")]
-        public async Task<ActionResult<List<TblUsuarioReadDto>>> ObtenerUsuarios()
+        [HttpGet("ObtenerTodos")]
+        public async Task<ActionResult<List<TblUsuarioReadDto>>> ObtenerTodos()
         {
             List<TblUsuarioReadDto> usuarios = await _tblUsuarioService.ObtenerTodos();
-            return Ok(usuarios);
+            return StatusCode(201, new { message = "Usuario creado correctamente" });
         }
-        [HttpGet("ObtenerPorId")]
-        public async Task<ActionResult<TblUsuarioReadDto>> ObtenerPorId(int idUsuario)
+        [HttpGet("ObtenerPorId/{idUsuario}")]
+        public async Task<ActionResult> ObtenerPorId(int idUsuario)
         {
-            TblUsuarioReadDto usuario = await _tblUsuarioService.ObtenerPorId(idUsuario);
-            return Ok(usuario);
+            try
+            {
+                var usuario = await _tblUsuarioService.ObtenerPorId(idUsuario);
+                if (usuario == null)
+                    return NotFound(new { message = $"El usuario con Id {idUsuario} no existe" });
+
+                return Ok(usuario);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
         }
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(int idUsuario)
         {
             await _tblUsuarioService.Eliminar(idUsuario);
-            return NoContent();
+            return StatusCode(201, new { message = "Eliminado correctamente" });
         }
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(TblUsuarioCreateDto usuario)
         {
             await _tblUsuarioService.Crear(usuario);
-            return Created();
+            return StatusCode(201, new { message = "Creado correctamente" });
         }
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(TblUsuarioUpdateDto usuario)
         {
             await _tblUsuarioService.Actualizar(usuario);
-            return NoContent();
+            return StatusCode(201, new { message = "Actualizado correctamente" });
         }
     }
 }
