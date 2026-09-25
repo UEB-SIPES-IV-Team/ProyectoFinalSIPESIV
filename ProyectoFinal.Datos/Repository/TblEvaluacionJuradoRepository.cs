@@ -50,13 +50,13 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<TblEvaluacionJurado> ObtenerPorId(int idEvaluacionJurado)
         {
-            IEnumerable<TblEvaluacionJurado> personaResult = await _database.GetData<TblEvaluacionJurado>("fn_tblevaluacionjurado_obtenerporid", new TblEvaluacionJurado
-            {
-                lEvaluacionJurado_id = idEvaluacionJurado
-            });
-            return personaResult.FirstOrDefault();
-        }
+            IEnumerable<TblEvaluacionJurado> resultado = await _database.GetData<TblEvaluacionJurado>(
+                "fn_tblevaluacionjurado_obtenerporid",
+                new { p_levaluacionjurado_id = idEvaluacionJurado }
+            );
 
+            return resultado.FirstOrDefault();
+        }
         public async Task<List<TblEvaluacionJurado>> ObtenerTodos()
         {
             IEnumerable<TblEvaluacionJurado> personaResult = await _database.GetData<TblEvaluacionJurado>("fn_tblevaluacionjurado_obtenertodos");
