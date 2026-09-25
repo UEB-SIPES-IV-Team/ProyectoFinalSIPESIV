@@ -26,23 +26,23 @@ namespace ProyectoFinal.Datos.Repository
             return resultado.FirstOrDefault();
         }
 
-        public async Task Actualizar(TblPremiacion premiacion)
+        public async Task Actualizar(TblPremiacion entidad)
         {
-            IEnumerable<int> premiacionResult = await _database.GetData<int>("fn_tblpremiacion_actualizar", new
+            await _database.GetData<int?>("fn_tblpremiacion_actualizar", new
             {
-                lpremiacion_id = premiacion.lPremiacion_id,
-                lproyecto_id = premiacion.lProyecto_id,
-                levento_id = premiacion.lEvento_id,
-                spremiacion_tipo = premiacion.sPremiacion_tipo,
-                sposicion = premiacion.sPosicion
+                p_lpremiacion_id = entidad.lPremiacion_id,
+                p_lproyecto_id = entidad.lProyecto_id,
+                p_levento_id = entidad.lEvento_id,
+                p_spremiacion_tipo = entidad.sPremiacion_tipo,
+                p_sposicion = entidad.sPosicion 
             });
         }
 
         public async Task Eliminar(int idPremiacion)
         {
-            IEnumerable<int> premiacionResult = await _database.GetData<int>("fn_tblpremiacion_eliminar", new
+            await _database.GetData<dynamic>("fn_tblpremiacion_eliminar", new
             {
-                lpremiacion_id = idPremiacion
+                p_lpremiacion_id = idPremiacion
             });
         }
 

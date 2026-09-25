@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoFinal.Negocio.DTOs.TblArea;
 using ProyectoFinal.Negocio.DTOs.TblEvento;
 using ProyectoFinal.Negocio.Interfaces;
 using ProyectoFinal.Negocio.Services;
@@ -41,19 +42,19 @@ namespace ProyectoFinal.Controllers
             }
         }
         [HttpDelete("Eliminar")]
-        public async Task<ActionResult> Eliminar(int idEvento)
+        public async Task<ActionResult> Eliminar([FromBody] DeleteTblEventoDTO dto)
         {
             try
             {
-                await _tblEventoService.Eliminar(idEvento);
-                return StatusCode(201, new { message = "Evento eliminado correctamente" });
+                await _tblEventoService.Eliminar(dto.lEvento_id);
+                return Ok(new { message = "Eliminado correctamente" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        [HttpGet("ObtenerPorId")]
+        [HttpGet("ObtenerPorId/{idEvento}")]
         public async Task<ActionResult> ObtenerPorId(int idEvento)
         {
             try

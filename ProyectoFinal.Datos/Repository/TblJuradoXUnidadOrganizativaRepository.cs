@@ -32,14 +32,13 @@ namespace ProyectoFinal.Datos.Repository
             });
         }
 
-        public async Task Eliminar(int idJuradoxFacultad)
+        public async Task Eliminar(int idJuradoXFacultad)
         {
-            IEnumerable<int> result = await _database.GetData<int>("fn_tbljuradoxunidadorganizativa_eliminar", new
+            await _database.GetData<dynamic>("fn_tbljuradoxunidadorganizativa_eliminar", new
             {
-                ljuradoxfacultad_id = idJuradoxFacultad
+                p_ljuradoxfacultad_id = idJuradoXFacultad
             });
         }
-
         public async Task<TblJuradoXUnidadOrganizativa> ObtenerPorId(int idJuradoXFacultad)
         {
             IEnumerable<TblJuradoXUnidadOrganizativa> result = await _database.GetData<TblJuradoXUnidadOrganizativa>("fn_tbljuradoxunidadorganizativa_obtenerporid", new

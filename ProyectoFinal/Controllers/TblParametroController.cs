@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ProyectoFinal.Negocio.DTOs.TblArea;
 using ProyectoFinal.Negocio.DTOs.TblParametro;
 using ProyectoFinal.Negocio.Interfaces;
+using ProyectoFinal.Negocio.Services;
 
 namespace ProyectoFinal.Controllers
 {
@@ -41,19 +43,19 @@ namespace ProyectoFinal.Controllers
             }
         }
         [HttpDelete("Eliminar")]
-        public async Task<ActionResult> Eliminar(int idParametro)
+        public async Task<ActionResult> Eliminar([FromBody] DeleteTblParametroDTO dto)
         {
             try
             {
-                await _tblParametroService.Eliminar(idParametro);
-                return StatusCode(201, new { message = "Parametro eliminado correctamente" });
+                await _tblParametroService.Eliminar(dto.lParametro_id);
+                return Ok(new { message = "Eliminado correctamente" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        [HttpGet("ObtenerPorId")]
+        [HttpGet("ObtenerPorId/{idParametro}")]
         public async Task<ActionResult> ObtenerPorId(int idParametro)
         {
             try

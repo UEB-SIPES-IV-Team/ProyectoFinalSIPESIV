@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoFinal.Negocio.DTOs.TblArea;
 using ProyectoFinal.Negocio.DTOs.TblDetalleEvaluacion;
 using ProyectoFinal.Negocio.DTOs.TblProyectoXPersona;
 using ProyectoFinal.Negocio.Interfaces;
@@ -34,7 +35,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblProyectoXPersonaService.Actualizar(proyectoXPersona);
-                return NoContent();
+                return StatusCode(201, new { message = "Proyecto actualizado a persona correctamente" });
             }
             catch (Exception ex)
             {
@@ -42,19 +43,19 @@ namespace ProyectoFinal.Controllers
             }
         }
         [HttpDelete("Eliminar")]
-        public async Task<ActionResult> Eliminar(int idProyectoXPersona)
+        public async Task<ActionResult> Eliminar([FromBody] DeleteTblProyectoXPersonaDTO dto)
         {
             try
             {
-                await _tblProyectoXPersonaService.Eliminar(idProyectoXPersona);
-                return NoContent();
+                await _tblProyectoXPersonaService.Eliminar(dto.lProyectoXPersona_id);
+                return Ok(new { message = "Eliminado correctamente" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        [HttpGet("ObtenerPorId")]
+        [HttpGet("ObtenerPorId/{idProyectoXPersona}")]
         public async Task<ActionResult> ObtenerPorId(int idProyectoXPersona)
         {
             try

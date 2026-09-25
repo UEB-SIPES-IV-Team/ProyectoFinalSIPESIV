@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoFinal.Negocio.DTOs.TblArea;
 using ProyectoFinal.Negocio.DTOs.TblDetalleEvaluacion;
 using ProyectoFinal.Negocio.DTOs.TblPEvaluacion;
 using ProyectoFinal.Negocio.Interfaces;
+using ProyectoFinal.Negocio.Services;
 
 namespace ProyectoFinal.Controllers
 {
@@ -33,7 +35,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblPEvaluacionService.Actualizar(evaluacion);
-                return NoContent();
+                return StatusCode(201, new { message = "Evaluación actualizada correctamente" });
             }
             catch (Exception ex)
             {
@@ -41,26 +43,31 @@ namespace ProyectoFinal.Controllers
             }
         }
         [HttpDelete("Eliminar")]
-        public async Task<ActionResult> Eliminar(int idEvaluacion)
+        public async Task<ActionResult> Eliminar([FromBody] DeleteTblPEvaluacionDTO dto)
         {
             try
             {
-                await _tblPEvaluacionService.Eliminar(idEvaluacion);
-                return NoContent();
+                await _tblPEvaluacionService.Eliminar(dto.lPEvaluacion_id);
+                return Ok(new { message = "Eliminado correctamente" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        [HttpGet("ObtenerPorId")]
-        public async Task<ActionResult> ObtenerPorId(int idEvaluacion)
+        [HttpGet("ObtenerPorId/{id}")]
+        public async Task<IActionResult> ObtenerPorId([FromRoute] int id)
         {
             try
             {
-                var evaluacion = await _tblPEvaluacionService.ObtenerPorId(idEvaluacion);
-                if (evaluacion == null) return NotFound(new { message = $"La evaluación con Id {idEvaluacion} no existe" });
-                return Ok(evaluacion);
+                var result = await _tblPEvaluacionService.ObtenerPorId(id);
+
+                if (result == null)
+                {
+                    return NotFound(new { message = $"No se encontró la evaluación con ID {id}" });
+                }
+
+                return Ok(result); 
             }
             catch (Exception ex)
             {

@@ -15,15 +15,17 @@ namespace ProyectoFinal.Datos.Repository
             _database = database;
         }
 
-        public async Task Actualizar(TblPermisos permisos)
+        public async Task Actualizar(TblPermisos permiso)
         {
-            IEnumerable<int> permisosResult = await _database.GetData<int>("fn_tblpermisos_actualizar", new
+            await _database.GetData<int>("fn_tblpermisos_actualizar", new
             {
-               
-                p_Insertar = permisos.insertar,
-                p_Actualizar = permisos.actualizar,
-                p_Consultar = permisos.consultar,
-                p_Eliminar = permisos.eliminar
+                p_lpermisos_id = permiso.lPermisos_id,
+                p_lrol_id = permiso.lRol_id,
+                p_lprogram_id = permiso.lProgram_id,
+                p_insertar = permiso.insertar,
+                p_actualizar = permiso.actualizar,
+                p_consultar = permiso.consultar,
+                p_eliminar = permiso.eliminar
             });
         }
 

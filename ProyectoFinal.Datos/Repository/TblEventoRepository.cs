@@ -28,36 +28,41 @@ namespace ProyectoFinal.Datos.Repository
             return resultado.FirstOrDefault();
         }
 
-        public async Task Actualizar(TblEvento evento)
+        public async Task<int> Actualizar(TblEvento evento)
         {
-            IEnumerable<int> eventoResult = await _database.GetData<int>("fn_tblevento_actualizar", new
+            IEnumerable<int?> resultado = await _database.GetData<int?>("fn_tblevento_actualizar", new
             {
-                levento_id = evento.lEvento_id,
-                linstitucion_id = evento.lInstitucion_id,
-                sevento_nm = evento.sEvento_nm,
-                sanio = evento.sAnio,
-                sgestion = evento.sGestion,
-                sfecha_ini = evento.sFecha_ini,
-                sfecha_fin = evento.sFecha_fin,
-                sevento_estado = evento.sEvento_estado
+                p_levento_id = evento.lEvento_id,
+                p_linstitucion_id = evento.lInstitucion_id,
+                p_sevento_nm = evento.sEvento_nm,
+                p_sanio = evento.sAnio,
+                p_sgestion = evento.sGestion,
+                p_sfecha_ini = evento.sFecha_ini,
+                p_sfecha_fin = evento.sFecha_fin,
+                p_sevento_estado = evento.sEvento_estado
             });
+
+            return resultado.FirstOrDefault() ?? 0;
         }
 
-        public async Task Eliminar(int idEvento)
+        public async Task<int> Eliminar(int idEvento)
         {
-            IEnumerable<int> eventoResult = await _database.GetData<int>("fn_tblevento_eliminar", new
+            IEnumerable<int?> resultado = await _database.GetData<int?>("fn_tblevento_eliminar", new
             {
-                levento_id = idEvento
+                p_levento_id = idEvento
             });
+
+            return resultado.FirstOrDefault() ?? 0;
         }
 
         public async Task<TblEvento> ObtenerPorId(int idEvento)
         {
-            IEnumerable<TblEvento> eventoResult = await _database.GetData<TblEvento>("fn_tblevento_obtenerporid", new
+            IEnumerable<TblEvento> resultado = await _database.GetData<TblEvento>("fn_tblevento_obtenerporid", new
             {
-                levento_id = idEvento
+                p_levento_id = idEvento
             });
-            return eventoResult.FirstOrDefault();
+
+            return resultado.FirstOrDefault();
         }
 
         public async Task<List<TblEvento>> ObtenerTodos()

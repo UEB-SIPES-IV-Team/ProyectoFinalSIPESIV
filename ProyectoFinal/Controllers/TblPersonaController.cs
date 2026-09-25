@@ -2,6 +2,7 @@
 
 using ProyectoFinal.Negocio.DTOs.TblPersona;
 using ProyectoFinal.Negocio.Interfaces;
+using ProyectoFinal.Negocio.Services;
 
 namespace ProyectoFinal.Controllers
 {
@@ -33,7 +34,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblPersonaService.Actualizar(persona);
-                return NoContent();
+                return StatusCode(201, new { message = "Persona actualizada correctamente" });
             }
             catch (Exception ex)
             {
@@ -41,25 +42,31 @@ namespace ProyectoFinal.Controllers
             }
         }
         [HttpDelete("Eliminar")]
-        public async Task<ActionResult> Eliminar(int idPersona)
+        public async Task<ActionResult> Eliminar([FromBody] DeleteTblPersonaDTO dto)
         {
             try
             {
-                await _tblPersonaService.Eliminar(idPersona);
-                return NoContent();
+                await _tblPersonaService.Eliminar(dto.lPersona_id);
+                return Ok(new { message = "Eliminado correctamente" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        [HttpGet("ObtenerPorId")]
-        public async Task<ActionResult> ObtenerPorId(int idPersona)
+       
+        [HttpGet("ObtenerPorId/{idPersona}")]
+        public async Task<IActionResult> ObtenerPorId([FromRoute] int idPersona)
         {
             try
             {
                 var persona = await _tblPersonaService.ObtenerPorId(idPersona);
-                if (persona == null) return NotFound(new { message = $"La persona con Id {idPersona} no existe" });
+
+                if (persona == null)
+                {
+                    return NotFound(new { message = $"La persona con ID {idPersona} no existe." });
+                }
+
                 return Ok(persona);
             }
             catch (Exception ex)

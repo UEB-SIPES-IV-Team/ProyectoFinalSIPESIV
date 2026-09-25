@@ -35,23 +35,23 @@ namespace ProyectoFinal.Datos.Repository
         }
 
 
-        public async Task Eliminar(int idEvaluacion)
+        public async Task Eliminar(int idPEvaluacion)
         {
-            IEnumerable<int> evaluacionResult = await _database.GetData<int>("fn_tblpevaluacion_eliminar", new TblPEvaluacion
+            await _database.GetData<dynamic>("fn_tblpevaluacion_eliminar", new
             {
-                lPEvaluacion_id = idEvaluacion
+                p_lpevaluacion_id = idPEvaluacion
             });
         }
 
-        public async Task<TblPEvaluacion> ObtenerPorId(int idEvaluacion)
+        public async Task<TblPEvaluacion> ObtenerPorId(int idPEvaluacion)
         {
-            IEnumerable<TblPEvaluacion> evaluacionResult = await _database.GetData<TblPEvaluacion>("fn_tblpevaluacion_obtenerporid", new TblPEvaluacion
-            {
-                lPEvaluacion_id = idEvaluacion
-            });
-            return evaluacionResult.FirstOrDefault();
+           
+            IEnumerable<TblPEvaluacion> result = await _database.GetData<TblPEvaluacion>(
+                "fn_tblpevaluacion_obtenerporid",
+                new { p_lpevaluacion_id = idPEvaluacion }
+            );
+            return result.FirstOrDefault();
         }
-
         public async Task<List<TblPEvaluacion>> ObtenerTodos()
         {
             IEnumerable<TblPEvaluacion> evaluacionResult = await _database.GetData<TblPEvaluacion>("fn_tblpevaluacion_obtenertodos");

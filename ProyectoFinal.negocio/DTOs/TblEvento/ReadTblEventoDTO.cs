@@ -15,4 +15,5 @@ namespace ProyectoFinal.Negocio.DTOs.TblEvento
         public DateTime sFecha_fin { get; set; }
         public bool sEvento_estado { get; set; }
     }
+
 }

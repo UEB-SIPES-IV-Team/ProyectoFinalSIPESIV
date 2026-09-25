@@ -37,19 +37,20 @@ namespace ProyectoFinal.Datos.Repository
         }
         public async Task Eliminar(int idJurado)
         {
-            IEnumerable<int> juradoResult = await _database.GetData<int>("fn_tbljurado_eliminar", new TblJurado
+            await _database.GetData<dynamic>("fn_tbljurado_eliminar", new
             {
-                lJurado_id = idJurado
+                p_ljurado_id = idJurado
             });
         }
 
         public async Task<TblJurado> ObtenerPorId(int idJurado)
         {
-            IEnumerable<TblJurado> juradoResult = await _database.GetData<TblJurado>("fn_tbljurado_obtenerporid", new TblJurado
-            {
-                lJurado_id = idJurado
-            });
-            return juradoResult.FirstOrDefault();
+            IEnumerable<TblJurado> result = await _database.GetData<TblJurado>(
+                "fn_tbljurado_obtenerporid",
+                new { p_ljurado_id = idJurado } 
+            );
+
+            return result.FirstOrDefault();
         }
 
         public async Task<List<TblJurado>> ObtenerTodos()

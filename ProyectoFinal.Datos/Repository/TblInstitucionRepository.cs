@@ -26,25 +26,28 @@ namespace ProyectoFinal.Datos.Repository
             return resultado.FirstOrDefault();
         }
 
-        public async Task<int> Actualizar(TblInstitucion institucion)
+        public async Task<int> Actualizar(TblInstitucion entidad)
         {
-            IEnumerable<int> resultado = await _database.GetData<int>("fn_tblinstitucion_actualizar", new TblInstitucion
+            var result = await _database.GetData<int?>("fn_tblinstitucion_actualizar", new
             {
-                lInstitucion_id = institucion.lInstitucion_id,
-                lParametro_id = institucion.lParametro_id,
-                sInstitucion_slug = institucion.sInstitucion_slug,
-                sInstitucion_nm = institucion.sInstitucion_nm,
+                p_linstitucion_id = entidad.lInstitucion_id,
+                p_lparametro_id = entidad.lParametro_id,
+                p_sinstitucion_nm = entidad.sInstitucion_nm,
+                p_sinstitucion_slug = entidad.sInstitucion_slug,
+                p_binstitucion_estado = entidad.bInstitucion_estado
             });
-            return resultado.FirstOrDefault();
+
+            return result.FirstOrDefault() ?? 0;
         }
 
-        public async Task<int> Eliminar(int institucion)
+        public async Task<int> Eliminar(int idInstitucion)
         {
-            IEnumerable<int> resultado = await _database.GetData<int>("fn_tblinstitucion_eliminar", new
+            IEnumerable<int?> resultado = await _database.GetData<int?>("fn_tblinstitucion_eliminar", new
             {
-                lInstitucion_id = institucion
+                p_linstitucion_id = idInstitucion
             });
-            return resultado.FirstOrDefault();
+
+            return resultado.FirstOrDefault() ?? 0;
         }
         public async Task<List<TblInstitucion>> ObtenerInstituciones()
         {

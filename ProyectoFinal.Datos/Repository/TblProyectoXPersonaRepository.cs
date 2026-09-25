@@ -38,21 +38,19 @@ namespace ProyectoFinal.Datos.Repository
             return result.FirstOrDefault();
         }
 
-        public async Task<int> Eliminar(int idProyectoxPersona)
+        public async Task Eliminar(int idProyectoXPersona)
         {
-            IEnumerable<int> result = await _database.GetData<int>("fn_tblproyectoxpersona_eliminar", new
+            await _database.GetData<dynamic>("fn_tblproyectoxpersona_eliminar", new
             {
-                lProyectoxPersona_id = idProyectoxPersona
+                p_lproyectoxpersona_id = idProyectoXPersona
             });
-            return result.FirstOrDefault();
         }
-
-        public async Task<TblProyectoXPersona> ObtenerPorId(int idProyectoxPersona)
+        public async Task<TblProyectoXPersona> ObtenerPorId(int idProyectoXPersona)
         {
-            IEnumerable<TblProyectoXPersona> result = await _database.GetData<TblProyectoXPersona>("fn_tblproyectoxpersona_obtenerporid", new
-            {
-                p_lProyectoxPersona_id = idProyectoxPersona
-            });
+            IEnumerable<TblProyectoXPersona> result = await _database.GetData<TblProyectoXPersona>(
+                "fn_tblproyectoxpersona_obtenerporid",
+                new { p_lproyectoxpersona_id = idProyectoXPersona }
+            );
             return result.FirstOrDefault();
         }
 

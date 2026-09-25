@@ -16,9 +16,17 @@ namespace ProyectoFinal.Controllers
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<List<TblUsuarioReadDto>>> ObtenerTodos()
         {
-            List<TblUsuarioReadDto> usuarios = await _tblUsuarioService.ObtenerTodos();
-            return StatusCode(201, new { message = "Usuario creado correctamente" });
+            try
+            {
+                var usuarios = await _tblUsuarioService.ObtenerTodos();
+                return Ok(usuarios);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
         }
+        
         [HttpGet("ObtenerPorId/{idUsuario}")]
         public async Task<ActionResult> ObtenerPorId(int idUsuario)
         {

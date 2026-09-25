@@ -11,5 +11,6 @@ namespace ProyectoFinal.Negocio.DTOs.TblPersona
         public string sPersona_email { get; set; }
         public string sPersona_telf { get; set; }
         public string sPersona_tipo_persona { get; set; }
+        public string sPersona_sexo { get; set; }
     }
 }

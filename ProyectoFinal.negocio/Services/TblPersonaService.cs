@@ -48,21 +48,30 @@ namespace ProyectoFinal.Negocio.Services
                 await _tblPersonaRepository.Eliminar(idPersona);
             }
 
-            public async Task<ReadTblPersonaDTO> ObtenerPorId(int idPersona)
+        public async Task<ReadTblPersonaDTO> ObtenerPorId(int idPersona)
+        {
+            var result = await _tblPersonaRepository.ObtenerPorId(idPersona);
+
+      
+            if (result == null)
             {
-                var result = await _tblPersonaRepository.ObtenerPorId(idPersona);
-                return new ReadTblPersonaDTO
-                {
-                    lPersona_id = result.lPersona_id,
-                    sPersona_aps = result.sPersona_aps,
-                    sPersona_email = result.sPersona_email,
-                    sPersona_nm = result.sPersona_nm,
-                    sPersona_telf = result.sPersona_telf,
-                    sPersona_tipo_persona = result.sPersona_tipo_persona
-                };
+                return null;
             }
 
-            public async Task<List<ReadTblPersonaDTO>> ObtenerTodos()
+            
+            return new ReadTblPersonaDTO
+            {
+                lPersona_id = result.lPersona_id,
+                sPersona_nm = result.sPersona_nm,
+                sPersona_aps = result.sPersona_aps,
+                sPersona_email = result.sPersona_email,
+                sPersona_telf = result.sPersona_telf,
+                sPersona_tipo_persona = result.sPersona_tipo_persona,
+                sPersona_sexo = result.sPersona_sexo
+            };
+        }
+
+        public async Task<List<ReadTblPersonaDTO>> ObtenerTodos()
             {
                 var personas = await _tblPersonaRepository.ObtenerTodos();
                 var PersonasDTO = new List<ReadTblPersonaDTO>();

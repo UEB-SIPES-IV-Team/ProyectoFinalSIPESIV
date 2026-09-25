@@ -26,25 +26,25 @@ namespace ProyectoFinal.Datos.Repository
             });
         }
 
-        public async Task Actualizar(TblProyecto proyecto)
+        public async Task Actualizar(TblProyecto entidad)
         {
-            IEnumerable<int> proyectoResult = await _database.GetData<int>("fn_tblproyecto_actualizar", new
+            await _database.GetData<int>("fn_tblproyecto_actualizar", new
             {
-                lproyecto_id = proyecto.lProyecto_id,
-                lasignatura_id = proyecto.lAsignatura_id,
-                sproyecto_nm = proyecto.sProyecto_nm,
-                sproyecto_desc = proyecto.sProyecto_desc,
-                sproyecto_tipo = proyecto.sProyecto_tipo,
-                sproyecto_estado = proyecto.sProyecto_estado,
-                sproyecto_video = proyecto.sProyecto_video
+                p_lproyecto_id = entidad.lProyecto_id,
+                p_lasignatura_id = entidad.lAsignatura_id,
+                p_sproyecto_nm = entidad.sProyecto_nm,
+                p_sproyecto_desc = entidad.sProyecto_desc,
+                p_sproyecto_tipo = entidad.sProyecto_tipo,
+                p_sproyecto_estado = entidad.sProyecto_estado,
+                p_sproyecto_video = entidad.sProyecto_video
             });
         }
 
         public async Task Eliminar(int idProyecto)
         {
-            IEnumerable<int> proyectoResult = await _database.GetData<int>("fn_tblproyecto_eliminar", new
+            await _database.GetData<dynamic>("fn_tblproyecto_eliminar", new
             {
-                lproyecto_id = idProyecto
+                p_lproyecto_id = idProyecto
             });
         }
 

@@ -14,16 +14,17 @@ namespace ProyectoFinal.Datos.Repository
         {
             _database = database;
         }
-        public async Task Actualizar(TblPersona persona)
+        public async Task Actualizar(TblPersona entidad)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblpersona_actualizar", new TblPersona
+            await _database.GetData<int?>("fn_tblpersona_actualizar", new
             {
-                lPersona_id = persona.lPersona_id,
-                sPersona_nm = persona.sPersona_nm,
-                sPersona_aps = persona.sPersona_aps,
-                sPersona_email = persona.sPersona_email,
-                sPersona_telf = persona.sPersona_telf,
-                sPersona_tipo_persona = persona.sPersona_tipo_persona
+                p_lpersona_id = entidad.lPersona_id,
+                p_spersona_nm = entidad.sPersona_nm,
+                p_spersona_aps = entidad.sPersona_aps,
+                p_spersona_email = entidad.sPersona_email,
+                p_spersona_telf = entidad.sPersona_telf,
+                p_spersona_tipo_persona = entidad.sPersona_tipo_persona,
+                p_spersona_sexo = entidad.sPersona_sexo
             });
         }
 
@@ -41,19 +42,19 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task Eliminar(int idPersona)
         {
-            IEnumerable<int> personaResult = await _database.GetData<int>("fn_tblpersona_eliminar", new TblPersona
+            await _database.GetData<dynamic>("fn_tblpersona_eliminar", new
             {
-                lPersona_id = idPersona
+                p_lpersona_id = idPersona
             });
         }
 
         public async Task<TblPersona> ObtenerPorId(int idPersona)
         {
-            IEnumerable<TblPersona> personaResult = await _database.GetData<TblPersona>("fn_tblpersona_obtenerporid", new TblPersona
-            {
-                lPersona_id = idPersona
-            });
-            return personaResult.FirstOrDefault();
+            IEnumerable<TblPersona> result = await _database.GetData<TblPersona>(
+                "fn_tblpersona_obtenerporid",
+                new { p_lpersona_id = idPersona } 
+            );
+            return result.FirstOrDefault();
         }
 
         public async Task<List<TblPersona>> ObtenerTodos()

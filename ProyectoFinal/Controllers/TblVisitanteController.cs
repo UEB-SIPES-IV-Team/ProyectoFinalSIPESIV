@@ -34,7 +34,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblVisitanteService.Actualizar(visitante);
-                return NoContent();
+                return StatusCode(201, new { message = "Visitante actualizado correctamente" });
             }
             catch (Exception ex)
             {
@@ -42,19 +42,19 @@ namespace ProyectoFinal.Controllers
             }
         }
         [HttpDelete("Eliminar")]
-        public async Task<ActionResult> Eliminar(int idVisitante)
+        public async Task<IActionResult> Eliminar([FromBody] DeleteTblVisitanteDTO dto)
         {
             try
             {
-                await _tblVisitanteService.Eliminar(idVisitante);
-                return NoContent();
+                await _tblVisitanteService.Eliminar(dto.lVisitante_id);
+                return Ok(new { message = "Unidad organizativa eliminada correctamente" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, new { message = ex.Message });
             }
         }
-        [HttpGet("ObtenerPorId")]
+        [HttpGet("ObtenerPorId/{idVisitante}")]
         public async Task<ActionResult> ObtenerPorId(int idVisitante)
         {
             try

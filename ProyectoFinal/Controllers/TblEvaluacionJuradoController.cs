@@ -56,8 +56,8 @@ namespace ProyectoFinal.Controllers
                     return StatusCode(500, new { message = ex.Message });
                 }
             }
-            [HttpGet("ObtenerPorId")]
-            public async Task<ActionResult> ObtenerPorId(int idEvaluacionJurado)
+        [HttpGet("ObtenerPorId/{idEvaluacionJurado}")]
+        public async Task<ActionResult> ObtenerPorId(int idEvaluacionJurado)
             {
                 try
                 {
@@ -71,7 +71,7 @@ namespace ProyectoFinal.Controllers
                 }
             }
              [HttpGet("ObtenerTodos")]
-             public async Task<ActionResult> ObtenerEvaluacionesJurado()
+             public async Task<ActionResult> ObtenerTodos()
              {
                try
              {

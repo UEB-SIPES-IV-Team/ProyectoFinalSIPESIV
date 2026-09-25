@@ -7,11 +7,10 @@ namespace ProyectoFinal.Datos.Interfaces
 {
     public interface ITblEventoRepository
     {
-        // CRUD
-        public Task<int> Crear(TblEvento evento);
-        public Task<TblEvento> ObtenerPorId(int lEvento_id);
-        public Task<List<TblEvento>> ObtenerTodos();
-        public Task Actualizar(TblEvento evento);
-        public Task Eliminar(int lEvento_id);
+        Task<int> Crear(TblEvento evento);
+        Task<int> Actualizar(TblEvento evento);
+        Task<int> Eliminar(int idEvento);
+        Task<List<TblEvento>> ObtenerTodos();
+        Task<TblEvento> ObtenerPorId(int idEvento);
     }
 }
