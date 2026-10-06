@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Elementos de la solución/">
+    <File Path="appsettings.json" />
+  </Folder>
   <Project Path="ProyectoFinal.Datos/ProyectoFinal.Datos.csproj" />
   <Project Path="ProyectoFinal.Negocio/ProyectoFinal.Negocio.csproj" />
   <Project Path="ProyectoFinal/ProyectoFinal.csproj" />
