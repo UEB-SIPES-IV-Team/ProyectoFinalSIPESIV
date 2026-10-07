@@ -21,7 +21,8 @@ namespace ProyectoFinal.Negocio.Services
             TblJuradoXUnidadOrganizativa objJuradoXUnidad = new TblJuradoXUnidadOrganizativa
             {
                lJuradoXFacultad_id = juradoXUnidad.lJuradoXFacultad_id,
-               lJurado_id = juradoXUnidad.lJurado_id,
+                lJurado_id = juradoXUnidad.lJurado_id,
+                lEvento_id = juradoXUnidad.lEvento_id,
                lUniversidadOrganizativa_id = juradoXUnidad.lUniversidadOrganizativa_id
             };
             await _tblJuradoXUnidadOrganizativaRepository.Actualizar(objJuradoXUnidad);
@@ -32,6 +33,7 @@ namespace ProyectoFinal.Negocio.Services
             TblJuradoXUnidadOrganizativa objJuradoXUnidad = new TblJuradoXUnidadOrganizativa
             {
                 lJurado_id = juradoXUnidad.lJurado_id,
+                lEvento_id = juradoXUnidad.lEvento_id,
                 lUniversidadOrganizativa_id = juradoXUnidad.lUniversidadOrganizativa_id
             };
             await _tblJuradoXUnidadOrganizativaRepository.Crear(objJuradoXUnidad);
@@ -50,6 +52,7 @@ namespace ProyectoFinal.Negocio.Services
             {
                 lJuradoXFacultad_id = result.lJuradoXFacultad_id,
                 lJurado_id = result.lJurado_id,
+                lEvento_id = result.lEvento_id,
                 lUniversidadOrganizativa_id = result.lUniversidadOrganizativa_id
             };
         }
@@ -65,6 +68,7 @@ namespace ProyectoFinal.Negocio.Services
                 {
                     lJuradoXFacultad_id = juradoXUnidad.lJuradoXFacultad_id,
                     lJurado_id = juradoXUnidad.lJurado_id,
+                    lEvento_id = juradoXUnidad.lEvento_id,
                     lUniversidadOrganizativa_id = juradoXUnidad.lUniversidadOrganizativa_id
                 };
                 JuradosXUnidadesDTO.Add(juradosXUnidadDTO);

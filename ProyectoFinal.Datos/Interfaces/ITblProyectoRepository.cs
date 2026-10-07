@@ -13,6 +13,8 @@ namespace ProyectoFinal.Datos.Interfaces
         public Task<List<TblProyecto>> ObtenerTodos();
         public Task Actualizar(TblProyecto proyecto);
         public Task Eliminar(int idProyecto);
+        public Task<IEnumerable<TblProyecto>> ObtenerPorEventoAsync(int eventoId);
+
     }
 }
 

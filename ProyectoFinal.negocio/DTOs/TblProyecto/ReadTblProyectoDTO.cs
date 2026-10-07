@@ -8,6 +8,7 @@ namespace ProyectoFinal.Negocio.DTOs.TblProyecto
     {
         public int lProyecto_id { get; set; }
         public int lAsignatura_id { get; set; }
+        public int lEvento_id { get; set; }
         public string sProyecto_nm { get; set; }
         public string sProyecto_desc { get; set; }
         public string sProyecto_tipo { get; set; }

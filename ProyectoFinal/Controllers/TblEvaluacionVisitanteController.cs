@@ -22,10 +22,16 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblEvaluacionVisitanteService.Crear(visitante);
-                return StatusCode(201, new { message = "Evaluación de visitante creada correctamente" });
+                return StatusCode(201, new { message = "Voto registrado exitosamente" });
             }
             catch (Exception ex)
             {
+               
+                if (ex.Message.Contains("El visitante ya emitió un voto"))
+                {
+                    return BadRequest(new { message = "Ya has votado por este proyecto anteriormente." });
+                }
+
                 return StatusCode(500, new { message = ex.Message });
             }
         }

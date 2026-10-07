@@ -81,5 +81,19 @@ namespace ProyectoFinal.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+
+        [HttpGet("ObtenerPorEvento/{eventoId}")]
+        public async Task<IActionResult> ObtenerProyectosPorEvento(int eventoId)
+        {
+            try
+            {
+                var proyectos = await _tblProyectoService.ObtenerPorEventoAsync(eventoId);
+                return Ok(proyectos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
     }
 }

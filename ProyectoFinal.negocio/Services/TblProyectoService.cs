@@ -20,6 +20,7 @@ namespace ProyectoFinal.Negocio.Services
             TblProyecto objProyecto= new TblProyecto
             {
                 lProyecto_id = proyecto.lProyecto_id,
+                lEvento_id = proyecto.lEvento_id,
                 lAsignatura_id = proyecto.lAsignatura_id,
                 sProyecto_nm = proyecto.sProyecto_nm,
                 sProyecto_desc = proyecto.sProyecto_desc,
@@ -35,6 +36,7 @@ namespace ProyectoFinal.Negocio.Services
             TblProyecto objProyecto = new TblProyecto
             {
                 lAsignatura_id = proyecto.lAsignatura_id,
+                lEvento_id = proyecto.lEvento_id,
                 sProyecto_nm = proyecto.sProyecto_nm,
                 sProyecto_desc = proyecto.sProyecto_desc,
                 sProyecto_tipo = proyecto.sProyecto_tipo,
@@ -57,6 +59,7 @@ namespace ProyectoFinal.Negocio.Services
             {
                 lProyecto_id = result.lProyecto_id,
                 lAsignatura_id = result.lAsignatura_id,
+                lEvento_id = result.lEvento_id,
                 sProyecto_nm = result.sProyecto_nm,
                 sProyecto_desc = result.sProyecto_desc,
                 sProyecto_tipo = result.sProyecto_tipo,
@@ -76,6 +79,7 @@ namespace ProyectoFinal.Negocio.Services
                 {
                     lProyecto_id = proyecto.lProyecto_id,
                     lAsignatura_id = proyecto.lAsignatura_id,
+                    lEvento_id = proyecto.lEvento_id,
                     sProyecto_nm = proyecto.sProyecto_nm,
                     sProyecto_desc = proyecto.sProyecto_desc,
                     sProyecto_tipo = proyecto.sProyecto_tipo,
@@ -86,6 +90,21 @@ namespace ProyectoFinal.Negocio.Services
             }
 
             return ProyectoDTO;
+        }
+        public async Task<IEnumerable<ReadTblProyectoDTO>> ObtenerPorEventoAsync(int eventoId)
+        {
+            var entidades = await _tblProyectoRepository.ObtenerPorEventoAsync(eventoId);
+
+            return entidades.Select(e => new ReadTblProyectoDTO
+            {
+                lAsignatura_id = e.lAsignatura_id,
+                lEvento_id = e.lEvento_id,
+                sProyecto_nm = e.sProyecto_nm,
+                sProyecto_desc = e.sProyecto_desc,
+                sProyecto_tipo = e.sProyecto_tipo,
+                sProyecto_estado = e.sProyecto_estado,
+                sProyecto_video = e.sProyecto_video
+            });
         }
     }
 }

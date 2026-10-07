@@ -8,6 +8,7 @@ namespace ProyectoFinal.Datos.Entities
     {
         public int lJuradoXFacultad_id {  get; set; }
         public int lJurado_id { get; set; }
+        public int lEvento_id { get; set; }
         public int lUniversidadOrganizativa_id {  get; set; }
     }
 }

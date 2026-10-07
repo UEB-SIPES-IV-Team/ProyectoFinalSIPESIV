@@ -17,7 +17,8 @@ namespace ProyectoFinal.Datos.Repository
         {
             IEnumerable<int> proyectoResult = await _database.GetData<int>("fn_tblproyecto_crear", new
             {
-                lasignatura_id = proyecto.lAsignatura_id, // integer
+                lasignatura_id = proyecto.lAsignatura_id,
+                lEvento_id = proyecto.lEvento_id,
                 sproyecto_nm = proyecto.sProyecto_nm,     // text
                 sproyecto_desc = proyecto.sProyecto_desc, // text
                 sproyecto_tipo = proyecto.sProyecto_tipo, // text
@@ -32,6 +33,7 @@ namespace ProyectoFinal.Datos.Repository
             {
                 p_lproyecto_id = entidad.lProyecto_id,
                 p_lasignatura_id = entidad.lAsignatura_id,
+                p_lEvento_id = entidad.lEvento_id,
                 p_sproyecto_nm = entidad.sProyecto_nm,
                 p_sproyecto_desc = entidad.sProyecto_desc,
                 p_sproyecto_tipo = entidad.sProyecto_tipo,
@@ -61,6 +63,16 @@ namespace ProyectoFinal.Datos.Repository
         {
             IEnumerable<TblProyecto> proyectoResult = await _database.GetData<TblProyecto>("fn_tblproyecto_obtenertodos");
             return proyectoResult.ToList();
+        }
+
+        public async Task<IEnumerable<TblProyecto>> ObtenerPorEventoAsync(int eventoId)
+        {
+            IEnumerable<TblProyecto> proyectosResult = await _database.GetData<TblProyecto>("fn_tblproyecto_obtener_por_evento", new
+            {
+                p_levento_id = eventoId
+            });
+
+            return proyectosResult;
         }
     }
 }

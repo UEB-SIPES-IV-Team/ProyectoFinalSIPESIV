@@ -18,6 +18,7 @@ namespace ProyectoFinal.Datos.Repository
             IEnumerable<int> result = await _database.GetData<int>("fn_tbljuradoxunidadorganizativa_crear", new
             {
                 ljurado_id = juradoXUnidad.lJurado_id,
+                levento_id = juradoXUnidad.lEvento_id,
                 luniversidadorganizativa_id = juradoXUnidad.lUniversidadOrganizativa_id
             });
         }
@@ -26,9 +27,10 @@ namespace ProyectoFinal.Datos.Repository
         {
             IEnumerable<int> result = await _database.GetData<int>("fn_tbljuradoxunidadorganizativa_actualizar", new
             {
-                ljuradoxfacultad_id = juradoXUnidad.lJuradoXFacultad_id,
-                ljurado_id = juradoXUnidad.lJurado_id,
-                luniversidadorganizativa_id = juradoXUnidad.lUniversidadOrganizativa_id
+                p_ljuradoxfacultad_id = juradoXUnidad.lJuradoXFacultad_id,
+                p_ljurado_id = juradoXUnidad.lJurado_id,
+                p_levento_id = juradoXUnidad.lEvento_id,
+                p_lunidadorganizativa_id = juradoXUnidad.lUniversidadOrganizativa_id
             });
         }
 

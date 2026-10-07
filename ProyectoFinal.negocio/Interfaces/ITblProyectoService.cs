@@ -12,6 +12,7 @@ namespace ProyectoFinal.Negocio.Interfaces
         public Task Eliminar(int idProyecto);
         public Task<List<ReadTblProyectoDTO>> ObtenerTodos();
         public Task <ReadTblProyectoDTO> ObtenerPorId(int idProyecto);
+       public Task<IEnumerable<ReadTblProyectoDTO>> ObtenerPorEventoAsync(int eventoId);
 
     }
 }
