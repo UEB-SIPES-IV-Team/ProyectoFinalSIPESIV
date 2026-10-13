@@ -28,7 +28,7 @@ namespace ProyectoFinal.Controllers
             {
                
                 if (ex.Message.Contains("El visitante ya emitió un voto"))
-                {
+                {  
                     return BadRequest(new { message = "Ya has votado por este proyecto anteriormente." });
                 }
 

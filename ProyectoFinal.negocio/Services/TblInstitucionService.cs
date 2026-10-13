@@ -23,6 +23,7 @@ namespace ProyectoFinal.Negocio.Services
             TblInstitucion institucionActualizada = new TblInstitucion
             {
                 lInstitucion_id = institucion.lInstitucion_id,
+                lSubParametro_id = institucion.lSubParametro_id,
                 sInstitucion_nm = institucion.sInstitucion_nm,
                 sInstitucion_slug = institucion.sInstitucion_slug
             };
@@ -38,6 +39,7 @@ namespace ProyectoFinal.Negocio.Services
         {
             TblInstitucion institucionCreada = new TblInstitucion
             {
+                lSubParametro_id = institucion.lSubParametro_id,
                 sInstitucion_nm = institucion.sInstitucion_nm,
                 sInstitucion_slug = institucion.sInstitucion_slug
             };
@@ -68,6 +70,7 @@ namespace ProyectoFinal.Negocio.Services
             return new ReadTblInstitucionDTO
             {
                 lInstitucion_id = institucion.lInstitucion_id,
+                lSubParametro_id = institucion.lSubParametro_id,
                 sInstitucion_nm = institucion.sInstitucion_nm,
                 sInstitucion_slug = institucion.sInstitucion_slug
             };
@@ -79,6 +82,7 @@ namespace ProyectoFinal.Negocio.Services
             return instituciones.Select(instit => new ReadTblInstitucionDTO
             {
                 lInstitucion_id = instit.lInstitucion_id,
+                lSubParametro_id = instit.lSubParametro_id,
                 sInstitucion_nm = instit.sInstitucion_nm,
                 sInstitucion_slug = instit.sInstitucion_slug
             }).ToList();
