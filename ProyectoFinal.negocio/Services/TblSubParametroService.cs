@@ -98,5 +98,31 @@ namespace ProyectoFinal.Negocio.Services
                 sSubParametro_desc = sp.sSubParametro_desc
             }).ToList();
         }
+
+        public async Task<List<ReadTblSubParametroDTO>> ObtenerSubParametrosTipoUnidadAsync()
+        {
+            var lista = await _tblSubParametroRepository.ObtenerSubParametrosTipoUnidadAsync();
+
+            return lista.Select(sp => new ReadTblSubParametroDTO
+            {
+                lSubParametro_id = sp.lSubParametro_id,
+                lParametro_id = sp.lParametro_id,
+                sSubParametro_nm = sp.sSubParametro_nm,
+                sSubParametro_desc = sp.sSubParametro_desc
+            }).ToList();
+        }
+
+        public async Task<List<ReadTblSubParametroDTO>> ObtenerSubParametrosTipoInstitucionAsync()
+        {
+            var lista = await _tblSubParametroRepository.ObtenerSubParametrosTipoInstitucionAsync();
+
+            return lista.Select(sp => new ReadTblSubParametroDTO
+            {
+                lSubParametro_id = sp.lSubParametro_id,
+                lParametro_id = sp.lParametro_id,
+                sSubParametro_nm = sp.sSubParametro_nm,
+                sSubParametro_desc = sp.sSubParametro_desc
+            }).ToList();
+        }
     }
 }

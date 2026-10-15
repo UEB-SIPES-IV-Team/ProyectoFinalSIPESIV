@@ -13,5 +13,8 @@ namespace ProyectoFinal.Datos.Interfaces
         public Task<TblSubParametro> ObtenerPorId(int idSubParametro);
         public Task<List<TblSubParametro>> ObtenerSubParametros();
         public Task<List<TblSubParametro>> ObtenerSubparametrosTipoArea();
+        public Task<List<TblSubParametro>> ObtenerSubParametrosTipoUnidadAsync();
+        public Task<List<TblSubParametro>> ObtenerSubParametrosTipoInstitucionAsync();
+
     }
 }

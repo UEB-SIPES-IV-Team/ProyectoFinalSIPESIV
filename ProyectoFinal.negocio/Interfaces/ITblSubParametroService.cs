@@ -1,4 +1,5 @@
-﻿using ProyectoFinal.Negocio.DTOs.TblSubParametro;
+﻿using ProyectoFinal.Datos.Entities;
+using ProyectoFinal.Negocio.DTOs.TblSubParametro;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,5 +14,7 @@ namespace ProyectoFinal.Negocio.Interfaces
         public Task<ReadTblSubParametroDTO> ObtenerPorId(int idSubParametro);
         public Task<List<ReadTblSubParametroDTO>> ObtenerSubParametros();
         public Task<List<ReadTblSubParametroDTO>> ObtenerSubparametrosTipoArea();
+        public Task<List<ReadTblSubParametroDTO>> ObtenerSubParametrosTipoUnidadAsync();
+        public Task<List<ReadTblSubParametroDTO>> ObtenerSubParametrosTipoInstitucionAsync();
     }
 }

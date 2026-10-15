@@ -91,5 +91,33 @@ namespace ProyectoFinal.Controllers
             return Ok(resultado);
         }
 
+        [HttpGet("tipo-unidad")]
+        public async Task<IActionResult> ObtenerSubParametrosTipoUnidad()
+        {
+            try
+            {
+                var lista = await _tblSubParametroService.ObtenerSubParametrosTipoUnidadAsync();
+                return Ok(lista);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno: {ex.Message}");
+            }
+        }
+
+        [HttpGet("tipo-institucion")]
+        public async Task<IActionResult> ObtenerSubParametrosTipoInstitucion()
+        {
+            try
+            {
+                var lista = await _tblSubParametroService.ObtenerSubParametrosTipoInstitucionAsync();
+                return Ok(lista);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Error interno: {ex.Message}");
+            }
+        }
+
     }
 }

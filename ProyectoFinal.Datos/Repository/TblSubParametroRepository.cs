@@ -71,5 +71,18 @@ namespace ProyectoFinal.Datos.Repository
             IEnumerable<TblSubParametro> resultado = await _database.GetData<TblSubParametro>("fn_tblsubparametro_obtenerportipoarea");
             return resultado.ToList();
         }
+
+        public async Task<List<TblSubParametro>> ObtenerSubParametrosTipoUnidadAsync()
+        {
+            IEnumerable<TblSubParametro> resultado = await _database.GetData<TblSubParametro>("fn_tblsubparametro_obtenerportipounidadorganizativa");
+            return resultado.ToList();
+        }
+
+        public async Task<List<TblSubParametro>> ObtenerSubParametrosTipoInstitucionAsync()
+        {
+            IEnumerable<TblSubParametro> resultado = await _database.GetData<TblSubParametro>("fn_tblsubparametro_obtenerportipoinstitucion");
+            return resultado.ToList();
+        }
+
     }
 }
