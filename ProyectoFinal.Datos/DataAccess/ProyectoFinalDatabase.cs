@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace ProyectoFinal.Datos.DataAccess
@@ -17,8 +18,14 @@ namespace ProyectoFinal.Datos.DataAccess
         public ProyectoFinalDatabase(IConfiguration configuration)
         {
             _configuration = configuration;
-            // 1. Permite mapear columnas en minúsculas/underscores a propiedades CamelCase en C#
-            Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
+
+            // Mapeo dinámico e insensible a mayúsculas/minúsculas y '_' para Dapper
+            SqlMapper.TypeMapProvider = type =>
+                new CustomPropertyTypeMap(type, (t, columnName) =>
+                    t.GetProperties().FirstOrDefault(p =>
+                        p.Name.Equals(columnName, StringComparison.OrdinalIgnoreCase) ||
+                        p.Name.Replace("_", "").Equals(columnName.Replace("_", ""), StringComparison.OrdinalIgnoreCase))
+                );
         }
 
         public async Task<IEnumerable<T>> GetData<T>(string functionName, object parameters = null)
@@ -30,15 +37,12 @@ namespace ProyectoFinal.Datos.DataAccess
 
                 if (parameters == null)
                 {
-                    // 2. Agrega "* FROM" para que expanda las columnas del conjunto de resultados
                     sql = $"SELECT * FROM {functionName}()";
                 }
                 else
                 {
-                    // Obtener propiedades del objeto real
                     var properties = parameters.GetType().GetProperties();
                     var paramNames = string.Join(", ", properties.Select(p => $"@{p.Name}"));
-                    // 2. Agrega "* FROM" aquí también si la función retorna una tabla con parámetros
                     sql = $"SELECT * FROM {functionName}({paramNames})";
                 }
 

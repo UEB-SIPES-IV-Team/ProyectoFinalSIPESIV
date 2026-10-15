@@ -3,25 +3,28 @@ using ProyectoFinal.Datos.Entities;
 using ProyectoFinal.Datos.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ProyectoFinal.Datos.Repository
 {
-    public class TblInstitucionRepository :ITblInstitucionRepository
+    public class TblInstitucionRepository : ITblInstitucionRepository
     {
         private readonly ProyectoFinalDatabase _database;
+
         public TblInstitucionRepository(ProyectoFinalDatabase database)
         {
             _database = database;
         }
+
         public async Task<int> Crear(TblInstitucion institucion)
         {
             IEnumerable<int> resultado = await _database.GetData<int>("fn_tblinstitucion_crear", new
             {
-                lparametro_id = institucion.lParametro_id,
-                sinstitucion_slug = institucion.sInstitucion_slug,
-                sinstitucion_nm = institucion.sInstitucion_nm,
-                binstitucion_estado = institucion.bInstitucion_estado
+                p_sinstitucion_tipo = institucion.sInstitucion_tipo,
+                p_sinstitucion_slug = institucion.sInstitucion_slug,
+                p_sinstitucion_nm = institucion.sInstitucion_nm,
+                p_binstitucion_estado = true
             });
             return resultado.FirstOrDefault();
         }
@@ -31,7 +34,7 @@ namespace ProyectoFinal.Datos.Repository
             var result = await _database.GetData<int?>("fn_tblinstitucion_actualizar", new
             {
                 p_linstitucion_id = entidad.lInstitucion_id,
-                p_lparametro_id = entidad.lParametro_id,
+                p_sinstitucion_tipo = entidad.sInstitucion_tipo,
                 p_sinstitucion_nm = entidad.sInstitucion_nm,
                 p_sinstitucion_slug = entidad.sInstitucion_slug,
                 p_binstitucion_estado = entidad.bInstitucion_estado
@@ -49,23 +52,20 @@ namespace ProyectoFinal.Datos.Repository
 
             return resultado.FirstOrDefault() ?? 0;
         }
+
         public async Task<List<TblInstitucion>> ObtenerInstituciones()
         {
             IEnumerable<TblInstitucion> resultado = await _database.GetData<TblInstitucion>("fn_tblinstitucion_obtenertodos");
             return resultado.ToList();
         }
 
-        public async Task<TblInstitucion> ObtenerPorId(int institucion)
+        public async Task<TblInstitucion?> ObtenerPorId(int idInstitucion)
         {
             IEnumerable<TblInstitucion> resultado = await _database.GetData<TblInstitucion>("fn_tblinstitucion_obtener_por_id", new
             {
-                lInstitucion_id = institucion
+                p_linstitucion_id = idInstitucion
             });
             return resultado.FirstOrDefault();
         }
-
     }
 }
-
-           
-   

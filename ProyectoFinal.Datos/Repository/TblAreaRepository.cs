@@ -43,7 +43,7 @@ namespace ProyectoFinal.Datos.Repository
         {
             IEnumerable<int> resultado = await _database.GetData<int>("fn_tblarea_eliminar", new
             {
-                lArea_id = area
+                larea_id = area
             });
             return resultado.FirstOrDefault();
         }

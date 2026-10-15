@@ -19,13 +19,12 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<int> Actualizar(TblSubParametro subParametro)
         {
-           
             IEnumerable<int> resultado = await _database.GetData<int>("fn_tblsubparametro_actualizar", new
             {
-                lSubParametro_id = subParametro.lSubParametro_id,
-                lParametro_id = subParametro.lParametro_id,
-                sSubParametro_nm = subParametro.sSubParametro_nm,
-                sSubParametro_desc = subParametro.sSubParametro_desc
+                lsubparametro_id = subParametro.lSubParametro_id,
+                lparametro_id = subParametro.lParametro_id,
+                ssubparametro_nm = subParametro.sSubParametro_nm,
+                ssubparametro_desc = subParametro.sSubParametro_desc
             });
 
             return resultado.FirstOrDefault();
@@ -64,6 +63,12 @@ namespace ProyectoFinal.Datos.Repository
         public async Task<List<TblSubParametro>> ObtenerSubParametros()
         {
             IEnumerable<TblSubParametro> resultado = await _database.GetData<TblSubParametro>("fn_tblsubparametro_obtenertodos");
+            return resultado.ToList();
+        }
+
+        public async Task<List<TblSubParametro>> ObtenerSubparametrosTipoArea()
+        {
+            IEnumerable<TblSubParametro> resultado = await _database.GetData<TblSubParametro>("fn_tblsubparametro_obtenerportipoarea");
             return resultado.ToList();
         }
     }

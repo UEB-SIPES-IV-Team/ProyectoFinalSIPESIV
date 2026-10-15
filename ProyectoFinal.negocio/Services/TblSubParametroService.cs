@@ -85,5 +85,18 @@ namespace ProyectoFinal.Negocio.Services
                 sSubParametro_desc = subparam.sSubParametro_desc
             }).ToList();
         }
+
+        public async Task<List<ReadTblSubParametroDTO>> ObtenerSubparametrosTipoArea()
+        {
+            var lista = await _tblSubParametroRepository.ObtenerSubparametrosTipoArea();
+
+            return lista.Select(sp => new ReadTblSubParametroDTO
+            {
+                lSubParametro_id = sp.lSubParametro_id,
+                lParametro_id = sp.lParametro_id,
+                sSubParametro_nm = sp.sSubParametro_nm,
+                sSubParametro_desc = sp.sSubParametro_desc
+            }).ToList();
+        }
     }
 }

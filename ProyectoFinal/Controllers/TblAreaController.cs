@@ -47,7 +47,7 @@ namespace ProyectoFinal.Controllers
         {
             try
             {
-                await _tblAreaService.Eliminar(dto.IdArea);
+                await _tblAreaService.Eliminar(dto.lArea_id);
                 return Ok(new { message = "Eliminado correctamente" });
             }
             catch (Exception ex)

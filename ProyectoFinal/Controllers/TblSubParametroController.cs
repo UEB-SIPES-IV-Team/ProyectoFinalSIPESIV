@@ -84,5 +84,12 @@ namespace ProyectoFinal.Controllers
             }
         }
 
+        [HttpGet("tipo-area")]
+        public async Task<IActionResult> ObtenerTipoArea()
+        {
+            var resultado = await _tblSubParametroService.ObtenerSubparametrosTipoArea();
+            return Ok(resultado);
+        }
+
     }
 }

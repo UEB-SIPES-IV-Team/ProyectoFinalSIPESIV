@@ -12,5 +12,6 @@ namespace ProyectoFinal.Negocio.Interfaces
         public Task Eliminar(int idSubParametro);
         public Task<ReadTblSubParametroDTO> ObtenerPorId(int idSubParametro);
         public Task<List<ReadTblSubParametroDTO>> ObtenerSubParametros();
+        public Task<List<ReadTblSubParametroDTO>> ObtenerSubparametrosTipoArea();
     }
 }

@@ -6,6 +6,6 @@ namespace ProyectoFinal.Negocio.DTOs.TblArea
 {
     public class DeleteTblAreaDTO
     {
-        public int IdArea { get; set; }
+        public int lArea_id { get; set; }
     }
 }
