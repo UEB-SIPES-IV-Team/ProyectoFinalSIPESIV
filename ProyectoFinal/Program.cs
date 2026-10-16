@@ -4,8 +4,41 @@ using ProyectoFinal.Datos.Repository;
 using ProyectoFinal.Negocio.Interfaces;
 using ProyectoFinal.Negocio.Services;
 using Scalar.AspNetCore;
+using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
+
+var jwtKey = builder.Configuration["Jwt:Key"]
+    ?? throw new InvalidOperationException("Falta configurar Jwt:Key.");
+
+if (Encoding.UTF8.GetByteCount(jwtKey) < 32)
+    throw new InvalidOperationException(
+        "La clave JWT debe tener al menos 32 bytes.");
+
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(jwtKey)),
+
+            ClockSkew = TimeSpan.Zero
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 // Configuración de Controladores y Swagger/OpenAPI
 builder.Services.AddControllers();
@@ -40,6 +73,7 @@ builder.Services.AddScoped<ITblRolRepository, TblRolRepository>();
 builder.Services.AddScoped<ITblSubParametroRepository, TblSubParametroRepository>();
 builder.Services.AddScoped<ITblUnidadOrganizativaRepository, TblUnidadOrganizativaRepository>();
 builder.Services.AddScoped<ITblUsuarioRepository, TblUsuarioRepository>();
+builder.Services.AddScoped<AuthService>();
 builder.Services.AddScoped<ITblVisitanteRepository, TblVisitanteRepository>();
 
 // Servicios (Corregido TblAreaService)
@@ -76,9 +110,67 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.MapScalarApiReference();
 }
-
+app.UseAuthentication();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+if (app.Environment.IsDevelopment() &&
+    args.Contains("--seed-superadmin"))
+{
+    using var scope = app.Services.CreateScope();
+
+    var repository = scope.ServiceProvider
+        .GetRequiredService<ITblUsuarioRepository>();
+
+    var existente = await repository
+        .ObtenerPorUsername("superadmin");
+
+    if (existente != null)
+    {
+        Console.WriteLine(
+            "El usuario superadmin ya existe."
+        );
+    }
+    else
+    {
+        var password = Environment.GetEnvironmentVariable(
+            "SIPESIV_INITIAL_ADMIN_PASSWORD");
+
+        if (string.IsNullOrWhiteSpace(password) ||
+            password.Length < 12)
+        {
+            throw new InvalidOperationException(
+                "Configura SIPESIV_INITIAL_ADMIN_PASSWORD " +
+                "con una contraseña de al menos 12 caracteres."
+            );
+        }
+
+        var usuario = new ProyectoFinal.Datos.Entities.TblUsuario
+        {
+            lPersona_id = 1,
+            lRol_id = 1,
+            sUsername = "superadmin",
+            bEstado = true
+        };
+
+        var hasher = new Microsoft.AspNetCore.Identity
+            .PasswordHasher<
+                ProyectoFinal.Datos.Entities.TblUsuario>();
+
+        usuario.sPassword = hasher.HashPassword(
+            usuario,
+            password
+        );
+
+        await repository.Crear(usuario);
+
+        Console.WriteLine(
+            "Superadministrador creado correctamente."
+        );
+    }
+
+    return;
+}
 
 app.Run();

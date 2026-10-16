@@ -2,6 +2,7 @@
 using ProyectoFinal.Datos.Interfaces;
 using ProyectoFinal.Negocio.DTOs.TblUsuario;
 using ProyectoFinal.Negocio.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,7 @@ namespace ProyectoFinal.Negocio.Services
     public class TblUsuarioService : ITblUsuarioService
     {
         private readonly ITblUsuarioRepository _tblUsuarioRepository;
+        private readonly PasswordHasher<TblUsuario> _passwordHasher = new();
         public TblUsuarioService(ITblUsuarioRepository tblUsuarioRepository)
         {
             _tblUsuarioRepository = tblUsuarioRepository;

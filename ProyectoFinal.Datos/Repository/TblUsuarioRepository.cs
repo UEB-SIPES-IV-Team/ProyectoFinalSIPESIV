@@ -1,6 +1,8 @@
 ﻿using ProyectoFinal.Datos.DataAccess;
 using ProyectoFinal.Datos.Entities;
 using ProyectoFinal.Datos.Interfaces;
+using System.Linq;
+using System.Threading.Tasks;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -61,6 +63,20 @@ namespace ProyectoFinal.Datos.Repository
         {
             IEnumerable<TblUsuario> usuarioResult = await _database.GetData<TblUsuario>("fn_tblusuario_obtenertodos");
             return usuarioResult.ToList();
+        }
+
+       
+        public async Task<TblUsuario?> ObtenerPorUsername(string username)
+        {
+            IEnumerable<TblUsuario> resultado =
+                await _database.GetData<TblUsuario>(
+                    "fn_tblusuario_obtenerporusername",
+                    new
+                    {
+                        p_sUsername = username
+                    });
+
+            return resultado.FirstOrDefault();
         }
     }
 }
