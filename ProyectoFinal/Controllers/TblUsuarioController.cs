@@ -1,11 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Negocio.DTOs.TblUsuario;
 using ProyectoFinal.Negocio.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ProyectoFinal.Controllers
 {
     [ApiController]
+    [Authorize(Roles = "Superadministrador")]
     [Route("api/[controller]")]
+   
     public class TblUsuarioController : ControllerBase
     {
         private readonly ITblUsuarioService _tblUsuarioService;

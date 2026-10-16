@@ -91,12 +91,14 @@ namespace ProyectoFinal.Negocio.Services
 
             return ProyectoDTO;
         }
+
         public async Task<IEnumerable<ReadTblProyectoDTO>> ObtenerPorEventoAsync(int eventoId)
         {
             var entidades = await _tblProyectoRepository.ObtenerPorEventoAsync(eventoId);
 
             return entidades.Select(e => new ReadTblProyectoDTO
             {
+                lProyecto_id = e.lProyecto_id,
                 lAsignatura_id = e.lAsignatura_id,
                 lEvento_id = e.lEvento_id,
                 sProyecto_nm = e.sProyecto_nm,
@@ -106,6 +108,7 @@ namespace ProyectoFinal.Negocio.Services
                 sProyecto_video = e.sProyecto_video
             });
         }
+
     }
 }
 

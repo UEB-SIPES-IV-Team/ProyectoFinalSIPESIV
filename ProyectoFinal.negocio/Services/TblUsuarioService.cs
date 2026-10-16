@@ -2,6 +2,7 @@
 using ProyectoFinal.Datos.Interfaces;
 using ProyectoFinal.Negocio.DTOs.TblUsuario;
 using ProyectoFinal.Negocio.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,6 +12,7 @@ namespace ProyectoFinal.Negocio.Services
     public class TblUsuarioService : ITblUsuarioService
     {
         private readonly ITblUsuarioRepository _tblUsuarioRepository;
+        private readonly PasswordHasher<TblUsuario> _passwordHasher = new();
         public TblUsuarioService(ITblUsuarioRepository tblUsuarioRepository)
         {
             _tblUsuarioRepository = tblUsuarioRepository;
@@ -18,28 +20,51 @@ namespace ProyectoFinal.Negocio.Services
 
         public async Task Actualizar(TblUsuarioUpdateDto usuario)
         {
-            TblUsuario objUsuario = new TblUsuario
+            if (usuario == null)
+                throw new ArgumentNullException(nameof(usuario));
+
+            var objUsuario = await _tblUsuarioRepository.ObtenerPorId(usuario.lUsuario_id);
+
+            if (objUsuario == null)
+                throw new ArgumentException("El usuario no existe.");
+
+            objUsuario.lPersona_id = usuario.lPersona_id;
+            objUsuario.lRol_id = usuario.lRol_id;
+            objUsuario.sUsername = usuario.sUsername;
+            objUsuario.bEstado = usuario.bEstado;
+
+            if (!string.IsNullOrWhiteSpace(usuario.sPassword))
             {
-                lUsuario_id = usuario.lUsuario_id,
-                lPersona_id = usuario.lPersona_id,
-                lRol_id = usuario.lRol_id,
-                sUsername = usuario.sUsername,
-                sPassword = usuario.sPassword,
-                bEstado = usuario.bEstado
-            };
+                objUsuario.sPassword = _passwordHasher.HashPassword(
+                    objUsuario,
+                    usuario.sPassword
+                );
+            }
+
             await _tblUsuarioRepository.Actualizar(objUsuario);
         }
 
         public async Task Crear(TblUsuarioCreateDto usuario)
         {
-            TblUsuario objUsuario = new TblUsuario
+            if (usuario == null)
+                throw new ArgumentNullException(nameof(usuario));
+
+            if (string.IsNullOrWhiteSpace(usuario.sPassword))
+                throw new ArgumentException("La contraseña es obligatoria.");
+
+            var objUsuario = new TblUsuario
             {
                 lPersona_id = usuario.lPersona_id,
                 lRol_id = usuario.lRol_id,
                 sUsername = usuario.sUsername,
-                sPassword = usuario.sPassword,
                 bEstado = usuario.bEstado
             };
+
+            objUsuario.sPassword = _passwordHasher.HashPassword(
+                objUsuario,
+                usuario.sPassword
+            );
+
             await _tblUsuarioRepository.Crear(objUsuario);
         }
 
@@ -58,7 +83,6 @@ namespace ProyectoFinal.Negocio.Services
                 lPersona_id = result.lPersona_id,
                 lRol_id = result.lRol_id,
                 sUsername = result.sUsername,
-                sPassword = result.sPassword,
                 bEstado = result.bEstado
             };
         }
@@ -76,7 +100,6 @@ namespace ProyectoFinal.Negocio.Services
                     lPersona_id = usuario.lPersona_id,
                     lRol_id = usuario.lRol_id,
                     sUsername = usuario.sUsername,
-                    sPassword = usuario.sPassword,
                     bEstado = usuario.bEstado
                 };
                 usuariosDTO.Add(usuarioDTO);
