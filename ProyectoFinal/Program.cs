@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using Npgsql;
 using ProyectoFinal.Datos.DataAccess;
 using ProyectoFinal.Datos.Interfaces;
 using ProyectoFinal.Datos.Repository;
@@ -5,8 +8,6 @@ using ProyectoFinal.Negocio.Interfaces;
 using ProyectoFinal.Negocio.Services;
 using Scalar.AspNetCore;
 using System.Text;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -172,5 +173,6 @@ if (app.Environment.IsDevelopment() &&
 
     return;
 }
+
 
 app.Run();

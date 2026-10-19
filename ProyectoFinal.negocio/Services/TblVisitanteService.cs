@@ -26,7 +26,10 @@ namespace ProyectoFinal.Negocio.Services
                 sVisitante_email = visitante.sVisitante_email,
                 sVisitante_telf = visitante.sVisitante_telf,
                 sVisitante_ci = visitante.sVisitante_ci,
-                sVisitante_inst = visitante.sVisitante_inst
+                sVisitante_inst = visitante.sVisitante_inst,
+                sVisitante_fecha_nacimiento = visitante.sVisitante_fecha_nacimiento,
+                sVisitante_sexo = visitante.sVisitante_sexo,
+                sVisitante_carrera = visitante.sVisitante_carrera
             };
             await _tblVisitanteRepository.Actualizar(objVisitante);
         }
@@ -40,7 +43,11 @@ namespace ProyectoFinal.Negocio.Services
                 sVisitante_email = visitante.sVisitante_email,
                 sVisitante_telf = visitante.sVisitante_telf,
                 sVisitante_ci = visitante.sVisitante_ci,
-                sVisitante_inst = visitante.sVisitante_inst
+                sVisitante_inst = visitante.sVisitante_inst,
+                sVisitante_fecha_nacimiento = visitante.sVisitante_fecha_nacimiento,
+                sVisitante_sexo = visitante.sVisitante_sexo,
+                sVisitante_carrera = visitante.sVisitante_carrera
+
             };
             await _tblVisitanteRepository.Crear(objVisitante);
         }
@@ -62,7 +69,10 @@ namespace ProyectoFinal.Negocio.Services
                 sVisitante_email = result.sVisitante_email,
                 sVisitante_telf = result.sVisitante_telf,
                 sVisitante_ci = result.sVisitante_ci,
-                sVisitante_inst = result.sVisitante_inst
+                sVisitante_inst = result.sVisitante_inst,
+                sVisitante_fecha_nacimiento = result.sVisitante_fecha_nacimiento,
+                sVisitante_carrera = result.sVisitante_carrera,
+                sVisitante_sexo = result.sVisitante_sexo
             };
         }
 
@@ -80,7 +90,11 @@ namespace ProyectoFinal.Negocio.Services
                     sVisitante_email = visitante.sVisitante_email,
                     sVisitante_telf = visitante.sVisitante_telf,
                     sVisitante_ci = visitante.sVisitante_ci,
-                    sVisitante_inst = visitante.sVisitante_inst
+                    sVisitante_inst = visitante.sVisitante_inst,
+                    sVisitante_fecha_nacimiento = visitante.sVisitante_fecha_nacimiento,
+                    sVisitante_carrera = visitante.sVisitante_carrera,
+                    sVisitante_sexo = visitante.sVisitante_sexo
+
                 };
                 VisitantesDTO.Add(visitanteDTO);
             }

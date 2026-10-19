@@ -25,7 +25,10 @@ namespace ProyectoFinal.Negocio.Services
                     sPersona_email = persona.sPersona_email,
                     sPersona_nm = persona.sPersona_nm,
                     sPersona_telf = persona.sPersona_telf,
-                    sPersona_tipo_persona = persona.sPersona_tipo_persona
+                  
+                    sPersona_ci = persona.sPersona_ci,
+                    dPersona_fecha_nacimiento = persona.dPersona_fecha_nacimiento
+                    
                 };
                 await _tblPersonaRepository.Actualizar(objPersona);
             }
@@ -38,7 +41,8 @@ namespace ProyectoFinal.Negocio.Services
                     sPersona_email = persona.sPersona_email,
                     sPersona_nm = persona.sPersona_nm,
                     sPersona_telf = persona.sPersona_telf,
-                    sPersona_tipo_persona = persona.sPersona_tipo_persona
+                    sPersona_ci = persona.sPersona_ci,
+                    dPersona_fecha_nacimiento = persona.dPersona_fecha_nacimiento
                 };
                 await _tblPersonaRepository.Crear(objPersona);
             }
@@ -66,8 +70,9 @@ namespace ProyectoFinal.Negocio.Services
                 sPersona_aps = result.sPersona_aps,
                 sPersona_email = result.sPersona_email,
                 sPersona_telf = result.sPersona_telf,
-                sPersona_tipo_persona = result.sPersona_tipo_persona,
-                sPersona_sexo = result.sPersona_sexo
+                sPersona_sexo = result.sPersona_sexo,
+                sPersona_ci = result.sPersona_ci,
+                dPersona_fecha_nacimiento = result.dPersona_fecha_nacimiento
             };
         }
 
@@ -85,7 +90,8 @@ namespace ProyectoFinal.Negocio.Services
                         sPersona_aps = persona.sPersona_aps,
                         sPersona_nm = persona.sPersona_nm,
                         sPersona_telf = persona.sPersona_telf,
-                        sPersona_tipo_persona = persona.sPersona_tipo_persona
+                        sPersona_ci = persona.sPersona_ci,
+                        dPersona_fecha_nacimiento = persona.dPersona_fecha_nacimiento
                     };
                     PersonasDTO.Add(personaDTO);
                 }

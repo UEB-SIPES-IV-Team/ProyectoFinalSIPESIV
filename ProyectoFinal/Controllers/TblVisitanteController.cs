@@ -47,7 +47,7 @@ namespace ProyectoFinal.Controllers
             try
             {
                 await _tblVisitanteService.Eliminar(dto.lVisitante_id);
-                return Ok(new { message = "Unidad organizativa eliminada correctamente" });
+                return Ok(new { message = "Visitante eliminada correctamente" });
             }
             catch (Exception ex)
             {

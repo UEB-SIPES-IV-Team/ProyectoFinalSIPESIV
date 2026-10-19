@@ -15,7 +15,7 @@ namespace ProyectoFinal.Controllers
         {
             _tblPersonaService = tblPersonaService;
         }
-        [HttpPost("Crear")]
+        [HttpPost("Crear")] 
         public async Task<ActionResult> Crear(CreateTblPersonaDTO   persona)
         {
             try
