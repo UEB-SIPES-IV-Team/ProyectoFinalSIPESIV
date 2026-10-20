@@ -31,7 +31,8 @@ namespace ProyectoFinal.Negocio.Services
             await _tblJuradoRepository.Actualizar(juradoActualizado);
         }
 
-        public async Task Crear(CreateTblJuradoDTO jurado)
+
+        public async Task<int> Crear(CreateTblJuradoDTO jurado)
         {
             TblJurado juradoCreado = new TblJurado
             {
@@ -40,8 +41,17 @@ namespace ProyectoFinal.Negocio.Services
                 sJurado_gral = jurado.sJurado_gral
             };
 
-            await _tblJuradoRepository.Crear(juradoCreado);
+            int idJurado = await _tblJuradoRepository.Crear(juradoCreado);
+
+            if (idJurado <= 0)
+            {
+                throw new Exception(
+                    "No se pudo obtener el ID del jurado creado.");
+            }
+
+            return idJurado;
         }
+
 
         public async Task Eliminar(int idJurado)
         {

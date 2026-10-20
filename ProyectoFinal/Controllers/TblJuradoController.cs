@@ -16,19 +16,29 @@ namespace ProyectoFinal.Controllers
         {
             _tblJuradoService = tblJuradoService;
         }
+
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(CreateTblJuradoDTO jurado)
         {
             try
             {
-                await _tblJuradoService.Crear(jurado);
-                return StatusCode(201, new { message = "Jurado creado correctamente" });
+                int idJurado = await _tblJuradoService.Crear(jurado);
+
+                return StatusCode(201, new
+                {
+                    message = "Jurado creado correctamente",
+                    lJurado_id = idJurado
+                });
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
             }
         }
+
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(UpdateTblJuradoDTO jurado)
         {

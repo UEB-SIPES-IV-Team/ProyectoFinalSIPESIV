@@ -16,38 +16,54 @@ namespace ProyectoFinal.Negocio.Services
             {
                 _tblPersonaRepository = tblPersonaRepository;
             }
-            public async Task Actualizar(UpdateTblPersonaDTO persona)
-            {
-                TblPersona objPersona = new TblPersona
-                {
-                    lPersona_id = persona.lPersona_id,
-                    sPersona_aps = persona.sPersona_aps,
-                    sPersona_email = persona.sPersona_email,
-                    sPersona_nm = persona.sPersona_nm,
-                    sPersona_telf = persona.sPersona_telf,
-                  
-                    sPersona_ci = persona.sPersona_ci,
-                    dPersona_fecha_nacimiento = persona.dPersona_fecha_nacimiento
-                    
-                };
-                await _tblPersonaRepository.Actualizar(objPersona);
-            }
 
-            public async Task Crear(CreateTblPersonaDTO persona)
+        public async Task Actualizar(UpdateTblPersonaDTO persona)
+        {
+            TblPersona objPersona = new TblPersona
             {
-                TblPersona objPersona = new TblPersona
-                {
-                    sPersona_aps = persona.sPersona_aps,
-                    sPersona_email = persona.sPersona_email,
-                    sPersona_nm = persona.sPersona_nm,
-                    sPersona_telf = persona.sPersona_telf,
-                    sPersona_ci = persona.sPersona_ci,
-                    dPersona_fecha_nacimiento = persona.dPersona_fecha_nacimiento
-                };
-                await _tblPersonaRepository.Crear(objPersona);
-            }
+                lPersona_id = persona.lPersona_id,
+                sPersona_nm = persona.sPersona_nm,
+                sPersona_aps = persona.sPersona_aps,
+                sPersona_email = persona.sPersona_email,
+                sPersona_telf = persona.sPersona_telf,
 
-            public async Task Eliminar(int idPersona)
+                // CAMPOS QUE FALTABAN
+                sPersona_tipo_persona = persona.sPersona_tipo_persona,
+                sPersona_sexo = persona.sPersona_sexo,
+
+                sPersona_ci = persona.sPersona_ci,
+                dPersona_fecha_nacimiento =
+                    persona.dPersona_fecha_nacimiento
+            };
+
+            await _tblPersonaRepository.Actualizar(objPersona);
+        }
+
+
+
+        public async Task Crear(CreateTblPersonaDTO persona)
+        {
+            TblPersona objPersona = new TblPersona
+            {
+                sPersona_nm = persona.sPersona_nm,
+                sPersona_aps = persona.sPersona_aps,
+                sPersona_email = persona.sPersona_email,
+                sPersona_telf = persona.sPersona_telf,
+
+                // CAMPOS QUE FALTABAN
+                sPersona_tipo_persona = persona.sPersona_tipo_persona,
+                sPersona_sexo = persona.sPersona_sexo,
+
+                sPersona_ci = persona.sPersona_ci,
+                dPersona_fecha_nacimiento =
+                    persona.dPersona_fecha_nacimiento
+            };
+
+            await _tblPersonaRepository.Crear(objPersona);
+        }
+
+
+        public async Task Eliminar(int idPersona)
             {
                 await _tblPersonaRepository.Eliminar(idPersona);
             }
@@ -72,7 +88,8 @@ namespace ProyectoFinal.Negocio.Services
                 sPersona_telf = result.sPersona_telf,
                 sPersona_sexo = result.sPersona_sexo,
                 sPersona_ci = result.sPersona_ci,
-                dPersona_fecha_nacimiento = result.dPersona_fecha_nacimiento
+                dPersona_fecha_nacimiento = result.dPersona_fecha_nacimiento,
+                sPersona_tipo_persona = result.sPersona_tipo_persona
             };
         }
 
@@ -91,7 +108,8 @@ namespace ProyectoFinal.Negocio.Services
                         sPersona_nm = persona.sPersona_nm,
                         sPersona_telf = persona.sPersona_telf,
                         sPersona_ci = persona.sPersona_ci,
-                        dPersona_fecha_nacimiento = persona.dPersona_fecha_nacimiento
+                        dPersona_fecha_nacimiento = persona.dPersona_fecha_nacimiento,
+                        sPersona_tipo_persona = persona.sPersona_tipo_persona
                     };
                     PersonasDTO.Add(personaDTO);
                 }

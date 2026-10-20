@@ -8,7 +8,7 @@ namespace ProyectoFinal.Negocio.Interfaces
 {
     public interface ITblJuradoService
     {
-        public Task Crear(CreateTblJuradoDTO jurado);
+        public Task<int> Crear(CreateTblJuradoDTO jurado);
         public Task Actualizar(UpdateTblJuradoDTO jurado);
         public Task Eliminar(int idJurado);
         public Task<ReadTblJuradoDTO> ObtenerPorId(int idJurado);

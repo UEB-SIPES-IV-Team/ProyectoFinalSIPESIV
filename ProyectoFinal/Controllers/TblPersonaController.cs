@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
 using ProyectoFinal.Negocio.DTOs.TblPersona;
 using ProyectoFinal.Negocio.Interfaces;
 using ProyectoFinal.Negocio.Services;
