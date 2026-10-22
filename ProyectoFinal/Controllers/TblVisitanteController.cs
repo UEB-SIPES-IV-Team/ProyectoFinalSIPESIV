@@ -80,5 +80,23 @@ namespace ProyectoFinal.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+
+        [HttpGet("ObtenerPorCi")]
+        public async Task<IActionResult> ObtenerPorCi([FromQuery] string ci, [FromQuery] int eventoId)
+        {
+            // Ver los valores exactos que llegan a la API
+            Console.WriteLine($"===> Consulta recibida en API -> CI: '{ci}', EventoId: {eventoId}");
+
+            var visitante = await _tblVisitanteService.ObtenerPorCiYEvento(ci, eventoId);
+
+            if (visitante == null)
+            {
+                Console.WriteLine($"===> Resultado: NULL (No encontrado en BD)");
+                return NotFound(new { message = "No se encontró ningún visitante registrado con ese Carnet para este evento." });
+            }
+
+            Console.WriteLine($"===> Resultado: Encontrado -> {visitante.sVisitante_nm}");
+            return Ok(visitante);
+        }
     }
 }

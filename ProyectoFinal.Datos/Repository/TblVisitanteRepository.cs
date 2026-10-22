@@ -69,5 +69,16 @@ namespace ProyectoFinal.Datos.Repository
             IEnumerable<TblVisitante> personaResult = await _database.GetData<TblVisitante>("fn_tblvisitante_obtenertodos");
             return personaResult.ToList();
         }
+
+        public async Task<TblVisitante?> ObtenerPorCiYEvento(string ci, int idEvento)
+        {
+            IEnumerable<TblVisitante> resultado = await _database.GetData<TblVisitante>("fn_tblvisitante_obtenerporci", new
+            {
+                p_svisitante_ci = ci,
+                p_levento_id = idEvento
+            });
+
+            return resultado.FirstOrDefault();
+        }
     }
 }

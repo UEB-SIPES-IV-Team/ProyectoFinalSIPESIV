@@ -10,6 +10,6 @@ namespace ProyectoFinal.Negocio.DTOs.TblEvaluacionVisitante
         public int lVisitante_id { get; set; }
         public int sPuntaje { get; set; }
         public DateTime sEvaluacion_fecha { get; set; }
-        public string sEvaluacion_desc { get; set; }
+        public string? sEvaluacion_desc { get; set; }
     }
 }

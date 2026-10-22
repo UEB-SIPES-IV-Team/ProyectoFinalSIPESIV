@@ -13,5 +13,6 @@ namespace ProyectoFinal.Datos.Interfaces
         public Task<List<TblVisitante>> ObtenerTodos();
         public Task Actualizar(TblVisitante visitante);
         public Task Eliminar(int idVisitante);
+        public  Task<TblVisitante?> ObtenerPorCiYEvento(string ci, int idEvento);
     }
 }

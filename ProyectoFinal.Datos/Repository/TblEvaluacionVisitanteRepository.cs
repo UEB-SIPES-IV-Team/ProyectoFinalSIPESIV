@@ -67,9 +67,60 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<List<TblEvaluacionVisitante>> ObtenerTodos()
         {
-            // Usamos GetData<TblEvaluacionVisitante> pero aseguramos la recompilación
             IEnumerable<TblEvaluacionVisitante> personaResult = await _database.GetData<TblEvaluacionVisitante>("fn_tblevaluacionvisitante_obtenertodos");
             return personaResult.ToList();
+        }
+
+        // =========================================================================
+        // 🟢 NUEVO: OBTENER EVALUACIÓN POR VISITANTE Y PROYECTO
+        // =========================================================================
+        public async Task<TblEvaluacionVisitante?> ObtenerPorVisitanteYProyecto(int idVisitante, int idProyecto)
+        {
+            IEnumerable<TblEvaluacionVisitante> result = await _database.GetData<TblEvaluacionVisitante>(
+                "fn_tblevaluacionvisitante_obtenerporvisitanteyproyecto",
+                new
+                {
+                    p_lvisitante_id = idVisitante,
+                    p_lproyecto_id = idProyecto
+                }
+            );
+
+            return result?.FirstOrDefault();
+        }
+
+        // =========================================================================
+        // 🟢 RANKING Y MOVIMIENTOS RECIENTES POR EVENTO
+        // =========================================================================
+        public async Task<List<TblEvaluacionVisitante>> ObtenerEvaluacionesPorEvento(int idEvento)
+        {
+            IEnumerable<TblEvaluacionVisitante> result = await _database.GetData<TblEvaluacionVisitante>(
+                "fn_tblevaluacionvisitante_obtenerporevento",
+                new { p_levento_id = idEvento }
+            );
+
+            return result?.ToList() ?? new List<TblEvaluacionVisitante>();
+        }
+
+        public async Task<List<TblEvaluacionVisitante>> ObtenerRecientesPorEvento(int idEvento, int limite = 5)
+        {
+            IEnumerable<TblEvaluacionVisitante> result = await _database.GetData<TblEvaluacionVisitante>(
+                "fn_tblevaluacionvisitante_obtenerporevento",
+                new { p_levento_id = idEvento }
+            );
+
+            return result?
+                .OrderByDescending(x => x.sEvaluacion_fecha)
+                .Take(limite)
+                .ToList() ?? new List<TblEvaluacionVisitante>();
+        }
+
+        public async Task<bool> ValidarEventoActivoPorProyecto(int idProyecto)
+        {
+            IEnumerable<bool> result = await _database.GetData<bool>(
+                "fn_tblevento_validaractivo_por_proyecto",
+                new { p_lproyecto_id = idProyecto }
+            );
+            return result.FirstOrDefault();
         }
     }
 }

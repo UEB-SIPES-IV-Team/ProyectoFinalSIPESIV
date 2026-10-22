@@ -81,5 +81,11 @@ namespace ProyectoFinal.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+        [HttpGet("ObtenerPorProyecto/{idProyecto}")]
+        public async Task<IActionResult> ObtenerPorProyecto(long idProyecto)
+        {
+            var integrantes = await _tblProyectoXPersonaService.ObtenerIntegrantesPorProyectoAsync(idProyecto);
+            return Ok(integrantes);
+        }
     }
 }

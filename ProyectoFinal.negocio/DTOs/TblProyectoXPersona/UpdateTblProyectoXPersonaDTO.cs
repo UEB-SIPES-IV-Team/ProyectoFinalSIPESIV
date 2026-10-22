@@ -9,5 +9,7 @@ namespace ProyectoFinal.Negocio.DTOs.TblProyectoXPersona
         public int lProyectoXPersona_id { get; set; }
         public int lProyecto_id { get; set; }
         public int lPersona_id { get; set; }
+        public string sPersona_nm { get; set; } = string.Empty;
+        public string sPersona_aps { get; set; } = string.Empty;
     }
 }

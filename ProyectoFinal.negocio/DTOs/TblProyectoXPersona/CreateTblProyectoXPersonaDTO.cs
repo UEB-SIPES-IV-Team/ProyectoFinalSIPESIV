@@ -8,5 +8,6 @@ namespace ProyectoFinal.Negocio.DTOs.TblProyectoXPersona
     {
         public int lProyecto_id { get; set; }
         public int lPersona_id { get; set; }
+      
     }
 }

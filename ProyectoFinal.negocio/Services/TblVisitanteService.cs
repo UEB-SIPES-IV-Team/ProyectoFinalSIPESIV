@@ -100,5 +100,25 @@ namespace ProyectoFinal.Negocio.Services
             }
             return VisitantesDTO;
         }
+
+        public async Task<ReadTblVisitanteDTO?> ObtenerPorCiYEvento(string ci, int idEvento)
+        {
+            var result = await _tblVisitanteRepository.ObtenerPorCiYEvento(ci, idEvento);
+            if (result is null) return null;
+
+            return new ReadTblVisitanteDTO
+            {
+                lVisitante_id = result.lVisitante_id,
+                lEvento_id = result.lEvento_id,
+                sVisitante_nm = result.sVisitante_nm,
+                sVisitante_email = result.sVisitante_email,
+                sVisitante_telf = result.sVisitante_telf,
+                sVisitante_ci = result.sVisitante_ci,
+                sVisitante_inst = result.sVisitante_inst,
+                sVisitante_fecha_nacimiento = result.sVisitante_fecha_nacimiento,
+                sVisitante_carrera = result.sVisitante_carrera,
+                sVisitante_sexo = result.sVisitante_sexo
+            };
+        }
     }
 }

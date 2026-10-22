@@ -59,12 +59,14 @@ namespace ProyectoFinal.Negocio.Services
             {
                 lProyecto_id = result.lProyecto_id,
                 lAsignatura_id = result.lAsignatura_id,
+                lAsignatura_nm = result.lAsignatura_nm,
                 lEvento_id = result.lEvento_id,
                 sProyecto_nm = result.sProyecto_nm,
                 sProyecto_desc = result.sProyecto_desc,
                 sProyecto_tipo = result.sProyecto_tipo,
                 sProyecto_estado = result.sProyecto_estado,
                 sProyecto_video = result.sProyecto_video
+
             };
         }
 
@@ -79,6 +81,7 @@ namespace ProyectoFinal.Negocio.Services
                 {
                     lProyecto_id = proyecto.lProyecto_id,
                     lAsignatura_id = proyecto.lAsignatura_id,
+                    lAsignatura_nm = proyecto.lAsignatura_nm, // 🟢 SÍ estaba mapeado
                     lEvento_id = proyecto.lEvento_id,
                     sProyecto_nm = proyecto.sProyecto_nm,
                     sProyecto_desc = proyecto.sProyecto_desc,
@@ -97,7 +100,9 @@ namespace ProyectoFinal.Negocio.Services
 
             return entidades.Select(e => new ReadTblProyectoDTO
             {
+                lProyecto_id = e.lProyecto_id,
                 lAsignatura_id = e.lAsignatura_id,
+                lAsignatura_nm = e.lAsignatura_nm, // 🟢 SÍ estaba mapeado
                 lEvento_id = e.lEvento_id,
                 sProyecto_nm = e.sProyecto_nm,
                 sProyecto_desc = e.sProyecto_desc,
@@ -109,3 +114,4 @@ namespace ProyectoFinal.Negocio.Services
     }
 }
 
+ 

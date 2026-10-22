@@ -45,6 +45,7 @@ namespace ProyectoFinal.Datos.Repository
                 p_lproyectoxpersona_id = idProyectoXPersona
             });
         }
+
         public async Task<TblProyectoXPersona> ObtenerPorId(int idProyectoXPersona)
         {
             IEnumerable<TblProyectoXPersona> result = await _database.GetData<TblProyectoXPersona>(
@@ -57,6 +58,16 @@ namespace ProyectoFinal.Datos.Repository
         public async Task<List<TblProyectoXPersona>> ObtenerTodos()
         {
             IEnumerable<TblProyectoXPersona> result = await _database.GetData<TblProyectoXPersona>("fn_tblproyectoxpersona_obtenertodos");
+            return result.ToList();
+        }
+
+        // 🟢 MÉTODO CORREGIDO: Llama a la función almacenada de PostgreSQL
+        public async Task<List<TblProyectoXPersona>> ObtenerIntegrantesPorProyectoAsync(long idProyecto)
+        {
+            IEnumerable<TblProyectoXPersona> result = await _database.GetData<TblProyectoXPersona>(
+                "fn_tblproyectoxpersona_obtenerporproyecto",
+                new { p_proyectoid = (int)idProyecto }
+            );
             return result.ToList();
         }
 

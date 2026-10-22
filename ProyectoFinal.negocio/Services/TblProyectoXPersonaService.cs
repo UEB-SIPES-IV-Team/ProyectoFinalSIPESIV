@@ -4,17 +4,20 @@ using ProyectoFinal.Negocio.DTOs.TblProyectoXPersona;
 using ProyectoFinal.Negocio.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace ProyectoFinal.Negocio.Services
 {
     public class TblProyectoXPersonaService : ITblProyectoXPersonaService
     {
         private readonly ITblProyectoXPersonaRepository _tblProyectoXPersonaRepository;
+
         public TblProyectoXPersonaService(ITblProyectoXPersonaRepository tblProyectoXPersonaRepository)
         {
             _tblProyectoXPersonaRepository = tblProyectoXPersonaRepository;
         }
+
         public async Task Actualizar(UpdateTblProyectoXPersonaDTO proyectoXPersona)
         {
             TblProyectoXPersona objProyectoXPersona = new TblProyectoXPersona
@@ -70,6 +73,35 @@ namespace ProyectoFinal.Negocio.Services
             }
 
             return ProyectoXPersonasDTO;
+        }
+
+        // 🟢 MÉTODO CORREGIDO: Llama directamente al repositorio de base de datos
+        public async Task<List<ReadTblProyectoXPersonaDTO>> ObtenerIntegrantesPorProyectoAsync(long idProyecto)
+        {
+            try
+            {
+                // Consulta al repositorio (BD / PostgreSQL Function)
+                var listaEntidad = await _tblProyectoXPersonaRepository.ObtenerIntegrantesPorProyectoAsync(idProyecto);
+                var listaDTO = new List<ReadTblProyectoXPersonaDTO>();
+
+                foreach (var item in listaEntidad)
+                {
+                    listaDTO.Add(new ReadTblProyectoXPersonaDTO
+                    {
+                        lProyecto_id = item.lProyecto_id,
+                        lPersona_id = item.lPersona_id,
+                        sPersona_nm = item.sPersona_nm,
+                        sPersona_aps = item.sPersona_aps
+                    });
+                }
+
+                return listaDTO;
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error al obtener integrantes en el servicio Backend: {ex.Message}");
+                return new List<ReadTblProyectoXPersonaDTO>();
+            }
         }
     }
 }

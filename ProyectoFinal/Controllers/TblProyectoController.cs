@@ -1,9 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ProyectoFinal.Negocio.DTOs.TblArea;
-using ProyectoFinal.Negocio.DTOs.TblDetalleEvaluacion;
 using ProyectoFinal.Negocio.DTOs.TblProyecto;
 using ProyectoFinal.Negocio.Interfaces;
-using ProyectoFinal.Negocio.Services;
 
 namespace ProyectoFinal.Controllers
 {
@@ -12,10 +9,12 @@ namespace ProyectoFinal.Controllers
     public class TblProyectoController : ControllerBase
     {
         private readonly ITblProyectoService _tblProyectoService;
+
         public TblProyectoController(ITblProyectoService tblProyectoService)
         {
             _tblProyectoService = tblProyectoService;
         }
+
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(CreateTblProyectoDTO proyecto)
         {
@@ -29,6 +28,7 @@ namespace ProyectoFinal.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(UpdateTblProyectoDTO proyecto)
         {
@@ -42,6 +42,7 @@ namespace ProyectoFinal.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar([FromBody] DeleteTblProyectoDTO dto)
         {
@@ -55,6 +56,7 @@ namespace ProyectoFinal.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+
         [HttpGet("ObtenerPorId/{idProyecto}")]
         public async Task<ActionResult> ObtenerPorId(int idProyecto)
         {
@@ -69,6 +71,7 @@ namespace ProyectoFinal.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerProyectos()
         {
@@ -82,8 +85,9 @@ namespace ProyectoFinal.Controllers
             }
         }
 
+        // ENDPOINT CORREGIDO PARA OBTENER PROYECTOS POR EVENTO
         [HttpGet("ObtenerPorEvento/{eventoId}")]
-        public async Task<IActionResult> ObtenerProyectosPorEvento(int eventoId)
+        public async Task<ActionResult> ObtenerPorEvento(int eventoId)
         {
             try
             {

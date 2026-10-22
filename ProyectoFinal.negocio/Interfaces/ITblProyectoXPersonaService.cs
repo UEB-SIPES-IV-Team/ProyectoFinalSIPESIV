@@ -1,4 +1,5 @@
-﻿using ProyectoFinal.Negocio.DTOs.TblProyectoXPersona;
+﻿using ProyectoFinal.Negocio.DTOs.TblEvaluacionVisitante;
+using ProyectoFinal.Negocio.DTOs.TblProyectoXPersona;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,5 +13,7 @@ namespace ProyectoFinal.Negocio.Interfaces
         public Task Eliminar(int idProyectoXPersona);
         public Task<List<ReadTblProyectoXPersonaDTO>> ObtenerTodos();
         public Task<ReadTblProyectoXPersonaDTO> ObtenerPorId(int idProyectoXPersona);
+        public Task<List<ReadTblProyectoXPersonaDTO>> ObtenerIntegrantesPorProyectoAsync(long idProyecto);
+        
     }
 }
