@@ -21,10 +21,7 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // CREAR PROYECTO
-        // =====================================
-
+        
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
             CreateTblProyectoDTO proyecto)
@@ -49,9 +46,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ACTUALIZAR PROYECTO
-        // =====================================
+
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -77,9 +72,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ELIMINAR PROYECTO
-        // =====================================
+  
 
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
@@ -105,82 +98,46 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER PROYECTO POR ID
-        // =====================================
-
         [HttpGet("ObtenerPorId/{idProyecto}")]
-        public async Task<ActionResult> ObtenerPorId(
-            int idProyecto)
+        public async Task<ActionResult> ObtenerPorId(int idProyecto)
         {
             try
             {
-                var proyecto =
-                    await _tblProyectoService.ObtenerPorId(idProyecto);
-
-                if (proyecto == null)
-                {
-                    return NotFound(new
-                    {
-                        message = $"El proyecto con Id {idProyecto} no existe"
-                    });
-                }
-
+                var proyecto = await _tblProyectoService.ObtenerPorId(idProyecto);
+                if (proyecto == null) return NotFound(new { message = $"El proyecto con Id {idProyecto} no existe" });
                 return Ok(proyecto);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = ex.Message
-                });
+                return StatusCode(500, new { message = ex.Message });
             }
         }
-
-        // =====================================
-        // OBTENER TODOS LOS PROYECTOS
-        // =====================================
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerProyectos()
         {
             try
             {
-                return Ok(
-                    await _tblProyectoService.ObtenerTodos()
-                );
+                return Ok(await _tblProyectoService.ObtenerTodos());
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = ex.Message
-                });
+                return StatusCode(500, new { message = ex.Message });
             }
         }
 
-        // =====================================
-        // OBTENER PROYECTOS POR EVENTO
-        // =====================================
-
+        // ENDPOINT CORREGIDO PARA OBTENER PROYECTOS POR EVENTO
         [HttpGet("ObtenerPorEvento/{eventoId}")]
-        public async Task<IActionResult> ObtenerProyectosPorEvento(
-            int eventoId)
+        public async Task<ActionResult> ObtenerPorEvento(int eventoId)
         {
             try
             {
-                var proyectos =
-                    await _tblProyectoService.ObtenerPorEventoAsync(
-                        eventoId);
-
+                var proyectos = await _tblProyectoService.ObtenerPorEventoAsync(eventoId);
                 return Ok(proyectos);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new
-                {
-                    message = ex.Message
-                });
+                return StatusCode(500, new { message = ex.Message });
             }
         }
     }

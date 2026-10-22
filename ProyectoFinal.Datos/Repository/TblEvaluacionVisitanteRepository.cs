@@ -71,9 +71,7 @@ namespace ProyectoFinal.Datos.Repository
             return personaResult.ToList();
         }
 
-        // =========================================================================
-        // 🟢 NUEVO: OBTENER EVALUACIÓN POR VISITANTE Y PROYECTO
-        // =========================================================================
+ 
         public async Task<TblEvaluacionVisitante?> ObtenerPorVisitanteYProyecto(int idVisitante, int idProyecto)
         {
             IEnumerable<TblEvaluacionVisitante> result = await _database.GetData<TblEvaluacionVisitante>(
@@ -88,9 +86,7 @@ namespace ProyectoFinal.Datos.Repository
             return result?.FirstOrDefault();
         }
 
-        // =========================================================================
-        // 🟢 RANKING Y MOVIMIENTOS RECIENTES POR EVENTO
-        // =========================================================================
+      
         public async Task<List<TblEvaluacionVisitante>> ObtenerEvaluacionesPorEvento(int idEvento)
         {
             IEnumerable<TblEvaluacionVisitante> result = await _database.GetData<TblEvaluacionVisitante>(
