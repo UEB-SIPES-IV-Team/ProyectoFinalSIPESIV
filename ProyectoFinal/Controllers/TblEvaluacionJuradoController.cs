@@ -1,86 +1,168 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Negocio.DTOs.TblEvaluacionJurado;
 using ProyectoFinal.Negocio.Interfaces;
+using ProyectoFinal.Services;
 
 namespace ProyectoFinal.Controllers
 {
-    
-    
-        [Route("api/[controller]")]
-        [ApiController]
+    [Route("api/[controller]")]
+    [ApiController]
+    public class TblEvaluacionJuradoController : ControllerBase
+    {
+        private readonly ITblEvaluacionJuradoService _tblEvaluacionJuradoService;
+        private readonly NotificadorCambios _notificador;
 
- 
-        public class TblEvaluacionJuradoController : ControllerBase
+        public TblEvaluacionJuradoController(
+            ITblEvaluacionJuradoService tblEvaluacionJuradoService,
+            NotificadorCambios notificador)
         {
-            private readonly ITblEvaluacionJuradoService _tblEvaluacionJuradoService;
-            public TblEvaluacionJuradoController(ITblEvaluacionJuradoService tblEvaluacionJuradoService)
+            _tblEvaluacionJuradoService = tblEvaluacionJuradoService;
+            _notificador = notificador;
+        }
+
+        // =====================================
+        // CREAR EVALUACIÓN DE JURADO
+        // =====================================
+
+        [HttpPost("Crear")]
+        public async Task<ActionResult> Crear(
+            CreateTblEvaluacionJuradoDTO evaluacionJurado)
+        {
+            try
             {
-                _tblEvaluacionJuradoService = tblEvaluacionJuradoService;
+                await _tblEvaluacionJuradoService.Crear(
+                    evaluacionJurado);
+
+                await _notificador.NotificarAsync("Evaluaciones");
+
+                return StatusCode(201, new
+                {
+                    message = "Evaluación de jurado creada correctamente"
+                });
             }
-            [HttpPost("Crear")]
-            public async Task<ActionResult> Crear(CreateTblEvaluacionJuradoDTO evaluacionJurado)
+            catch (Exception ex)
             {
-                try
+                return StatusCode(500, new
                 {
-                    await _tblEvaluacionJuradoService.Crear(evaluacionJurado);
-                    return StatusCode(201, new { message = "Evaluación de jurado creada correctamente" });
-                }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, new { message = ex.Message });
-                }
+                    message = ex.Message
+                });
             }
-            [HttpPut("Actualizar")]
-            public async Task<ActionResult> Actualizar(UpdateTblEvaluacionJuradoDTO evaluacionJurado)
+        }
+
+        // =====================================
+        // ACTUALIZAR EVALUACIÓN DE JURADO
+        // =====================================
+
+        [HttpPut("Actualizar")]
+        public async Task<ActionResult> Actualizar(
+            UpdateTblEvaluacionJuradoDTO evaluacionJurado)
+        {
+            try
             {
-                try
+                await _tblEvaluacionJuradoService.Actualizar(
+                    evaluacionJurado);
+
+                await _notificador.NotificarAsync("Evaluaciones");
+
+                return Ok(new
                 {
-                    await _tblEvaluacionJuradoService.Actualizar(evaluacionJurado);
-                    return StatusCode(201, new { message = "Evaluación de jurado actualizada correctamente" });
+                    message = "Evaluación de jurado actualizada correctamente"
+                });
             }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, new { message = ex.Message });
-                }
-            }
-            [HttpDelete("Eliminar")]
-            public async Task<ActionResult> Eliminar(int idEvaluacionJurado)
+            catch (Exception ex)
             {
-                try
+                return StatusCode(500, new
                 {
-                    await _tblEvaluacionJuradoService.Eliminar(idEvaluacionJurado);
-                    return StatusCode(201, new { message = "Evaluación de jurado eliminada correctamente" });
+                    message = ex.Message
+                });
             }
-                catch (Exception ex)
+        }
+
+        // =====================================
+        // ELIMINAR EVALUACIÓN DE JURADO
+        // =====================================
+
+        [HttpDelete("Eliminar")]
+        public async Task<ActionResult> Eliminar(
+            int idEvaluacionJurado)
+        {
+            try
+            {
+                await _tblEvaluacionJuradoService.Eliminar(
+                    idEvaluacionJurado);
+
+                await _notificador.NotificarAsync("Evaluaciones");
+
+                return Ok(new
                 {
-                    return StatusCode(500, new { message = ex.Message });
-                }
+                    message = "Evaluación de jurado eliminada correctamente"
+                });
             }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
+        // =====================================
+        // OBTENER EVALUACIÓN POR ID
+        // =====================================
+
         [HttpGet("ObtenerPorId/{idEvaluacionJurado}")]
-        public async Task<ActionResult> ObtenerPorId(int idEvaluacionJurado)
+        public async Task<ActionResult> ObtenerPorId(
+            int idEvaluacionJurado)
+        {
+            try
             {
-                try
+                var evaluacionJurado =
+                    await _tblEvaluacionJuradoService.ObtenerPorId(
+                        idEvaluacionJurado);
+
+                if (evaluacionJurado == null)
                 {
-                    var evaluacionJurado = await _tblEvaluacionJuradoService.ObtenerPorId(idEvaluacionJurado);
-                    if (evaluacionJurado == null) return NotFound(new { message = $"La evaluación de jurado con Id {idEvaluacionJurado} no existe" });
-                    return Ok(evaluacionJurado);
+                    return NotFound(new
+                    {
+                        message =
+                            $"La evaluación de jurado con Id {idEvaluacionJurado} no existe"
+                    });
                 }
-                catch (Exception ex)
-                {
-                    return StatusCode(500, new { message = ex.Message });
-                }
+
+                return Ok(evaluacionJurado);
             }
-             [HttpGet("ObtenerTodos")]
-             public async Task<ActionResult> ObtenerTodos()
-             {
-               try
-             {
-                return Ok(await _tblEvaluacionJuradoService.ObtenerTodos());
-             }
-               catch (Exception ex)
-             {
-               return StatusCode(500, new { message = ex.Message });
-             }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
+
+        // =====================================
+        // OBTENER TODAS LAS EVALUACIONES
+        // =====================================
+
+        [HttpGet("ObtenerTodos")]
+        public async Task<ActionResult> ObtenerTodos()
+        {
+            try
+            {
+                var evaluaciones =
+                    await _tblEvaluacionJuradoService.ObtenerTodos();
+
+                return Ok(evaluaciones);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
         }
     }
 }

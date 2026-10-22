@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
 using ProyectoFinal.Negocio.DTOs.TblUsuario;
 using ProyectoFinal.Negocio.Interfaces;
-using Microsoft.AspNetCore.Authorization;
+using ProyectoFinal.Services;
 
 namespace ProyectoFinal.Controllers
 {
@@ -11,57 +13,119 @@ namespace ProyectoFinal.Controllers
     public class TblUsuarioController : ControllerBase
     {
         private readonly ITblUsuarioService _tblUsuarioService;
-        public TblUsuarioController(ITblUsuarioService tblUsuarioService)
+        private readonly NotificadorCambios _notificador;
+
+        public TblUsuarioController(
+            ITblUsuarioService tblUsuarioService,
+            NotificadorCambios notificador)
         {
             _tblUsuarioService = tblUsuarioService;
+            _notificador = notificador;
         }
+
+        // =====================================
+        // OBTENER TODOS
+        // =====================================
+
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<List<TblUsuarioReadDto>>> ObtenerTodos()
         {
             try
             {
                 var usuarios = await _tblUsuarioService.ObtenerTodos();
+
                 return Ok(usuarios);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
             }
         }
-        
+
+        // =====================================
+        // OBTENER POR ID
+        // =====================================
+
         [HttpGet("ObtenerPorId/{idUsuario}")]
         public async Task<ActionResult> ObtenerPorId(int idUsuario)
         {
             try
             {
                 var usuario = await _tblUsuarioService.ObtenerPorId(idUsuario);
+
                 if (usuario == null)
-                    return NotFound(new { message = $"El usuario con Id {idUsuario} no existe" });
+                {
+                    return NotFound(new
+                    {
+                        message = $"El usuario con Id {idUsuario} no existe"
+                    });
+                }
 
                 return Ok(usuario);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
             }
         }
+
+        // =====================================
+        // ELIMINAR
+        // =====================================
+
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(int idUsuario)
         {
             await _tblUsuarioService.Eliminar(idUsuario);
-            return StatusCode(201, new { message = "Eliminado correctamente" });
+
+            await _notificador.NotificarAsync("Usuarios");
+
+            return Ok(new
+            {
+                message = "Eliminado correctamente"
+            });
         }
+
+        // =====================================
+        // CREAR
+        // =====================================
+
         [HttpPost("Crear")]
-        public async Task<ActionResult> Crear(TblUsuarioCreateDto usuario)
+        public async Task<ActionResult> Crear(
+            TblUsuarioCreateDto usuario)
         {
             await _tblUsuarioService.Crear(usuario);
-            return StatusCode(201, new { message = "Creado correctamente" });
+
+            await _notificador.NotificarAsync("Usuarios");
+
+            return StatusCode(201, new
+            {
+                message = "Creado correctamente"
+            });
         }
+
+        // =====================================
+        // ACTUALIZAR
+        // =====================================
+
         [HttpPut("Actualizar")]
-        public async Task<ActionResult> Actualizar(TblUsuarioUpdateDto usuario)
+        public async Task<ActionResult> Actualizar(
+            TblUsuarioUpdateDto usuario)
         {
             await _tblUsuarioService.Actualizar(usuario);
-            return StatusCode(201, new { message = "Actualizado correctamente" });
+
+            await _notificador.NotificarAsync("Usuarios");
+
+            return Ok(new
+            {
+                message = "Actualizado correctamente"
+            });
         }
     }
 }

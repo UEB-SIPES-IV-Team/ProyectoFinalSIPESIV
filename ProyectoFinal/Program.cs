@@ -1,9 +1,11 @@
+using ProyectoFinal.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Npgsql;
 using ProyectoFinal.Datos.DataAccess;
 using ProyectoFinal.Datos.Interfaces;
 using ProyectoFinal.Datos.Repository;
+using ProyectoFinal.Hubs;
 using ProyectoFinal.Negocio.Interfaces;
 using ProyectoFinal.Negocio.Services;
 using Scalar.AspNetCore;
@@ -17,6 +19,7 @@ var jwtKey = builder.Configuration["Jwt:Key"]
 if (Encoding.UTF8.GetByteCount(jwtKey) < 32)
     throw new InvalidOperationException(
         "La clave JWT debe tener al menos 32 bytes.");
+
 
 builder.Services
     .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -37,6 +40,27 @@ builder.Services
 
             ClockSkew = TimeSpan.Zero
         };
+
+        // Permitir JWT por query string únicamente
+        // en el endpoint de SignalR.
+        options.Events = new JwtBearerEvents
+        {
+            OnMessageReceived = context =>
+            {
+                var accessToken =
+                    context.Request.Query["access_token"];
+
+                var path = context.HttpContext.Request.Path;
+
+                if (!string.IsNullOrEmpty(accessToken) &&
+                    path.StartsWithSegments("/hubs/cambios"))
+                {
+                    context.Token = accessToken;
+                }
+
+                return Task.CompletedTask;
+            }
+        };
     });
 
 builder.Services.AddAuthorization();
@@ -45,6 +69,10 @@ builder.Services.AddAuthorization();
 builder.Services.AddControllers();
 builder.Services.AddOpenApi();
 builder.Services.AddSwaggerGen();
+
+// SignalR: comunicación en tiempo real
+builder.Services.AddSignalR();
+builder.Services.AddScoped<NotificadorCambios>();
 
 Dapper.DefaultTypeMap.MatchNamesWithUnderscores = true;
 
@@ -111,10 +139,15 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
     app.MapScalarApiReference();
 }
+
 app.UseHttpsRedirection();
 app.UseAuthentication();
 app.UseAuthorization();
+
 app.MapControllers();
+
+// Endpoint de SignalR
+app.MapHub<CambiosHub>("/hubs/cambios");
 
 if (app.Environment.IsDevelopment() &&
     args.Contains("--seed-superadmin"))
@@ -173,6 +206,5 @@ if (app.Environment.IsDevelopment() &&
 
     return;
 }
-
 
 app.Run();
