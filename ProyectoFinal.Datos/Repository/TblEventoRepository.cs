@@ -25,15 +25,16 @@ namespace ProyectoFinal.Datos.Repository
                     sgestion = evento.sGestion,
 
                     sfecha_ini = evento.sFecha_ini.HasValue
-                   ? DateTime.SpecifyKind(evento.sFecha_ini.Value, DateTimeKind.Unspecified)
-                   : (DateTime?)null,
+    ? DateTime.SpecifyKind(evento.sFecha_ini.Value, DateTimeKind.Unspecified)
+    : (DateTime?)null,
 
                     sfecha_fin = evento.sFecha_fin.HasValue
-                    ? DateTime.SpecifyKind(evento.sFecha_fin.Value, DateTimeKind.Unspecified)
-                    : (DateTime?)null,
+    ? DateTime.SpecifyKind(evento.sFecha_fin.Value, DateTimeKind.Unspecified)
+    : (DateTime?)null,
 
                     sevento_estado = evento.sEvento_estado
                 });
+
             return resultado.FirstOrDefault();
         }
 

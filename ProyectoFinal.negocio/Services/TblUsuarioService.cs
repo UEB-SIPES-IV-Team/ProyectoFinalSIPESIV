@@ -18,32 +18,63 @@ namespace ProyectoFinal.Negocio.Services
             _tblUsuarioRepository = tblUsuarioRepository;
         }
 
+
+
         public async Task Actualizar(TblUsuarioUpdateDto usuario)
         {
-            TblUsuario objUsuario = new TblUsuario
+            if (usuario == null)
+                throw new ArgumentNullException(nameof(usuario));
+
+            var existente = await _tblUsuarioRepository
+                .ObtenerPorId(usuario.lUsuario_id);
+
+            if (existente == null)
+                throw new Exception("El usuario no existe.");
+
+            existente.lPersona_id = usuario.lPersona_id;
+            existente.lRol_id = usuario.lRol_id;
+            existente.sUsername = usuario.sUsername.Trim();
+            existente.bEstado = usuario.bEstado;
+
+            if (!string.IsNullOrWhiteSpace(usuario.sPassword))
             {
-                lUsuario_id = usuario.lUsuario_id,
-                lPersona_id = usuario.lPersona_id,
-                lRol_id = usuario.lRol_id,
-                sUsername = usuario.sUsername,
-                sPassword = usuario.sPassword,
-                bEstado = usuario.bEstado
-            };
-            await _tblUsuarioRepository.Actualizar(objUsuario);
+                existente.sPassword = _passwordHasher.HashPassword(
+                    existente,
+                    usuario.sPassword
+                );
+            }
+
+            await _tblUsuarioRepository.Actualizar(existente);
         }
+
+
+
 
         public async Task Crear(TblUsuarioCreateDto usuario)
         {
-            TblUsuario objUsuario = new TblUsuario
+            if (usuario == null)
+                throw new ArgumentNullException(nameof(usuario));
+
+            if (string.IsNullOrWhiteSpace(usuario.sPassword))
+                throw new ArgumentException(
+                    "La contraseña es obligatoria.");
+
+            var nuevoUsuario = new TblUsuario
             {
                 lPersona_id = usuario.lPersona_id,
                 lRol_id = usuario.lRol_id,
-                sUsername = usuario.sUsername,
-                sPassword = usuario.sPassword,
+                sUsername = usuario.sUsername.Trim(),
                 bEstado = usuario.bEstado
             };
-            await _tblUsuarioRepository.Crear(objUsuario);
+
+            nuevoUsuario.sPassword = _passwordHasher.HashPassword(
+                nuevoUsuario,
+                usuario.sPassword
+            );
+
+            await _tblUsuarioRepository.Crear(nuevoUsuario);
         }
+
 
         public async Task Eliminar(int idUsuario)
         {

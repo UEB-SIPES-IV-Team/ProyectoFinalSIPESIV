@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using ProyectoFinal.Negocio.DTOs.TblArea;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Negocio.DTOs.TblProgram;
 using ProyectoFinal.Negocio.Interfaces;
-using ProyectoFinal.Negocio.Services;
+using ProyectoFinal.Services;
 
 namespace ProyectoFinal.Controllers
 {
@@ -11,46 +11,175 @@ namespace ProyectoFinal.Controllers
     public class TblProgramController : ControllerBase
     {
         private readonly ITblProgramService _tblProgramService;
-        public TblProgramController(ITblProgramService tblProgramService)
+        private readonly NotificadorCambios _notificador;
+        private readonly ILogger<TblProgramController> _logger;
+
+        public TblProgramController(
+            ITblProgramService tblProgramService,
+            NotificadorCambios notificador,
+            ILogger<TblProgramController> logger)
         {
             _tblProgramService = tblProgramService;
+            _notificador = notificador;
+            _logger = logger;
         }
+
+        // =====================================
+        // OBTENER TODOS LOS PROGRAMAS
+        // =====================================
+
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<List<ReadTblProgramDTO>>> ObtenerTodos()
         {
-            List<ReadTblProgramDTO> programs = await _tblProgramService.ObtenerTodos();
-            return Ok(programs);
-        }
-        [HttpGet("ObtenerPorId/{idProgram}")]
-        public async Task<ActionResult<ReadTblProgramDTO>> ObtenerPorId(int idProgram)
-        {
-            ReadTblProgramDTO program = await _tblProgramService.ObtenerPorId(idProgram);
-            return Ok(program);
-        }
-        [HttpDelete("Eliminar")]
-        public async Task<ActionResult> Eliminar([FromBody] DeleteTblProgramDTO dto)
-        {
             try
             {
-                await _tblProgramService.Eliminar(dto.lProgram_id);
-                return Ok(new { message = "Eliminado correctamente" });
+                List<ReadTblProgramDTO> programs =
+                    await _tblProgramService.ObtenerTodos();
+
+                return Ok(programs);
             }
             catch (Exception ex)
             {
-                return StatusCode(500, new { message = ex.Message });
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
             }
         }
-        [HttpPost("Crear")]
-        public async Task<ActionResult> Crear(CreateTblProgramDTO program)
+
+        // =====================================
+        // OBTENER PROGRAMA POR ID
+        // =====================================
+
+        [HttpGet("ObtenerPorId/{idProgram}")]
+        public async Task<ActionResult<ReadTblProgramDTO>> ObtenerPorId(
+            int idProgram)
         {
-            await _tblProgramService.Crear(program);
-            return StatusCode(201, new { message = "Programa creado correctamente" });
+            try
+            {
+                ReadTblProgramDTO program =
+                    await _tblProgramService.ObtenerPorId(idProgram);
+
+                if (program == null)
+                {
+                    return NotFound(new
+                    {
+                        message = $"El programa con ID {idProgram} no existe"
+                    });
+                }
+
+                return Ok(program);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
         }
-        [HttpPut("Actualizar")]
-        public async Task<ActionResult> Actualizar(UpdateTblProgramDTO program)
+
+        // =====================================
+        // CREAR PROGRAMA
+        // =====================================
+
+        [HttpPost("Crear")]
+        public async Task<ActionResult> Crear(
+            CreateTblProgramDTO program)
         {
-            await _tblProgramService.Actualizar(program);
-            return StatusCode(201, new { message = "Programa actualizado correctamente" });
+            try
+            {
+                await _tblProgramService.Crear(program);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
+
+            await NotificarCambiosAsync();
+
+            return StatusCode(201, new
+            {
+                message = "Programa creado correctamente"
+            });
+        }
+
+        // =====================================
+        // ACTUALIZAR PROGRAMA
+        // =====================================
+
+        [HttpPut("Actualizar")]
+        public async Task<ActionResult> Actualizar(
+            UpdateTblProgramDTO program)
+        {
+            try
+            {
+                await _tblProgramService.Actualizar(program);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
+
+            await NotificarCambiosAsync();
+
+            return Ok(new
+            {
+                message = "Programa actualizado correctamente"
+            });
+        }
+
+        // =====================================
+        // ELIMINAR PROGRAMA
+        // =====================================
+
+        [HttpDelete("Eliminar")]
+        public async Task<ActionResult> Eliminar(
+            [FromBody] DeleteTblProgramDTO dto)
+        {
+            try
+            {
+                await _tblProgramService.Eliminar(
+                    dto.lProgram_id);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
+
+            await NotificarCambiosAsync();
+
+            return Ok(new
+            {
+                message = "Eliminado correctamente"
+            });
+        }
+
+        // =====================================
+        // NOTIFICAR CAMBIOS POR SIGNALR
+        // =====================================
+
+        private async Task NotificarCambiosAsync()
+        {
+            try
+            {
+                await _notificador.NotificarAsync("Programas");
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(
+                    ex,
+                    "No se pudo enviar la notificación SignalR del módulo Programas.");
+            }
         }
     }
 }

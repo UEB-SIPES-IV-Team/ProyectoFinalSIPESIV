@@ -14,7 +14,7 @@ namespace ProyectoFinal.Datos.Entities
         public string sPersona_sexo { get; set; }
         public DateOnly dPersona_fecha_nacimiento { get; set; }
         public string sPersona_ci { get; set; }
-
+        public string sPersona_tipo_persona { get; set; } = "";
 
     }
 }
