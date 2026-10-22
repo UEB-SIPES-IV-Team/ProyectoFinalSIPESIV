@@ -15,16 +15,25 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<int> Crear(TblEvento evento)
         {
-            IEnumerable<int> resultado = await _database.GetData<int>("fn_tblevento_crear", new
-            {
-                linstitucion_id = evento.lInstitucion_id,
-                sevento_nm = evento.sEvento_nm,
-                sanio = evento.sAnio,
-                sgestion = evento.sGestion,
-                sfecha_ini = evento.sFecha_ini,
-                sfecha_fin = evento.sFecha_fin,
-                sevento_estado = evento.sEvento_estado
-            });
+            IEnumerable<int> resultado = await _database.GetData<int>(
+                "fn_tblevento_crear",
+                new
+                {
+                    linstitucion_id = evento.lInstitucion_id,
+                    sevento_nm = evento.sEvento_nm,
+                    sanio = evento.sAnio,
+                    sgestion = evento.sGestion,
+
+                    sfecha_ini = evento.sFecha_ini.HasValue
+                   ? DateTime.SpecifyKind(evento.sFecha_ini.Value, DateTimeKind.Unspecified)
+                   : (DateTime?)null,
+
+                    sfecha_fin = evento.sFecha_fin.HasValue
+                    ? DateTime.SpecifyKind(evento.sFecha_fin.Value, DateTimeKind.Unspecified)
+                    : (DateTime?)null,
+
+                    sevento_estado = evento.sEvento_estado
+                });
             return resultado.FirstOrDefault();
         }
 

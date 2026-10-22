@@ -21,30 +21,40 @@ namespace ProyectoFinal.Negocio.Services
                 TblPersona objPersona = new TblPersona
                 {
                     lPersona_id = persona.lPersona_id,
+                    sPersona_nm = persona.sPersona_nm,
                     sPersona_aps = persona.sPersona_aps,
                     sPersona_email = persona.sPersona_email,
-                    sPersona_nm = persona.sPersona_nm,
                     sPersona_telf = persona.sPersona_telf,
-                  
+
+                    // CAMPOS QUE FALTABAN
+                   
+                    sPersona_sexo = persona.sPersona_sexo,
+
                     sPersona_ci = persona.sPersona_ci,
-                    dPersona_fecha_nacimiento = persona.dPersona_fecha_nacimiento
-                    
+                    dPersona_fecha_nacimiento =
+                    persona.dPersona_fecha_nacimiento
                 };
-                await _tblPersonaRepository.Actualizar(objPersona);
+            await _tblPersonaRepository.Actualizar(objPersona);
             }
 
             public async Task Crear(CreateTblPersonaDTO persona)
             {
                 TblPersona objPersona = new TblPersona
                 {
+                    sPersona_nm = persona.sPersona_nm,
                     sPersona_aps = persona.sPersona_aps,
                     sPersona_email = persona.sPersona_email,
-                    sPersona_nm = persona.sPersona_nm,
                     sPersona_telf = persona.sPersona_telf,
+
+                    // CAMPOS QUE FALTABAN
+                    
+                    sPersona_sexo = persona.sPersona_sexo,
+
                     sPersona_ci = persona.sPersona_ci,
-                    dPersona_fecha_nacimiento = persona.dPersona_fecha_nacimiento
+                    dPersona_fecha_nacimiento =
+                    persona.dPersona_fecha_nacimiento
                 };
-                await _tblPersonaRepository.Crear(objPersona);
+            await _tblPersonaRepository.Crear(objPersona);
             }
 
             public async Task Eliminar(int idPersona)
