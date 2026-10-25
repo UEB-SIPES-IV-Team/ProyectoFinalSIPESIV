@@ -97,17 +97,21 @@ namespace ProyectoFinal.Datos.Repository
             return result?.ToList() ?? new List<TblEvaluacionVisitante>();
         }
 
-        public async Task<List<TblEvaluacionVisitante>> ObtenerRecientesPorEvento(int idEvento, int limite = 5)
+        public async Task<List<TblEvaluacionVisitante>> ObtenerRecientesPorEvento(int idEvento, int limite = 100)
         {
             IEnumerable<TblEvaluacionVisitante> result = await _database.GetData<TblEvaluacionVisitante>(
                 "fn_tblevaluacionvisitante_obtenerporevento",
                 new { p_levento_id = idEvento }
             );
 
-            return result?
+            if (result == null) return new List<TblEvaluacionVisitante>();
+
+            // 🟢 ORDENA PRIMERO POR FECHA DE EVALUACIÓN DESCENDENTE
+            return result
+                .Where(x => x != null && x.lProyecto_id > 0)
                 .OrderByDescending(x => x.sEvaluacion_fecha)
                 .Take(limite)
-                .ToList() ?? new List<TblEvaluacionVisitante>();
+                .ToList();
         }
 
         public async Task<bool> ValidarEventoActivoPorProyecto(int idProyecto)

@@ -18,9 +18,6 @@ namespace ProyectoFinal.Negocio.Services
             _tblEvaluacionVisitanteRepository = tblEvaluacionVisitanteRepository;
         }
 
-        // =========================================================================
-        // 🟢 NUEVO: OBTENER EVALUACIÓN POR VISITANTE Y PROYECTO
-        // =========================================================================
         public async Task<ReadTblEvaluacionVisitanteDTO?> ObtenerPorVisitanteYProyecto(int idVisitante, int idProyecto)
         {
             var result = await _tblEvaluacionVisitanteRepository.ObtenerPorVisitanteYProyecto(idVisitante, idProyecto);
@@ -64,7 +61,7 @@ namespace ProyectoFinal.Negocio.Services
             {
                 lProyecto_id = evaluacionVisitante.lProyecto_id,
                 lVisitante_id = evaluacionVisitante.lVisitante_id,
-                sPuntaje = evaluacionVisitante.sPuntaje,
+                sPuntaje = evaluacionVisitante.sPuntaje, // Recibe valor de 1 a 5 estrellas
                 sEvaluacion_fecha = DateTime.Now,
                 sEvaluacion_desc = evaluacionVisitante.sEvaluacion_desc
             };
@@ -115,7 +112,7 @@ namespace ProyectoFinal.Negocio.Services
         }
 
         // =========================================================================
-        // 🟢 RANKING: NOMBRE REAL Y VISITANTES ÚNICOS
+        // 🟢 RANKING PODIO (0% - 100%)
         // =========================================================================
         public async Task<List<ProyectoRankingDTO>> ObtenerRanking(int idEvento)
         {
@@ -139,19 +136,20 @@ namespace ProyectoFinal.Negocio.Services
 
                         int cantidadVisitantesUnicos = g.Select(x => x.lVisitante_id).Distinct().Count();
 
-                        decimal puntajeAcumulado = g.Sum(e => e.sPuntaje * 20);
-                        decimal promedioPorcentaje = g.Any() ? Math.Round((decimal)g.Average(e => e.sPuntaje * 20), 1) : 0;
+                        // 🟢 Normalización: Estrellas (1-5) * 20 = 20% a 100%
+                        decimal promedioEstrellas = (decimal)g.Average(e => e.sPuntaje);
+                        decimal promedioPorcentaje = Math.Min(100m, Math.Round(promedioEstrellas * 20m, 1));
 
                         return new ProyectoRankingDTO
                         {
                             lProyecto_id = g.Key,
                             sProyecto_nm = nombreProyecto,
                             TotalVisitantes = cantidadVisitantesUnicos,
-                            PuntajeTotalAcumulado = puntajeAcumulado,
+                            PuntajeTotalAcumulado = g.Sum(e => e.sPuntaje),
                             PorcentajePromedio = promedioPorcentaje
                         };
                     })
-                    .OrderByDescending(r => r.PuntajeTotalAcumulado)
+                    .OrderByDescending(r => r.PorcentajePromedio)
                     .ToList();
 
                 return ranking;
@@ -164,7 +162,7 @@ namespace ProyectoFinal.Negocio.Services
         }
 
         // =========================================================================
-        // 🟢 MOVIMIENTOS RECIENTES
+        // 🟢 MOVIMIENTOS RECIENTES (ORDENADOS POR LA FECHA DEL VOTO MÁS RECIENTE)
         // =========================================================================
         public async Task<List<MovimientoItemDTO>> ObtenerRecientes(int idEvento)
         {
@@ -190,36 +188,37 @@ namespace ProyectoFinal.Negocio.Services
                             ? ultimoVoto.sEvaluacion_desc.ToUpper()
                             : $"PROYECTO #{g.Key}";
 
-                        int porcentajePromedio = g.Any() ? (int)Math.Round(g.Average(x => x.sPuntaje * 20)) : 0;
+                        // 🟢 Promedio de estrellas (1-5) normalizado a %
+                        double promedioEstrellas = g.Average(x => x.sPuntaje);
+                        int porcentajePromedio = (int)Math.Min(100, Math.Round(promedioEstrellas * 20));
 
-                        string tiempoTexto = "Hace un momento";
-                        if (ultimoVoto != null && ultimoVoto.sEvaluacion_fecha.HasValue)
+                        DateTime fechaUltimoVoto = ultimoVoto?.sEvaluacion_fecha ?? DateTime.Now;
+                        if (fechaUltimoVoto.Kind == DateTimeKind.Utc)
                         {
-                            DateTime fechaVoto = ultimoVoto.sEvaluacion_fecha.Value.Kind == DateTimeKind.Utc
-                                ? ultimoVoto.sEvaluacion_fecha.Value.ToLocalTime()
-                                : ultimoVoto.sEvaluacion_fecha.Value;
+                            fechaUltimoVoto = fechaUltimoVoto.ToLocalTime();
+                        }
 
-                            TimeSpan diferencia = DateTime.Now - fechaVoto;
+                        TimeSpan diferencia = DateTime.Now - fechaUltimoVoto;
+                        string tiempoTexto = "Hace un momento";
 
-                            if (diferencia.TotalMinutes < 1)
-                            {
-                                tiempoTexto = "Hace un momento";
-                            }
-                            else if (diferencia.TotalMinutes <= 60)
-                            {
-                                int min = Math.Max(1, (int)diferencia.TotalMinutes);
-                                tiempoTexto = $"Hace {min} min";
-                            }
-                            else if (diferencia.TotalHours < 24)
-                            {
-                                int horas = (int)diferencia.TotalHours;
-                                tiempoTexto = $"Hace {horas} {(horas == 1 ? "hora" : "horas")}";
-                            }
-                            else
-                            {
-                                int dias = (int)diferencia.TotalDays;
-                                tiempoTexto = $"Hace {dias} {(dias == 1 ? "día" : "días")}";
-                            }
+                        if (diferencia.TotalMinutes <= 1)
+                        {
+                            tiempoTexto = "Hace un momento";
+                        }
+                        else if (diferencia.TotalMinutes <= 60)
+                        {
+                            int min = Math.Max(1, (int)diferencia.TotalMinutes);
+                            tiempoTexto = $"Hace {min} min";
+                        }
+                        else if (diferencia.TotalHours < 24)
+                        {
+                            int horas = (int)diferencia.TotalHours;
+                            tiempoTexto = $"Hace {horas} {(horas == 1 ? "hora" : "horas")}";
+                        }
+                        else
+                        {
+                            int dias = (int)diferencia.TotalDays;
+                            tiempoTexto = $"Hace {dias} {(dias == 1 ? "día" : "días")}";
                         }
 
                         return new
@@ -230,12 +229,13 @@ namespace ProyectoFinal.Negocio.Services
                                 Tiempo = tiempoTexto,
                                 Posicion = $"{porcentajePromedio}%"
                             },
-                            PorcentajePromedio = porcentajePromedio
+                            FechaUltimaEvaluacion = fechaUltimoVoto
                         };
                     })
-                    .OrderByDescending(x => x.PorcentajePromedio)
+                    // 🟢 ORDENAR POR FECHA MÁS RECIENTE PARA QUE LOS NUEVOS VOTOS APAREZCAN ARRIBA AL INSTANTE
+                    .OrderByDescending(x => x.FechaUltimaEvaluacion)
                     .Select(x => x.Item)
-                    .Take(5)
+                    .Take(10)
                     .ToList();
 
                 return listaMovimientos;
