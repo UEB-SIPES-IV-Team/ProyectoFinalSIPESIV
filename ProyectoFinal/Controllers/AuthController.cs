@@ -40,59 +40,60 @@ namespace ProyectoFinal.Controllers
                 });
             }
 
-            string rol = usuario.lRol_id == 1
-                ? "Superadministrador"
-                : "Administrador";
+            //string rol = usuario.lRol_id == 1
+            //    ? "Superadministrador"
+            //    : "Administrador";
 
-            var claims = new List<Claim>
-            {
-                new Claim(
-                    ClaimTypes.NameIdentifier,
-                    usuario.lUsuario_id.ToString()
-                ),
-                new Claim(ClaimTypes.Name, usuario.sUsername),
-                new Claim(ClaimTypes.Role, rol)
-            };
+            //var claims = new List<Claim>
+            //{
+            //    new Claim(
+            //        ClaimTypes.NameIdentifier,
+            //        usuario.lUsuario_id.ToString()
+            //    ),
+            //    new Claim(ClaimTypes.Name, usuario.sUsername),
+            //    new Claim(ClaimTypes.Role, rol)
+            //};
 
-            var jwtKey = _configuration["Jwt:Key"]
-                ?? throw new InvalidOperationException(
-                    "Falta configurar Jwt:Key."
-                );
+            //var jwtKey = _configuration["Jwt:Key"]
+            //    ?? throw new InvalidOperationException(
+            //        "Falta configurar Jwt:Key."
+            //    );
 
-            var securityKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(jwtKey)
-            );
+            //var securityKey = new SymmetricSecurityKey(
+            //    Encoding.UTF8.GetBytes(jwtKey)
+            //);
 
-            var credentials = new SigningCredentials(
-                securityKey,
-                SecurityAlgorithms.HmacSha256
-            );
+            //var credentials = new SigningCredentials(
+            //    securityKey,
+            //    SecurityAlgorithms.HmacSha256
+            //);
 
-            var expiration = DateTime.UtcNow.AddHours(2);
+            //var expiration = DateTime.UtcNow.AddHours(2);
 
-            var token = new JwtSecurityToken(
-                issuer: _configuration["Jwt:Issuer"],
-                audience: _configuration["Jwt:Audience"],
-                claims: claims,
-                expires: expiration,
-                signingCredentials: credentials
-            );
+            //var token = new JwtSecurityToken(
+            //    issuer: _configuration["Jwt:Issuer"],
+            //    audience: _configuration["Jwt:Audience"],
+            //    claims: claims,
+            //    expires: expiration,
+            //    signingCredentials: credentials
+            //);
 
-            var tokenString = new JwtSecurityTokenHandler()
-                .WriteToken(token);
+            //var tokenString = new JwtSecurityTokenHandler()
+            //    .WriteToken(token);
 
-            return Ok(new
-            {
-                message = "Inicio de sesión exitoso.",
-                token = tokenString,
-                expiresAt = expiration,
-                usuario = new
-                {
-                    id = usuario.lUsuario_id,
-                    username = usuario.sUsername,
-                    rol = rol
-                }
-            });
+            //return Ok(new
+            //{
+            //    message = "Inicio de sesión exitoso.",
+            //    token = tokenString,
+            //    expiresAt = expiration,
+            //    usuario = new
+            //    {
+            //        id = usuario.lUsuario_id,
+            //        username = usuario.sUsername,
+            //        rol = rol
+            //    }
+            //});
+            return Ok(usuario);
         }
     }
 }
