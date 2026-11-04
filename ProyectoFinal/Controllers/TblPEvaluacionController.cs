@@ -1,8 +1,8 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Negocio.DTOs.TblPEvaluacion;
 using ProyectoFinal.Negocio.Interfaces;
 using ProyectoFinal.Services;
+using Npgsql; // Opcional: si utilizas el proveedor de Npgsql
 
 namespace ProyectoFinal.Controllers
 {
@@ -29,19 +29,25 @@ namespace ProyectoFinal.Controllers
         // =====================================
 
         [HttpPost("Crear")]
-        public async Task<ActionResult> Crear(
-            CreateTblPEvaluacionDTO evaluacion)
+        public async Task<ActionResult> Crear(CreateTblPEvaluacionDTO evaluacion)
         {
             try
             {
                 await _tblPEvaluacionService.Crear(evaluacion);
             }
+            catch (PostgresException pgEx) // Captura específica de PostgreSQL
+            {
+                return BadRequest(new { message = pgEx.MessageText });
+            }
             catch (Exception ex)
             {
-                return StatusCode(500, new
+                // Si la excepción interna viene de Npgsql/PostgreSQL
+                if (ex.InnerException is PostgresException innerPgEx)
                 {
-                    message = ex.Message
-                });
+                    return BadRequest(new { message = innerPgEx.MessageText });
+                }
+
+                return BadRequest(new { message = ex.Message });
             }
 
             await NotificarCambiosAsync();
@@ -57,19 +63,24 @@ namespace ProyectoFinal.Controllers
         // =====================================
 
         [HttpPut("Actualizar")]
-        public async Task<ActionResult> Actualizar(
-            UpdateTblPEvaluacionDTO evaluacion)
+        public async Task<ActionResult> Actualizar(UpdateTblPEvaluacionDTO evaluacion)
         {
             try
             {
                 await _tblPEvaluacionService.Actualizar(evaluacion);
             }
+            catch (PostgresException pgEx) // Captura específica de PostgreSQL
+            {
+                return BadRequest(new { message = pgEx.MessageText });
+            }
             catch (Exception ex)
             {
-                return StatusCode(500, new
+                if (ex.InnerException is PostgresException innerPgEx)
                 {
-                    message = ex.Message
-                });
+                    return BadRequest(new { message = innerPgEx.MessageText });
+                }
+
+                return BadRequest(new { message = ex.Message });
             }
 
             await NotificarCambiosAsync();
@@ -85,13 +96,11 @@ namespace ProyectoFinal.Controllers
         // =====================================
 
         [HttpDelete("Eliminar")]
-        public async Task<ActionResult> Eliminar(
-            [FromBody] DeleteTblPEvaluacionDTO dto)
+        public async Task<ActionResult> Eliminar([FromBody] DeleteTblPEvaluacionDTO dto)
         {
             try
             {
-                await _tblPEvaluacionService.Eliminar(
-                    dto.lPEvaluacion_id);
+                await _tblPEvaluacionService.Eliminar(dto.lPEvaluacion_id);
             }
             catch (Exception ex)
             {
@@ -114,20 +123,17 @@ namespace ProyectoFinal.Controllers
         // =====================================
 
         [HttpGet("ObtenerPorId/{id}")]
-        public async Task<IActionResult> ObtenerPorId(
-            [FromRoute] int id)
+        public async Task<IActionResult> ObtenerPorId([FromRoute] int id)
         {
             try
             {
-                var result =
-                    await _tblPEvaluacionService.ObtenerPorId(id);
+                var result = await _tblPEvaluacionService.ObtenerPorId(id);
 
                 if (result == null)
                 {
                     return NotFound(new
                     {
-                        message =
-                            $"No se encontró la evaluación con ID {id}"
+                        message = $"No se encontró la evaluación con ID {id}"
                     });
                 }
 
@@ -151,9 +157,7 @@ namespace ProyectoFinal.Controllers
         {
             try
             {
-                var evaluaciones =
-                    await _tblPEvaluacionService.ObtenerEvaluaciones();
-
+                var evaluaciones = await _tblPEvaluacionService.ObtenerEvaluaciones();
                 return Ok(evaluaciones);
             }
             catch (Exception ex)
@@ -173,8 +177,7 @@ namespace ProyectoFinal.Controllers
         {
             try
             {
-                await _notificador.NotificarAsync(
-                    "ParametrosEvaluacion");
+                await _notificador.NotificarAsync("ParametrosEvaluacion");
             }
             catch (Exception ex)
             {

@@ -64,5 +64,15 @@ namespace ProyectoFinal.Datos.Repository
             IEnumerable<TblPermisos> permisosResult = await _database.GetData<TblPermisos>("fn_tblpermisos_obtenertodos");
             return permisosResult.ToList();
         }
+
+        public async Task<List<TblPermisos>> ObtenerPorRol(int idRol)
+        {
+            IEnumerable<TblPermisos> permisosResult = await _database.GetData<TblPermisos>("fn_tblpermisos_obtenerporrol", new
+            {
+                p_lrol_id = idRol
+            });
+
+            return permisosResult.ToList();
+        }
     }
 }

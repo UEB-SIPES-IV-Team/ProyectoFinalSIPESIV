@@ -22,10 +22,6 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // CREAR ÁREA
-        // =====================================
-
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
             CreateTblAreaDTO area)

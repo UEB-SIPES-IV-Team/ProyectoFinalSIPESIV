@@ -61,6 +61,7 @@ namespace ProyectoFinal.Negocio.Services
                 lPermisos_id = result.lPermisos_id,
                 lRol_id = result.lRol_id,
                 lProgram_id = result.lProgram_id,
+                sProgram_nm = result.sProgram_nm,
                 insertar = result.insertar,
                 actualizar = result.actualizar,
                 consultar = result.consultar,
@@ -80,6 +81,7 @@ namespace ProyectoFinal.Negocio.Services
                     lPermisos_id = permiso.lPermisos_id,
                     lRol_id = permiso.lRol_id,
                     lProgram_id = permiso.lProgram_id,
+                    sProgram_nm = permiso.sProgram_nm,
                     insertar = permiso.insertar,
                     actualizar = permiso.actualizar,
                     consultar = permiso.consultar,
@@ -91,6 +93,22 @@ namespace ProyectoFinal.Negocio.Services
             return permisosDTO;
         }
 
-     
+        public async Task<List<TblPermisosReadDto>> ObtenerPorRol(int idRol)
+        {
+            var permisos = await _tblPermisosRepository.ObtenerPorRol(idRol);
+
+            return permisos.Select(p => new TblPermisosReadDto
+            {
+                lPermisos_id = p.lPermisos_id,
+                lRol_id = p.lRol_id,
+                lProgram_id = p.lProgram_id,
+                sProgram_nm = p.sProgram_nm,
+                insertar = p.insertar,
+                actualizar = p.actualizar,
+                consultar = p.consultar,
+                eliminar = p.eliminar
+            }).ToList();
+        }
+
     }
 }

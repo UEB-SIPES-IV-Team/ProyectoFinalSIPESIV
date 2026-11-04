@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using ProyectoFinal.Negocio.DTOs;
 using ProyectoFinal.Negocio.Services;
@@ -8,6 +9,7 @@ using System.Text;
 
 namespace ProyectoFinal.Controllers
 {
+   
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase

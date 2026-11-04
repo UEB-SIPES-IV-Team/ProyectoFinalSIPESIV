@@ -182,5 +182,11 @@ namespace ProyectoFinal.Controllers
                     "No se pudo enviar la notificación SignalR del módulo Permisos.");
             }
         }
+        [HttpGet("ObtenerPorRol/{idRol}")]
+        public async Task<IActionResult> ObtenerPorRol(int idRol)
+        {
+            var permisos = await _tblPermisosService.ObtenerPorRol(idRol);
+            return Ok(permisos);
+        }
     }
 }

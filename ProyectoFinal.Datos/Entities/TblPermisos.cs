@@ -9,6 +9,7 @@ namespace ProyectoFinal.Datos.Entities
         public int lPermisos_id { get; set; }
         public int lRol_id { get; set; }
         public int lProgram_id { get; set; }
+        public string sProgram_nm { get; set; }
         public bool insertar { get; set; }
         public bool actualizar { get; set; }
         public bool consultar { get; set; }

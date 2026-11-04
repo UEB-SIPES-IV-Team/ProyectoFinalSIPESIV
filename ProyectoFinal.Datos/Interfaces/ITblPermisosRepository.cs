@@ -12,5 +12,7 @@ namespace ProyectoFinal.Datos.Interfaces
         public Task<List<TblPermisos>> ObtenerTodos();
         public Task Actualizar(TblPermisos permisos);
         public Task Eliminar(int idPermisos);
+
+        public Task<List<TblPermisos>> ObtenerPorRol(int idRol);
     }
 }

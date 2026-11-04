@@ -26,12 +26,9 @@ namespace ProyectoFinal.Datos.Repository
                     p_spersona_aps = entidad.sPersona_aps,
                     p_spersona_email = entidad.sPersona_email,
                     p_spersona_telf = entidad.sPersona_telf,
-                    p_spersona_tipo_persona =
-                        entidad.sPersona_tipo_persona,
                     p_spersona_sexo = entidad.sPersona_sexo,
                     p_spersona_ci = entidad.sPersona_ci,
-                    p_spersona_fecha_nacimiento =
-                        entidad.dPersona_fecha_nacimiento
+                    p_spersona_fecha_nacimiento = entidad.dPersona_fecha_nacimiento
                 });
         }
 
@@ -48,11 +45,9 @@ namespace ProyectoFinal.Datos.Repository
                     p_spersona_aps = persona.sPersona_aps,
                     p_spersona_email = persona.sPersona_email,
                     p_spersona_telf = persona.sPersona_telf,
-                    p_spersona_tipo_persona = persona.sPersona_tipo_persona,
                     p_spersona_sexo = persona.sPersona_sexo,
                     p_spersona_ci = persona.sPersona_ci,
-                    p_dpersona_fecha_nacimiento =
-                        persona.dPersona_fecha_nacimiento
+                    p_dpersona_fecha_nacimiento =persona.dPersona_fecha_nacimiento
                 });
         }
 
