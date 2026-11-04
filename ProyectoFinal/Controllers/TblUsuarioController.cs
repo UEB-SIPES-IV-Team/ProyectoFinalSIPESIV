@@ -8,7 +8,6 @@ using ProyectoFinal.Services;
 namespace ProyectoFinal.Controllers
 {
     [ApiController]
-    [Authorize(Roles = "Superadministrador")]
     [Route("api/[controller]")]
     public class TblUsuarioController : ControllerBase
     {
@@ -78,7 +77,6 @@ namespace ProyectoFinal.Controllers
         // =====================================
         // ELIMINAR
         // =====================================
-
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(int idUsuario)
         {
@@ -95,7 +93,7 @@ namespace ProyectoFinal.Controllers
         // =====================================
         // CREAR
         // =====================================
-
+        [Authorize(Roles = "Administrador")]
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
             TblUsuarioCreateDto usuario)
