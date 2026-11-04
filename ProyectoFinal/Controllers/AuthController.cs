@@ -9,7 +9,6 @@ using System.Text;
 
 namespace ProyectoFinal.Controllers
 {
-   
     [ApiController]
     [Route("api/[controller]")]
     public class AuthController : ControllerBase
@@ -26,76 +25,88 @@ namespace ProyectoFinal.Controllers
         }
 
         [HttpPost("Login")]
-        public async Task<IActionResult> Login(
-            [FromBody] LoginRequestDto request)
+        public async Task<IActionResult> Login([FromBody] LoginRequestDto request)
         {
-            var usuario = await _authService.ValidarCredenciales(
-                request.Username,
-                request.Password
-            );
-
-            if (usuario == null)
+            try
             {
-                return Unauthorized(new
+                var usuario = await _authService.ValidarCredenciales(
+                    request.Username,
+                    request.Password
+                );
+
+                if (usuario == null)
                 {
-                    message = "Usuario o contraseña incorrectos."
+                    return Unauthorized(new
+                    {
+                        message = "Usuario o contraseña incorrectos."
+                    });
+                }
+
+                // Asignación de Rol
+                string rol = usuario.lRol_id == 1
+                    ? "Superadministrador"
+                    : "Administrador";
+
+                // Creación de Claims para el JWT
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.NameIdentifier, usuario.lUsuario_id.ToString()),
+                    new Claim(ClaimTypes.Name, usuario.sUsername),
+                    new Claim(ClaimTypes.Role, rol)
+                };
+
+                var jwtKey = _configuration["Jwt:Key"]
+                    ?? throw new InvalidOperationException("Falta configurar Jwt:Key en appsettings.json.");
+
+                var securityKey = new SymmetricSecurityKey(
+                    Encoding.UTF8.GetBytes(jwtKey)
+                );
+
+                var credentials = new SigningCredentials(
+                    securityKey,
+                    SecurityAlgorithms.HmacSha256
+                );
+
+                var expiration = DateTime.UtcNow.AddHours(2);
+
+                var token = new JwtSecurityToken(
+                    issuer: _configuration["Jwt:Issuer"],
+                    audience: _configuration["Jwt:Audience"],
+                    claims: claims,
+                    expires: expiration,
+                    signingCredentials: credentials
+                );
+
+                var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+                // CORRECCIÓN 1: Estructura anidada con el objeto "usuario" para la app WPF
+                return Ok(new
+                {
+                    message = "Inicio de sesión exitoso.",
+                    token = tokenString,
+                    expiresAt = expiration,
+                    usuario = new
+                    {
+                        id = usuario.lUsuario_id,
+                        username = usuario.sUsername,
+                        rol = rol,
+                        lRol_id = usuario.lRol_id,
+                        rolId = usuario.lRol_id
+                    }
                 });
             }
+            catch (Exception ex)
+            {
+                // CORRECCIÓN 2: Captura del error interno para revelar la causa real del 500
+                string detalleError = ex.InnerException != null
+                    ? $"{ex.Message} -> {ex.InnerException.Message}"
+                    : ex.Message;
 
-            //string rol = usuario.lRol_id == 1
-            //    ? "Superadministrador"
-            //    : "Administrador";
-
-            //var claims = new List<Claim>
-            //{
-            //    new Claim(
-            //        ClaimTypes.NameIdentifier,
-            //        usuario.lUsuario_id.ToString()
-            //    ),
-            //    new Claim(ClaimTypes.Name, usuario.sUsername),
-            //    new Claim(ClaimTypes.Role, rol)
-            //};
-
-            //var jwtKey = _configuration["Jwt:Key"]
-            //    ?? throw new InvalidOperationException(
-            //        "Falta configurar Jwt:Key."
-            //    );
-
-            //var securityKey = new SymmetricSecurityKey(
-            //    Encoding.UTF8.GetBytes(jwtKey)
-            //);
-
-            //var credentials = new SigningCredentials(
-            //    securityKey,
-            //    SecurityAlgorithms.HmacSha256
-            //);
-
-            //var expiration = DateTime.UtcNow.AddHours(2);
-
-            //var token = new JwtSecurityToken(
-            //    issuer: _configuration["Jwt:Issuer"],
-            //    audience: _configuration["Jwt:Audience"],
-            //    claims: claims,
-            //    expires: expiration,
-            //    signingCredentials: credentials
-            //);
-
-            //var tokenString = new JwtSecurityTokenHandler()
-            //    .WriteToken(token);
-
-            //return Ok(new
-            //{
-            //    message = "Inicio de sesión exitoso.",
-            //    token = tokenString,
-            //    expiresAt = expiration,
-            //    usuario = new
-            //    {
-            //        id = usuario.lUsuario_id,
-            //        username = usuario.sUsername,
-            //        rol = rol
-            //    }
-            //});
-            return Ok(usuario);
+                return StatusCode(500, new
+                {
+                    message = $"Error en backend: {detalleError}"
+                });
+            }
         }
     }
 }
