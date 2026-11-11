@@ -24,9 +24,7 @@ namespace ProyectoFinal.Controllers
             _logger = logger;
         }
 
-        // =====================================
-        // OBTENER TODOS LOS PROGRAMAS
-        // =====================================
+       
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<List<ReadTblProgramDTO>>> ObtenerTodos()
@@ -47,9 +45,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER PROGRAMA POR ID
-        // =====================================
+      
 
         [HttpGet("ObtenerPorId/{idProgram}")]
         public async Task<ActionResult<ReadTblProgramDTO>> ObtenerPorId(
@@ -79,10 +75,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // CREAR PROGRAMA
-        // =====================================
-
+       
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
             CreateTblProgramDTO program)
@@ -107,9 +100,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ACTUALIZAR PROGRAMA
-        // =====================================
+      
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -135,9 +126,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ELIMINAR PROGRAMA
-        // =====================================
+       
 
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
@@ -164,9 +153,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // NOTIFICAR CAMBIOS POR SIGNALR
-        // =====================================
+        
 
         private async Task NotificarCambiosAsync()
         {

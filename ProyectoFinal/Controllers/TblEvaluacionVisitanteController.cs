@@ -93,7 +93,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // 🟢 1. OBTENER RANKING Y PODIO DE PROYECTOS POR EVENTO (ORDENADO DE MAYOR A MENOR)
+        
         [HttpGet("ObtenerRanking/{idEvento}")]
         public async Task<ActionResult> ObtenerRanking(int idEvento)
         {
@@ -108,7 +108,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // 🟢 2. OBTENER MOVIMIENTOS Y VOTOS RECIENTES POR EVENTO
+       
         [HttpGet("ObtenerRecientes/{idEvento}")]
         public async Task<ActionResult> ObtenerRecientes(int idEvento)
         {
@@ -123,7 +123,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // 🟢 OBTENER EVALUACIÓN PREVIA POR VISITANTE Y PROYECTO
+       
         [HttpGet("ObtenerPorVisitanteYProyecto/{idVisitante}/{idProyecto}")]
         public async Task<ActionResult> ObtenerPorVisitanteYProyecto(int idVisitante, int idProyecto)
         {

@@ -126,7 +126,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // ENDPOINT CORREGIDO PARA OBTENER PROYECTOS POR EVENTO
+      
         [HttpGet("ObtenerPorEvento/{eventoId}")]
         public async Task<ActionResult> ObtenerPorEvento(int eventoId)
         {

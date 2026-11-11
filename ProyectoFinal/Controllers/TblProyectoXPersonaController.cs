@@ -24,9 +24,7 @@ namespace ProyectoFinal.Controllers
             _logger = logger;
         }
 
-        // =====================================
-        // CREAR RELACIÓN PROYECTO - PERSONA
-        // =====================================
+       
 
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
@@ -53,9 +51,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ACTUALIZAR RELACIÓN PROYECTO - PERSONA
-        // =====================================
+        
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -82,9 +78,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ELIMINAR RELACIÓN PROYECTO - PERSONA
-        // =====================================
+        
 
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
@@ -111,9 +105,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // OBTENER RELACIÓN POR ID
-        // =====================================
+        
 
         [HttpGet("ObtenerPorId/{idProyectoXPersona}")]
         public async Task<ActionResult> ObtenerPorId(
@@ -145,9 +137,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODAS LAS RELACIONES
-        // =====================================
+      
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerProyectosXPersona()
@@ -168,9 +158,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // NOTIFICAR CAMBIOS POR SIGNALR
-        // =====================================
+      
 
         private async Task NotificarCambiosAsync()
         {

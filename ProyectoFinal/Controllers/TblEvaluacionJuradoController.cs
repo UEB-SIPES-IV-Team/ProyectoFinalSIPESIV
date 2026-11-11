@@ -21,9 +21,7 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // CREAR EVALUACIÓN DE JURADO
-        // =====================================
+     
 
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
@@ -50,9 +48,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ACTUALIZAR EVALUACIÓN DE JURADO
-        // =====================================
+     
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -79,9 +75,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ELIMINAR EVALUACIÓN DE JURADO
-        // =====================================
 
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
@@ -108,9 +101,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER EVALUACIÓN POR ID
-        // =====================================
 
         [HttpGet("ObtenerPorId/{idEvaluacionJurado}")]
         public async Task<ActionResult> ObtenerPorId(
@@ -142,9 +132,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODAS LAS EVALUACIONES
-        // =====================================
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerTodos()

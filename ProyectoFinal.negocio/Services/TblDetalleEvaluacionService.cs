@@ -5,7 +5,7 @@ using ProyectoFinal.Negocio.DTOs.TblDetalleEvaluacion;
 using ProyectoFinal.Negocio.Interfaces;
 using System;
 using System.Collections.Generic;
-using System.Linq; // AGREGADO: Necesario para .Select() y .ToList()
+using System.Linq; 
 using System.Threading.Tasks;
 
 namespace ProyectoFinal.Negocio.Services

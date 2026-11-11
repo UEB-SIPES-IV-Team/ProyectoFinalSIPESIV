@@ -25,9 +25,7 @@ namespace ProyectoFinal.Controllers
             _logger = logger;
         }
 
-        // =====================================
-        // OBTENER TODOS LOS PERMISOS
-        // =====================================
+       
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<List<TblPermisosReadDto>>> ObtenerObtenerTodos()
@@ -48,9 +46,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER PERMISO POR ID
-        // =====================================
+       
 
         [HttpGet("ObtenerPorId/{idPermisos}")]
         public async Task<ActionResult<TblPermisosReadDto>> ObtenerPorId(
@@ -80,9 +76,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // CREAR PERMISO
-        // =====================================
 
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
@@ -108,10 +101,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ACTUALIZAR PERMISO
-        // =====================================
-
+        
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
             TblPermisosUpdateDto permisos)
@@ -136,9 +126,6 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ELIMINAR PERMISO
-        // =====================================
 
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
@@ -165,9 +152,6 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // NOTIFICAR CAMBIOS POR SIGNALR
-        // =====================================
 
         private async Task NotificarCambiosAsync()
         {

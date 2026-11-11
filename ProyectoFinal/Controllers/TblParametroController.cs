@@ -21,10 +21,7 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // CREAR PARÁMETRO
-        // =====================================
-
+       
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
             CreateTblParametroDTO parametro)
@@ -50,9 +47,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ACTUALIZAR PARÁMETRO
-        // =====================================
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -79,9 +73,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ELIMINAR PARÁMETRO
-        // =====================================
 
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
@@ -109,9 +100,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER PARÁMETRO POR ID
-        // =====================================
+     
 
         [HttpGet("ObtenerPorId/{idParametro}")]
         public async Task<ActionResult> ObtenerPorId(
@@ -143,9 +132,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODOS LOS PARÁMETROS
-        // =====================================
+       
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerParametros()

@@ -21,9 +21,7 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // CREAR INSTITUCIÓN
-        // =====================================
+      
 
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
@@ -49,9 +47,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ACTUALIZAR INSTITUCIÓN
-        // =====================================
+        
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -77,9 +73,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ELIMINAR INSTITUCIÓN
-        // =====================================
+       
 
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
@@ -106,9 +100,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER INSTITUCIÓN POR ID
-        // =====================================
+       
 
         [HttpGet("ObtenerPorId/{idInstitucion}")]
         public async Task<ActionResult> ObtenerPorId(
@@ -140,9 +132,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODAS LAS INSTITUCIONES
-        // =====================================
+     
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerInstituciones()

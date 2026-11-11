@@ -30,7 +30,7 @@ namespace ProyectoFinal.Negocio.Services
 
             bool esPasswordValida = false;
 
-            // 1. Intentar validar usando el verificador de Hash de ASP.NET Identity
+           
             try
             {
                 var resultado = _passwordHasher.VerifyHashedPassword(
@@ -47,7 +47,7 @@ namespace ProyectoFinal.Negocio.Services
                 esPasswordValida = false;
             }
 
-            // 2. Si falló el Hash, verificar si la contraseña en la BD está en texto plano
+           
             if (!esPasswordValida && usuario.sPassword == password)
             {
                 esPasswordValida = true;

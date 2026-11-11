@@ -106,7 +106,7 @@ namespace ProyectoFinal.Datos.Repository
 
             if (result == null) return new List<TblEvaluacionVisitante>();
 
-            // 🟢 ORDENA PRIMERO POR FECHA DE EVALUACIÓN DESCENDENTE
+          
             return result
                 .Where(x => x != null && x.lProyecto_id > 0)
                 .OrderByDescending(x => x.sEvaluacion_fecha)

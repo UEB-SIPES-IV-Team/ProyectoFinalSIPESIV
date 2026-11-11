@@ -21,9 +21,7 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // CREAR UNIDAD ORGANIZATIVA
-        // =====================================
+       
 
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
@@ -51,9 +49,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ACTUALIZAR UNIDAD ORGANIZATIVA
-        // =====================================
+        
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -81,9 +77,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ELIMINAR UNIDAD ORGANIZATIVA
-        // =====================================
+      
 
         [HttpDelete("Eliminar")]
         public async Task<IActionResult> Eliminar(
@@ -111,10 +105,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODAS LAS UNIDADES
-        // =====================================
-
+      
         [HttpGet("ObtenerTodos")]
         public async Task<IActionResult> ObtenerUnidadesOrganizativas()
         {
@@ -134,9 +125,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER UNIDAD POR ID
-        // =====================================
+       
 
         [HttpGet("ObtenerPorId/{id}")]
         public async Task<IActionResult> ObtenerPorId(int id)

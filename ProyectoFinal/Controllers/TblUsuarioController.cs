@@ -22,9 +22,7 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // OBTENER TODOS
-        // =====================================
+      
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<List<TblUsuarioReadDto>>> ObtenerTodos()
@@ -44,10 +42,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER POR ID
-        // =====================================
-
+       
         [HttpGet("ObtenerPorId/{idUsuario}")]
         public async Task<ActionResult> ObtenerPorId(int idUsuario)
         {
@@ -74,9 +69,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ELIMINAR
-        // =====================================
+      
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(int idUsuario)
         {
@@ -90,9 +83,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // CREAR
-        // =====================================
+  
         [Authorize(Roles = "Administrador")]
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
@@ -108,9 +99,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ACTUALIZAR
-        // =====================================
+    
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(

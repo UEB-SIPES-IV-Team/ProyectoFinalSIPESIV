@@ -24,10 +24,6 @@ namespace ProyectoFinal.Controllers
             _logger = logger;
         }
 
-        // =====================================
-        // CREAR DETALLE DE EVALUACIÓN
-        // =====================================
-
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
             CreateTblDetalleEvaluacionDTO detalleEvaluacion)
@@ -52,10 +48,6 @@ namespace ProyectoFinal.Controllers
                 message = "Detalle de evaluación creado correctamente"
             });
         }
-
-        // =====================================
-        // ACTUALIZAR DETALLE DE EVALUACIÓN
-        // =====================================
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -82,9 +74,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ELIMINAR DETALLE DE EVALUACIÓN
-        // =====================================
+ 
 
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
@@ -111,9 +101,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // OBTENER DETALLE POR ID
-        // =====================================
+      
 
         [HttpGet("ObtenerPorId/{idDetalleEvaluacion}")]
         public async Task<ActionResult> ObtenerPorId(
@@ -145,9 +133,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODOS LOS DETALLES
-        // =====================================
+       
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerDetallesEvaluacion()
@@ -169,9 +155,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // NOTIFICAR CAMBIOS POR SIGNALR
-        // =====================================
 
         private async Task NotificarEvaluacionesAsync()
         {

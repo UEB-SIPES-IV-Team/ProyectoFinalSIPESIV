@@ -61,7 +61,7 @@ namespace ProyectoFinal.Datos.Repository
             return result.ToList();
         }
 
-        // 🟢 MÉTODO CORREGIDO: Llama a la función almacenada de PostgreSQL
+        /
         public async Task<List<TblProyectoXPersona>> ObtenerIntegrantesPorProyectoAsync(long idProyecto)
         {
             IEnumerable<TblProyectoXPersona> result = await _database.GetData<TblProyectoXPersona>(

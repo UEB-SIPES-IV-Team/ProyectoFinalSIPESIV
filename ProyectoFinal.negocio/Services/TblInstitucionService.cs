@@ -26,7 +26,7 @@ namespace ProyectoFinal.Negocio.Services
                 sInstitucion_tipo = institucion.sInstitucion_tipo,
                 sInstitucion_nm = institucion.sInstitucion_nm,
                 sInstitucion_slug = institucion.sInstitucion_slug,
-                bInstitucion_estado = institucion.bInstitucion_estado // <--- AGREGAR ESTA LÍNEA
+                bInstitucion_estado = institucion.bInstitucion_estado 
             };
 
             int resultado = await _tblInstitucionRepository.Actualizar(institucionActualizada);
@@ -88,7 +88,7 @@ namespace ProyectoFinal.Negocio.Services
                 sInstitucion_tipo = instit.sInstitucion_tipo,
                 sInstitucion_nm = instit.sInstitucion_nm,
                 sInstitucion_slug = instit.sInstitucion_slug,
-                bInstitucion_estado = instit.bInstitucion_estado // <--- ¡AQUÍ FALTABA ESTA LÍNEA!
+                bInstitucion_estado = instit.bInstitucion_estado 
             }).ToList();
         }
     }

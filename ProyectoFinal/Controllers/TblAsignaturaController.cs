@@ -21,10 +21,6 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // CREAR ASIGNATURA
-        // =====================================
-
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
             CreateTblAsignaturaDTO asignatura)
@@ -48,10 +44,6 @@ namespace ProyectoFinal.Controllers
                 });
             }
         }
-
-        // =====================================
-        // ACTUALIZAR ASIGNATURA
-        // =====================================
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -77,10 +69,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ELIMINAR ASIGNATURA
-        // =====================================
-
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
             [FromBody] DeleteTblAsignaturaDTO dto)
@@ -105,10 +93,6 @@ namespace ProyectoFinal.Controllers
                 });
             }
         }
-
-        // =====================================
-        // OBTENER ASIGNATURA POR ID
-        // =====================================
 
         [HttpGet("ObtenerPorId/{idAsignatura}")]
         public async Task<ActionResult> ObtenerPorId(
@@ -140,9 +124,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODAS LAS ASIGNATURAS
-        // =====================================
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerAsignaturas()

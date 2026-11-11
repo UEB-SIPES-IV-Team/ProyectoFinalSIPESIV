@@ -21,10 +21,7 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // CREAR SUBPARÁMETRO
-        // =====================================
-
+        
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
             CreateTblSubParametroDTO subParametro)
@@ -50,9 +47,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ACTUALIZAR SUBPARÁMETRO
-        // =====================================
+      
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -79,9 +74,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ELIMINAR SUBPARÁMETRO
-        // =====================================
+       
 
         [HttpDelete("Eliminar")]
         public async Task<IActionResult> Eliminar(
@@ -109,9 +102,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODOS
-        // =====================================
+       
 
         [HttpGet("ObtenerTodos")]
         public async Task<IActionResult> ObtenerTodos()
@@ -132,9 +123,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER POR ID
-        // =====================================
+       
 
         [HttpGet("ObtenerPorId/{idSubParametro}")]
         public async Task<IActionResult> ObtenerPorId(
@@ -165,9 +154,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TIPOS DE ÁREA
-        // =====================================
+       
 
         [HttpGet("tipo-area")]
         public async Task<IActionResult> ObtenerTipoArea()
@@ -178,9 +165,6 @@ namespace ProyectoFinal.Controllers
             return Ok(resultado);
         }
 
-        // =====================================
-        // OBTENER TIPOS DE UNIDAD
-        // =====================================
 
         [HttpGet("tipo-unidad")]
         public async Task<IActionResult> ObtenerSubParametrosTipoUnidad()
@@ -200,9 +184,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TIPOS DE INSTITUCIÓN
-        // =====================================
+        
 
         [HttpGet("tipo-institucion")]
         public async Task<IActionResult> ObtenerSubParametrosTipoInstitucion()

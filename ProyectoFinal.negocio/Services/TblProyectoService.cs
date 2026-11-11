@@ -81,7 +81,7 @@ namespace ProyectoFinal.Negocio.Services
                 {
                     lProyecto_id = proyecto.lProyecto_id,
                     lAsignatura_id = proyecto.lAsignatura_id,
-                    lAsignatura_nm = proyecto.lAsignatura_nm, // 🟢 SÍ estaba mapeado
+                    lAsignatura_nm = proyecto.lAsignatura_nm,
                     lEvento_id = proyecto.lEvento_id,
                     sProyecto_nm = proyecto.sProyecto_nm,
                     sProyecto_desc = proyecto.sProyecto_desc,

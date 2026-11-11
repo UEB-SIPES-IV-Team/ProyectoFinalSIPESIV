@@ -31,7 +31,7 @@ namespace ProyectoFinal.Datos.Repository
 
         public async Task<int> Actualizar(TblAsignatura asignatura)
         {
-            // Corregido: Objeto anónimo con los 5 parámetros necesarios (incluyendo bEstado)
+           
             IEnumerable<int> resultado = await _database.GetData<int>("fn_tblasignatura_actualizar", new
             {
                 lAsignatura_id = asignatura.lAsignatura_id,

@@ -2,7 +2,7 @@
 using ProyectoFinal.Negocio.DTOs.TblPEvaluacion;
 using ProyectoFinal.Negocio.Interfaces;
 using ProyectoFinal.Services;
-using Npgsql; // Opcional: si utilizas el proveedor de Npgsql
+using Npgsql; 
 
 namespace ProyectoFinal.Controllers
 {
@@ -24,9 +24,7 @@ namespace ProyectoFinal.Controllers
             _logger = logger;
         }
 
-        // =====================================
-        // CREAR PARÁMETRO DE EVALUACIÓN
-        // =====================================
+     
 
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(CreateTblPEvaluacionDTO evaluacion)
@@ -58,9 +56,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ACTUALIZAR PARÁMETRO DE EVALUACIÓN
-        // =====================================
+
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(UpdateTblPEvaluacionDTO evaluacion)
@@ -91,9 +87,6 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ELIMINAR PARÁMETRO DE EVALUACIÓN
-        // =====================================
 
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar([FromBody] DeleteTblPEvaluacionDTO dto)
@@ -118,9 +111,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // OBTENER PARÁMETRO POR ID
-        // =====================================
+       
 
         [HttpGet("ObtenerPorId/{id}")]
         public async Task<IActionResult> ObtenerPorId([FromRoute] int id)
@@ -148,9 +139,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODOS LOS PARÁMETROS
-        // =====================================
+       
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerEvaluaciones()
@@ -169,9 +158,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // NOTIFICAR CAMBIOS POR SIGNALR
-        // =====================================
 
         private async Task NotificarCambiosAsync()
         {

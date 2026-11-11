@@ -24,9 +24,7 @@ namespace ProyectoFinal.Controllers
             _logger = logger;
         }
 
-        // =====================================
-        // CREAR VISITANTE
-        // =====================================
+       
 
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
@@ -52,9 +50,6 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ACTUALIZAR VISITANTE
-        // =====================================
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -80,9 +75,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ELIMINAR VISITANTE
-        // =====================================
+       
 
         [HttpDelete("Eliminar")]
         public async Task<IActionResult> Eliminar(
@@ -109,9 +102,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // OBTENER VISITANTE POR ID
-        // =====================================
+       
 
         [HttpGet("ObtenerPorId/{idVisitante}")]
         public async Task<ActionResult> ObtenerPorId(
@@ -143,9 +134,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODOS LOS VISITANTES
-        // =====================================
+       
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerVisitantes()
@@ -166,9 +155,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // NOTIFICAR CAMBIOS POR SIGNALR
-        // =====================================
+       
 
         private async Task NotificarCambiosAsync()
         {
@@ -187,7 +174,7 @@ namespace ProyectoFinal.Controllers
         [HttpGet("ObtenerPorCi")]
         public async Task<IActionResult> ObtenerPorCi([FromQuery] string ci, [FromQuery] int eventoId)
         {
-            // Ver los valores exactos que llegan a la API
+      
             Console.WriteLine($"===> Consulta recibida en API -> CI: '{ci}', EventoId: {eventoId}");
 
             var visitante = await _tblVisitanteService.ObtenerPorCiYEvento(ci, eventoId);

@@ -21,9 +21,7 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // CREAR PREMIACIÓN
-        // =====================================
+       
 
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
@@ -49,9 +47,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ACTUALIZAR PREMIACIÓN
-        // =====================================
+        
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -77,9 +73,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ELIMINAR PREMIACIÓN
-        // =====================================
+       
 
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
@@ -106,9 +100,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER PREMIACIÓN POR ID
-        // =====================================
+        
 
         [HttpGet("ObtenerPorId/{idPremiacion}")]
         public async Task<ActionResult> ObtenerPorId(
@@ -140,10 +132,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODAS LAS PREMIACIONES
-        // =====================================
-
+       
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerPremiaciones()
         {

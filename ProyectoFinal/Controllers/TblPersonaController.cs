@@ -21,9 +21,7 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // CREAR PERSONA
-        // =====================================
+        
 
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
@@ -49,9 +47,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ACTUALIZAR PERSONA
-        // =====================================
+       
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
@@ -77,10 +73,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ELIMINAR PERSONA
-        // =====================================
-
+        
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
             [FromBody] DeleteTblPersonaDTO dto)
@@ -105,9 +98,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER PERSONA POR ID
-        // =====================================
+        
 
         [HttpGet("ObtenerPorId/{idPersona}")]
         public async Task<IActionResult> ObtenerPorId(
@@ -137,10 +128,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // OBTENER TODAS LAS PERSONAS
-        // =====================================
-
+        
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerTodos()
         {

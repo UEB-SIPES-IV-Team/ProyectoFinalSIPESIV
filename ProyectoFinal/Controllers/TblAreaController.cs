@@ -46,10 +46,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ACTUALIZAR ÁREA
-        // =====================================
-
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
             UpdateTblAreaDTO area)
@@ -74,10 +70,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // ELIMINAR ÁREA
-        // =====================================
-
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
             [FromBody] DeleteTblAreaDTO dto)
@@ -101,10 +93,6 @@ namespace ProyectoFinal.Controllers
                 });
             }
         }
-
-        // =====================================
-        // OBTENER ÁREA POR ID
-        // =====================================
 
         [HttpGet("ObtenerPorId/{idArea}")]
         public async Task<ActionResult> ObtenerPorId(
@@ -132,10 +120,6 @@ namespace ProyectoFinal.Controllers
                 });
             }
         }
-
-        // =====================================
-        // OBTENER TODAS LAS ÁREAS
-        // =====================================
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerAreas()

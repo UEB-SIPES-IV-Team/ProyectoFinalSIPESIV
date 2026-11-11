@@ -23,9 +23,7 @@ namespace ProyectoFinal.Controllers
             _notificadorCambios = notificadorCambios;
         }
 
-        // =========================================
-        // CREAR EVENTO
-        // =========================================
+      
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(
             CreateTblEventoDTO evento)
@@ -51,9 +49,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =========================================
-        // ACTUALIZAR EVENTO
-        // =========================================
+       
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(
             UpdateTblEventoDTO evento)
@@ -79,9 +75,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =========================================
-        // ELIMINAR EVENTO
-        // =========================================
+       
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
             [FromBody] DeleteTblEventoDTO dto)
@@ -108,9 +102,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =========================================
-        // OBTENER POR ID
-        // =========================================
+       
         [HttpGet("ObtenerPorId/{idEvento}")]
         public async Task<ActionResult> ObtenerPorId(
             int idEvento)
@@ -140,9 +132,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =========================================
-        // OBTENER TODOS
-        // =========================================
+  
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult> ObtenerEventos()
         {

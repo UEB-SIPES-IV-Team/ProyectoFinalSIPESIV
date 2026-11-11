@@ -79,7 +79,7 @@ namespace ProyectoFinal.Controllers
 
                 var tokenString = new JwtSecurityTokenHandler().WriteToken(token);
 
-                // CORRECCIÓN 1: Estructura anidada con el objeto "usuario" para la app WPF
+              
                 return Ok(new
                 {
                     message = "Inicio de sesión exitoso.",
@@ -97,7 +97,7 @@ namespace ProyectoFinal.Controllers
             }
             catch (Exception ex)
             {
-                // CORRECCIÓN 2: Captura del error interno para revelar la causa real del 500
+      
                 string detalleError = ex.InnerException != null
                     ? $"{ex.Message} -> {ex.InnerException.Message}"
                     : ex.Message;

@@ -21,9 +21,7 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-        // =====================================
-        // OBTENER TODOS
-        // =====================================
+      
 
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<List<ReadTblRolDTO>>> ObtenerTodos()
@@ -34,9 +32,7 @@ namespace ProyectoFinal.Controllers
             return Ok(roles);
         }
 
-        // =====================================
-        // OBTENER POR ID
-        // =====================================
+        
 
         [HttpGet("ObtenerPorId/{idRol}")]
         public async Task<ActionResult<ReadTblRolDTO>> ObtenerPorId(int idRol)
@@ -47,10 +43,7 @@ namespace ProyectoFinal.Controllers
             return Ok(rol);
         }
 
-        // =====================================
-        // ELIMINAR
-        // =====================================
-
+       
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(
             [FromBody] DeleteTblRolDTO dto)
@@ -75,10 +68,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-        // =====================================
-        // CREAR
-        // =====================================
-
         [HttpPost("Crear")]
         public async Task<ActionResult> Crear(CreateTblRolDTO rol)
         {
@@ -92,9 +81,7 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-        // =====================================
-        // ACTUALIZAR
-        // =====================================
+      
 
         [HttpPut("Actualizar")]
         public async Task<ActionResult> Actualizar(UpdateTblRolDTO rol)

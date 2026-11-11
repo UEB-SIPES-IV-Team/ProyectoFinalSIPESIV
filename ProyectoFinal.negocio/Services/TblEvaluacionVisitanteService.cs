@@ -111,9 +111,7 @@ namespace ProyectoFinal.Negocio.Services
             return EvaluacionVisitantesDTO;
         }
 
-        // =========================================================================
-        // 🟢 RANKING PODIO (0% - 100%)
-        // =========================================================================
+      
         public async Task<List<ProyectoRankingDTO>> ObtenerRanking(int idEvento)
         {
             try
@@ -136,7 +134,7 @@ namespace ProyectoFinal.Negocio.Services
 
                         int cantidadVisitantesUnicos = g.Select(x => x.lVisitante_id).Distinct().Count();
 
-                        // 🟢 Normalización: Estrellas (1-5) * 20 = 20% a 100%
+                      
                         decimal promedioEstrellas = (decimal)g.Average(e => e.sPuntaje);
                         decimal promedioPorcentaje = Math.Min(100m, Math.Round(promedioEstrellas * 20m, 1));
 
@@ -161,9 +159,7 @@ namespace ProyectoFinal.Negocio.Services
             }
         }
 
-        // =========================================================================
-        // 🟢 MOVIMIENTOS RECIENTES (ORDENADOS POR LA FECHA DEL VOTO MÁS RECIENTE)
-        // =========================================================================
+        
         public async Task<List<MovimientoItemDTO>> ObtenerRecientes(int idEvento)
         {
             try
@@ -188,7 +184,7 @@ namespace ProyectoFinal.Negocio.Services
                             ? ultimoVoto.sEvaluacion_desc.ToUpper()
                             : $"PROYECTO #{g.Key}";
 
-                        // 🟢 Promedio de estrellas (1-5) normalizado a %
+                       
                         double promedioEstrellas = g.Average(x => x.sPuntaje);
                         int porcentajePromedio = (int)Math.Min(100, Math.Round(promedioEstrellas * 20));
 
