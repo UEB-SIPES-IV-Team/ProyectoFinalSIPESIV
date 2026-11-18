@@ -61,7 +61,6 @@ namespace ProyectoFinal.Datos.Repository
             return result.ToList();
         }
 
-        /
         public async Task<List<TblProyectoXPersona>> ObtenerIntegrantesPorProyectoAsync(long idProyecto)
         {
             IEnumerable<TblProyectoXPersona> result = await _database.GetData<TblProyectoXPersona>(

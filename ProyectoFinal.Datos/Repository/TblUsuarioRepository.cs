@@ -78,5 +78,31 @@ namespace ProyectoFinal.Datos.Repository
 
             return resultado.FirstOrDefault();
         }
+        public async Task<PerfilUsuarioEntity?> ObtenerPerfil(int idUsuario)
+        {
+            IEnumerable<PerfilUsuarioEntity> resultado =
+                await _database.GetData<PerfilUsuarioEntity>(
+                    "fn_usuario_obtener_perfil",
+                    new
+                    {
+                        p_lusuario_id = idUsuario
+                    });
+
+            return resultado.FirstOrDefault();
+        }
+
+        public async Task<int> CambiarPassword(int idUsuario, string nuevoPassword)
+        {
+            IEnumerable<int> resultado =
+                await _database.GetData<int>(
+                    "fn_usuario_cambiar_password",
+                    new
+                    {
+                        p_lusuario_id = idUsuario,
+                        p_nuevo_password = nuevoPassword
+                    });
+
+            return resultado.FirstOrDefault();
+        }
     }
 }

@@ -12,5 +12,9 @@ namespace ProyectoFinal.Negocio.Interfaces
         public Task<List<TblUsuarioReadDto>> ObtenerTodos();
         public Task Actualizar(TblUsuarioUpdateDto usuario);
         public Task Eliminar(int idUsuario);
+
+        
+        public Task<PerfilUsuarioDto?> ObtenerPerfil(int idUsuario);
+        public Task<bool> CambiarPassword(int idUsuario, string passwordActual, string nuevaPassword);
     }
 }

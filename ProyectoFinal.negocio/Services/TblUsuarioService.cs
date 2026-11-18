@@ -117,5 +117,51 @@ namespace ProyectoFinal.Negocio.Services
 
             return usuariosDTO;
         }
+        public async Task<PerfilUsuarioDto?> ObtenerPerfil(int idUsuario)
+        {
+            var perfilEntity = await _tblUsuarioRepository.ObtenerPerfil(idUsuario);
+
+            if (perfilEntity == null)
+                return null;
+
+            return new PerfilUsuarioDto
+            {
+                lUsuario_id = perfilEntity.lUsuario_id,
+                lPersona_id = perfilEntity.lPersona_id,
+                sUsername = perfilEntity.sUsername,
+                sPersona_nm = perfilEntity.sPersona_nm,
+                sPersona_aps = perfilEntity.sPersona_aps,
+                sPersona_ci = perfilEntity.sPersona_ci,
+                sPersona_email = perfilEntity.sPersona_email,
+                sPersona_telf = perfilEntity.sPersona_telf,
+                sRol_nm = perfilEntity.sRol_nm
+            };
+        }
+
+        public async Task<bool> CambiarPassword(int idUsuario, string passwordActual, string nuevaPassword)
+        {
+            if (string.IsNullOrWhiteSpace(passwordActual) || string.IsNullOrWhiteSpace(nuevaPassword))
+                throw new ArgumentException("Las contraseñas no pueden estar vacías.");
+
+            var usuario = await _tblUsuarioRepository.ObtenerPorId(idUsuario);
+            if (usuario == null)
+                throw new Exception("Usuario no encontrado.");
+
+            // Verificar si la contraseña actual coincide con el hash guardado en la BD
+            var resultadoVerificacion = _passwordHasher.VerifyHashedPassword(
+                usuario,
+                usuario.sPassword,
+                passwordActual
+            );
+
+            if (resultadoVerificacion == PasswordVerificationResult.Failed)
+                return false;
+
+            // Generar el hash seguro para la nueva contraseña y guardarla
+            string nuevoPasswordHash = _passwordHasher.HashPassword(usuario, nuevaPassword);
+            int filasAfectadas = await _tblUsuarioRepository.CambiarPassword(idUsuario, nuevoPasswordHash);
+
+            return filasAfectadas > 0;
+        }
     }
 }

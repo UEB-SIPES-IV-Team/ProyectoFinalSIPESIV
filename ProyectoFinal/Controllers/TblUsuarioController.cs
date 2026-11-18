@@ -1,9 +1,10 @@
 ﻿
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Negocio.DTOs.TblUsuario;
 using ProyectoFinal.Negocio.Interfaces;
 using ProyectoFinal.Services;
+using System.Security.Claims;
 
 namespace ProyectoFinal.Controllers
 {
@@ -113,6 +114,54 @@ namespace ProyectoFinal.Controllers
             {
                 message = "Actualizado correctamente"
             });
+        }
+
+        [Authorize]
+        [HttpGet("MiPerfil")]
+        public async Task<ActionResult> ObtenerMiPerfil()
+        {
+            try
+            {
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (!int.TryParse(userIdClaim, out int idUsuario))
+                    return Unauthorized(new { message = "Token inválido o sin identificador de usuario." });
+
+                var perfil = await _tblUsuarioService.ObtenerPerfil(idUsuario);
+
+                if (perfil == null)
+                    return NotFound(new { message = "No se encontraron datos de perfil para este usuario." });
+
+                return Ok(perfil);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
+
+        [Authorize]
+        [HttpPut("CambiarPassword")]
+        public async Task<ActionResult> CambiarPassword([FromBody] CambiarPasswordDto dto)
+        {
+            try
+            {
+                var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (!int.TryParse(userIdClaim, out int idUsuario))
+                    return Unauthorized(new { message = "Token inválido." });
+
+                bool actualizado = await _tblUsuarioService.CambiarPassword(idUsuario, dto.PasswordActual, dto.NuevaPassword);
+
+                if (!actualizado)
+                    return BadRequest(new { message = "La contraseña actual es incorrecta." });
+
+                return Ok(new { message = "Contraseña actualizada correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
         }
     }
 }

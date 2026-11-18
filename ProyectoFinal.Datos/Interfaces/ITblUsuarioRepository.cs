@@ -13,5 +13,9 @@ namespace ProyectoFinal.Datos.Interfaces
         public Task<List<TblUsuario>> ObtenerTodos();
         public Task Actualizar(TblUsuario usuario);
         public Task Eliminar(int idUsuario);
+
+    
+        public Task<PerfilUsuarioEntity?> ObtenerPerfil(int idUsuario);
+        public Task<int> CambiarPassword(int idUsuario, string nuevoPassword);
     }
 }
