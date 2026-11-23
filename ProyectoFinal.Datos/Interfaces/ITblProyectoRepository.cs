@@ -14,7 +14,6 @@ namespace ProyectoFinal.Datos.Interfaces
         public Task Actualizar(TblProyecto proyecto);
         public Task Eliminar(int idProyecto);
         public Task<IEnumerable<TblProyecto>> ObtenerPorEventoAsync(int eventoId);
-
+        public Task<List<TblProyecto>> ObtenerPorVariasUnidadesYEventoActivo(int eventoId, int[] unidadesIds);
     }
 }
-

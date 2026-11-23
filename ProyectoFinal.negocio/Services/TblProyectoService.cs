@@ -102,7 +102,7 @@ namespace ProyectoFinal.Negocio.Services
             {
                 lProyecto_id = e.lProyecto_id,
                 lAsignatura_id = e.lAsignatura_id,
-                lAsignatura_nm = e.lAsignatura_nm, // 🟢 SÍ estaba mapeado
+                lAsignatura_nm = e.lAsignatura_nm, 
                 lEvento_id = e.lEvento_id,
                 sProyecto_nm = e.sProyecto_nm,
                 sProyecto_desc = e.sProyecto_desc,
@@ -110,6 +110,24 @@ namespace ProyectoFinal.Negocio.Services
                 sProyecto_estado = e.sProyecto_estado,
                 sProyecto_video = e.sProyecto_video
             });
+        }
+        public async Task<List<ProyectoPorUnidadDTO>> ObtenerPorVariasUnidadesYEventoActivo(int eventoId, int[] unidadesIds)
+        {
+            var entidades = await _tblProyectoRepository.ObtenerPorVariasUnidadesYEventoActivo(eventoId, unidadesIds);
+
+            return entidades.Select(e => new ProyectoPorUnidadDTO
+            {
+                lProyecto_id = e.lProyecto_id,
+                lAsignatura_id = e.lAsignatura_id,
+                lAsignatura_nm = e.lAsignatura_nm,
+                lEvento_id = e.lEvento_id,
+                sEvento_nm = e.sEvento_nm,
+                sProyecto_nm = e.sProyecto_nm,
+                sProyecto_desc = e.sProyecto_desc,
+                sProyecto_tipo = e.sProyecto_tipo,
+                sProyecto_estado = e.sProyecto_estado,
+                sProyecto_video = e.sProyecto_video
+            }).ToList();
         }
     }
 }

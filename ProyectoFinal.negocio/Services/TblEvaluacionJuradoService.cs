@@ -80,5 +80,9 @@ namespace ProyectoFinal.Negocio.Services
 
             return EvaluacionJuradosDTO;
         }
+        public async Task<List<TblEvaluacionJurado>> ObtenerPorJurado(int juradoId)
+        {
+            return await _tblEvaluacionJuradoRepository.ObtenerPorJurado(juradoId);
+        }
     }
 }

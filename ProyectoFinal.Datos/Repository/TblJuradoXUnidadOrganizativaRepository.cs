@@ -19,7 +19,7 @@ namespace ProyectoFinal.Datos.Repository
             {
                 ljurado_id = juradoXUnidad.lJurado_id,
                 levento_id = juradoXUnidad.lEvento_id,
-                luniversidadorganizativa_id = juradoXUnidad.lUniversidadOrganizativa_id
+                lunidadorganizativa_id = juradoXUnidad.lUnidadOrganizativa_id
             });
         }
 
@@ -30,7 +30,7 @@ namespace ProyectoFinal.Datos.Repository
                 p_ljuradoxfacultad_id = juradoXUnidad.lJuradoXFacultad_id,
                 p_ljurado_id = juradoXUnidad.lJurado_id,
                 p_levento_id = juradoXUnidad.lEvento_id,
-                p_lunidadorganizativa_id = juradoXUnidad.lUniversidadOrganizativa_id
+                p_lunidadorganizativa_id = juradoXUnidad.lUnidadOrganizativa_id
             });
         }
 

@@ -79,6 +79,10 @@ namespace ProyectoFinal.Negocio.Services
 
             return PremiacionDTO;
         }
+        public async Task<List<PremiacionDetalleEvento>> ObtenerPorEvento(int idEvento)
+        {
+            return await _tblPremiacionRepository.ObtenerPorEvento(idEvento);
+        }
     }
 }
 

@@ -7,12 +7,12 @@ namespace ProyectoFinal.Negocio.Interfaces
 {
     public interface ITblProyectoService
     {
-        public Task Crear (CreateTblProyectoDTO proyecto);
+        public Task Crear(CreateTblProyectoDTO proyecto);
         public Task Actualizar(UpdateTblProyectoDTO proyecto);
         public Task Eliminar(int idProyecto);
         public Task<List<ReadTblProyectoDTO>> ObtenerTodos();
-        public Task <ReadTblProyectoDTO> ObtenerPorId(int idProyecto);
-       public Task<IEnumerable<ReadTblProyectoDTO>> ObtenerPorEventoAsync(int eventoId);
-
+        public Task<ReadTblProyectoDTO> ObtenerPorId(int idProyecto);
+        public Task<IEnumerable<ReadTblProyectoDTO>> ObtenerPorEventoAsync(int eventoId);
+        public Task<List<ProyectoPorUnidadDTO>> ObtenerPorVariasUnidadesYEventoActivo(int eventoId, int[] unidadesIds);
     }
 }

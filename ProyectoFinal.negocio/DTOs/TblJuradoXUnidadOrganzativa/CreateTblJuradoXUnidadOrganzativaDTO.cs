@@ -8,6 +8,6 @@ namespace ProyectoFinal.Negocio.DTOs.TblJuradoXUnidadOrganzativa
     {
         public int lJurado_id { get; set; }
         public int lEvento_id { get; set; }
-        public int lUniversidadOrganizativa_id { get; set; }
+        public int lUnidadOrganizativa_id { get; set; }
     }
 }

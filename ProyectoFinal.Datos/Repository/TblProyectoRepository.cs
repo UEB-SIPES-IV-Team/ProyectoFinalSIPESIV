@@ -74,5 +74,17 @@ namespace ProyectoFinal.Datos.Repository
 
             return proyectosResult;
         }
+        public async Task<List<TblProyecto>> ObtenerPorVariasUnidadesYEventoActivo(int eventoId, int[] unidadesIds)
+        {
+            IEnumerable<TblProyecto> proyectosResult = await _database.GetData<TblProyecto>(
+                "fn_tblproyecto_obtener_por_varias_unidades_y_evento_activo",
+                new
+                {
+                    p_levento_id = eventoId,
+                    p_lunidadesorganizativas_ids = unidadesIds
+                });
+
+            return proyectosResult.ToList();
+        }
     }
 }

@@ -1,4 +1,5 @@
 ﻿
+using ProyectoFinal.Datos.Entities;
 using ProyectoFinal.Negocio.DTOs.TblPremiacion;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace ProyectoFinal.Negocio.Interfaces
         public Task Eliminar(int idPremiacion);
         public Task<List<ReadTblPremiacionDTO>> ObtenerTodos();
         public Task<ReadTblPremiacionDTO> ObtenerPorId(int idPremiacion);
+        public Task<List<PremiacionDetalleEvento>> ObtenerPorEvento(int idEvento);
     }
 
 }

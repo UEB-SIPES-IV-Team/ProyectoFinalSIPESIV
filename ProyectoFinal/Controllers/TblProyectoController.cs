@@ -140,5 +140,30 @@ namespace ProyectoFinal.Controllers
                 return StatusCode(500, new { message = ex.Message });
             }
         }
+        [HttpPost("ObtenerPorVariasUnidadesYEventoActivo")]
+        public async Task<ActionResult> ObtenerPorVariasUnidadesYEventoActivo(
+            [FromBody] FiltroProyectosPorUnidadesDTO filtro)
+        {
+            try
+            {
+                if (filtro == null || filtro.lEvento_id <= 0 || filtro.UnidadesIds == null || filtro.UnidadesIds.Count == 0)
+                {
+                    return Ok(new List<ProyectoPorUnidadDTO>());
+                }
+
+                var proyectos = await _tblProyectoService.ObtenerPorVariasUnidadesYEventoActivo(
+                    filtro.lEvento_id,
+                    filtro.UnidadesIds.ToArray());
+
+                return Ok(proyectos);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
     }
 }

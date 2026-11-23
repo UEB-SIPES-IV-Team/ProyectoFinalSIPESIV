@@ -61,5 +61,13 @@ namespace ProyectoFinal.Datos.Repository
             IEnumerable<TblPremiacion> premiacionResult = await _database.GetData<TblPremiacion>("fn_tblpremiacion_obtenertodos");
             return premiacionResult.ToList();
         }
+        public async Task<List<PremiacionDetalleEvento>> ObtenerPorEvento(int idEvento)
+        {
+            IEnumerable<PremiacionDetalleEvento> result = await _database.GetData<PremiacionDetalleEvento>(
+                "fn_tblpremiacion_generar_y_obtener_por_evento",
+                new { p_levento_id = idEvento });
+
+            return result.ToList();
+        }
     }
 }

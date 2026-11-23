@@ -151,5 +151,18 @@ namespace ProyectoFinal.Controllers
                 });
             }
         }
+        [HttpGet("ObtenerPorJurado/{juradoId}")]
+        public async Task<ActionResult> ObtenerPorJurado(int juradoId)
+        {
+            try
+            {
+                var lista = await _tblEvaluacionJuradoService.ObtenerPorJurado(juradoId);
+                return Ok(lista);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new { message = ex.Message });
+            }
+        }
     }
 }

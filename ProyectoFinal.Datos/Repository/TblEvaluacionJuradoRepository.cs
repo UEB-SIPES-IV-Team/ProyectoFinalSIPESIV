@@ -62,5 +62,16 @@ namespace ProyectoFinal.Datos.Repository
             IEnumerable<TblEvaluacionJurado> personaResult = await _database.GetData<TblEvaluacionJurado>("fn_tblevaluacionjurado_obtenertodos");
             return personaResult.ToList();
         }
+        public async Task<List<TblEvaluacionJurado>> ObtenerPorJurado(int juradoId)
+        {
+            IEnumerable<TblEvaluacionJurado> resultado = await _database.GetData<TblEvaluacionJurado>(
+                "fn_tblevaluacionjurado_obtener_detalle_por_jurado",
+                new
+                {
+                    p_ljurado_id = juradoId
+                });
+
+            return resultado.ToList();
+        }
     }
 }

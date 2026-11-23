@@ -12,5 +12,6 @@
         public string sProyecto_video { get; set; } = string.Empty;
 
         public string lAsignatura_nm { get; set; } = string.Empty;
+        public string sEvento_nm { get; set; } = string.Empty;
     }
 }

@@ -15,5 +15,6 @@ namespace ProyectoFinal.Negocio.Interfaces
         public Task Eliminar(int idEvaluacionVisitante);
         public Task<List<ReadTblEvaluacionJuradoDTO>> ObtenerTodos();
         public Task<ReadTblEvaluacionJuradoDTO> ObtenerPorId(int idEvaluacionJurado);
+        public Task<List<TblEvaluacionJurado>> ObtenerPorJurado(int juradoId);
     }
 }

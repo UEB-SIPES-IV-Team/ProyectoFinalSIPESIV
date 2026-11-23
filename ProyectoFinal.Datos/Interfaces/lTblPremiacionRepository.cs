@@ -13,6 +13,7 @@ namespace ProyectoFinal.Datos.Interfaces
         public Task<List<TblPremiacion>> ObtenerTodos();
         public Task Actualizar (TblPremiacion premiacion);
         public Task Eliminar(int idPremiacion);
+        public Task<List<PremiacionDetalleEvento>> ObtenerPorEvento(int idEvento);
 
 
 

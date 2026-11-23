@@ -151,5 +151,21 @@ namespace ProyectoFinal.Controllers
                 });
             }
         }
+        [HttpGet("ObtenerPorEvento/{idEvento}")]
+        public async Task<ActionResult> ObtenerPorEvento(int idEvento)
+        {
+            try
+            {
+                var premiaciones = await _tblPremiacionService.ObtenerPorEvento(idEvento);
+                return Ok(premiaciones);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    message = ex.Message
+                });
+            }
+        }
     }
 }
