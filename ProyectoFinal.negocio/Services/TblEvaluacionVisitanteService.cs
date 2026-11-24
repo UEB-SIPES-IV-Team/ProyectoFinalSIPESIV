@@ -12,10 +12,14 @@ namespace ProyectoFinal.Negocio.Services
     public class TblEvaluacionVisitanteService : ITblEvaluacionVisitanteService
     {
         private readonly ITblEvaluacionVisitanteRepository _tblEvaluacionVisitanteRepository;
+        private readonly ITblProyectoRepository _tblProyectoRepository;
 
-        public TblEvaluacionVisitanteService(ITblEvaluacionVisitanteRepository tblEvaluacionVisitanteRepository)
+        public TblEvaluacionVisitanteService(
+            ITblEvaluacionVisitanteRepository tblEvaluacionVisitanteRepository,
+            ITblProyectoRepository tblProyectoRepository)
         {
             _tblEvaluacionVisitanteRepository = tblEvaluacionVisitanteRepository;
+            _tblProyectoRepository = tblProyectoRepository;
         }
 
         public async Task<ReadTblEvaluacionVisitanteDTO?> ObtenerPorVisitanteYProyecto(int idVisitante, int idProyecto)
@@ -61,7 +65,7 @@ namespace ProyectoFinal.Negocio.Services
             {
                 lProyecto_id = evaluacionVisitante.lProyecto_id,
                 lVisitante_id = evaluacionVisitante.lVisitante_id,
-                sPuntaje = evaluacionVisitante.sPuntaje, // Recibe valor de 1 a 5 estrellas
+                sPuntaje = evaluacionVisitante.sPuntaje,
                 sEvaluacion_fecha = DateTime.Now,
                 sEvaluacion_desc = evaluacionVisitante.sEvaluacion_desc
             };
@@ -96,7 +100,7 @@ namespace ProyectoFinal.Negocio.Services
 
             foreach (var evaluacionVisitante in evaluacionVisitantes)
             {
-                var evaluacionVisitanteDTO = new ReadTblEvaluacionVisitanteDTO
+                EvaluacionVisitantesDTO.Add(new ReadTblEvaluacionVisitanteDTO
                 {
                     lEvaluacion_id = evaluacionVisitante.lEvaluacion_id,
                     lProyecto_id = evaluacionVisitante.lProyecto_id,
@@ -104,38 +108,36 @@ namespace ProyectoFinal.Negocio.Services
                     sPuntaje = evaluacionVisitante.sPuntaje,
                     sEvaluacion_fecha = evaluacionVisitante.sEvaluacion_fecha,
                     sEvaluacion_desc = evaluacionVisitante.sEvaluacion_desc
-                };
-                EvaluacionVisitantesDTO.Add(evaluacionVisitanteDTO);
+                });
             }
 
             return EvaluacionVisitantesDTO;
         }
 
-      
         public async Task<List<ProyectoRankingDTO>> ObtenerRanking(int idEvento)
         {
             try
             {
                 var evaluaciones = await _tblEvaluacionVisitanteRepository.ObtenerEvaluacionesPorEvento(idEvento);
-
                 if (evaluaciones == null || !evaluaciones.Any())
                     return new List<ProyectoRankingDTO>();
 
-                var ranking = evaluaciones
+                var proyectos = await _tblProyectoRepository.ObtenerTodos();
+                var dicProyectos = proyectos != null
+                    ? proyectos.GroupBy(p => p.lProyecto_id).ToDictionary(g => g.Key, g => g.First().sProyecto_nm)
+                    : new Dictionary<int, string>();
+
+                return evaluaciones
                     .Where(e => e != null && e.lProyecto_id > 0)
                     .GroupBy(e => e.lProyecto_id)
                     .Select(g =>
                     {
-                        var ultimoVoto = g.OrderByDescending(x => x.sEvaluacion_fecha).FirstOrDefault();
-
-                        string nombreProyecto = (!string.IsNullOrWhiteSpace(ultimoVoto?.sEvaluacion_desc) && !ultimoVoto.sEvaluacion_desc.StartsWith("PROYECTO #"))
-                            ? ultimoVoto.sEvaluacion_desc.ToUpper()
+                        string nombreProyecto = dicProyectos.TryGetValue(g.Key, out string? nombreReal) && !string.IsNullOrWhiteSpace(nombreReal)
+                            ? nombreReal.ToUpper()
                             : $"PROYECTO #{g.Key}";
 
                         int cantidadVisitantesUnicos = g.Select(x => x.lVisitante_id).Distinct().Count();
-
-                      
-                        decimal promedioEstrellas = (decimal)g.Average(e => e.sPuntaje);
+                        decimal promedioEstrellas = (decimal)g.Average(e => (double)e.sPuntaje);
                         decimal promedioPorcentaje = Math.Min(100m, Math.Round(promedioEstrellas * 20m, 1));
 
                         return new ProyectoRankingDTO
@@ -148,9 +150,8 @@ namespace ProyectoFinal.Negocio.Services
                         };
                     })
                     .OrderByDescending(r => r.PorcentajePromedio)
+                    .ThenByDescending(r => r.TotalVisitantes)
                     .ToList();
-
-                return ranking;
             }
             catch (Exception ex)
             {
@@ -159,62 +160,60 @@ namespace ProyectoFinal.Negocio.Services
             }
         }
 
-        
         public async Task<List<MovimientoItemDTO>> ObtenerRecientes(int idEvento)
         {
             try
             {
-                var recientes = await _tblEvaluacionVisitanteRepository.ObtenerRecientesPorEvento(idEvento, 100);
-
-                if (recientes == null || !recientes.Any())
+                var evaluaciones = await _tblEvaluacionVisitanteRepository.ObtenerEvaluacionesPorEvento(idEvento);
+                if (evaluaciones == null || !evaluaciones.Any())
                     return new List<MovimientoItemDTO>();
 
-                var listaValida = recientes.Where(e => e != null && e.lProyecto_id > 0).ToList();
+                var proyectos = await _tblProyectoRepository.ObtenerTodos();
+                var dicProyectos = proyectos != null
+                    ? proyectos.GroupBy(p => p.lProyecto_id).ToDictionary(g => g.Key, g => g.First().sProyecto_nm)
+                    : new Dictionary<int, string>();
 
-                if (!listaValida.Any())
-                    return new List<MovimientoItemDTO>();
-
-                var listaMovimientos = listaValida
+                return evaluaciones
+                    .Where(e => e != null && e.lProyecto_id > 0)
                     .GroupBy(e => e.lProyecto_id)
                     .Select(g =>
                     {
                         var ultimoVoto = g.OrderByDescending(x => x.sEvaluacion_fecha).FirstOrDefault();
 
-                        string nombreProyecto = (!string.IsNullOrWhiteSpace(ultimoVoto?.sEvaluacion_desc) && !ultimoVoto.sEvaluacion_desc.StartsWith("PROYECTO #"))
-                            ? ultimoVoto.sEvaluacion_desc.ToUpper()
+                        string nombreProyecto = dicProyectos.TryGetValue(g.Key, out string? nombreReal) && !string.IsNullOrWhiteSpace(nombreReal)
+                            ? nombreReal.ToUpper()
                             : $"PROYECTO #{g.Key}";
 
-                       
-                        double promedioEstrellas = g.Average(x => x.sPuntaje);
-                        int porcentajePromedio = (int)Math.Min(100, Math.Round(promedioEstrellas * 20));
+                        double promedioEstrellas = g.Average(x => (double)x.sPuntaje);
+                        double porcentajeExacto = Math.Min(100.0, Math.Round(promedioEstrellas * 20.0, 1));
+                        int porcentajeRedondeado = (int)Math.Round(porcentajeExacto);
 
+                        // Forzar hora local para evitar el desfase de 15 horas
                         DateTime fechaUltimoVoto = ultimoVoto?.sEvaluacion_fecha ?? DateTime.Now;
-                        if (fechaUltimoVoto.Kind == DateTimeKind.Utc)
-                        {
-                            fechaUltimoVoto = fechaUltimoVoto.ToLocalTime();
-                        }
+                        fechaUltimoVoto = DateTime.SpecifyKind(fechaUltimoVoto, DateTimeKind.Local);
 
                         TimeSpan diferencia = DateTime.Now - fechaUltimoVoto;
-                        string tiempoTexto = "Hace un momento";
+                        if (diferencia.TotalSeconds < 0)
+                            diferencia = TimeSpan.Zero;
 
-                        if (diferencia.TotalMinutes <= 1)
+                        string tiempoTexto;
+                        if (diferencia.TotalMinutes < 1)
                         {
-                            tiempoTexto = "Hace un momento";
+                            tiempoTexto = $"Hace un momento ({fechaUltimoVoto:HH:mm})";
                         }
-                        else if (diferencia.TotalMinutes <= 60)
+                        else if (diferencia.TotalHours < 1)
                         {
-                            int min = Math.Max(1, (int)diferencia.TotalMinutes);
-                            tiempoTexto = $"Hace {min} min";
+                            int min = (int)diferencia.TotalMinutes;
+                            tiempoTexto = $"Hace {min} min ({fechaUltimoVoto:HH:mm})";
                         }
-                        else if (diferencia.TotalHours < 24)
+                        else if (fechaUltimoVoto.Date == DateTime.Today)
                         {
-                            int horas = (int)diferencia.TotalHours;
-                            tiempoTexto = $"Hace {horas} {(horas == 1 ? "hora" : "horas")}";
+                            tiempoTexto = $"Hoy a las {fechaUltimoVoto:HH:mm}";
                         }
                         else
                         {
-                            int dias = (int)diferencia.TotalDays;
-                            tiempoTexto = $"Hace {dias} {(dias == 1 ? "día" : "días")}";
+                            int dias = Math.Max(1, (int)diferencia.TotalDays);
+                            tiempoTexto = $"Hace {dias} {(dias == 1 ? "día" : "días")} ({fechaUltimoVoto:dd/MM HH:mm})";
                         }
 
                         return new
@@ -223,18 +222,16 @@ namespace ProyectoFinal.Negocio.Services
                             {
                                 Descripcion = nombreProyecto,
                                 Tiempo = tiempoTexto,
-                                Posicion = $"{porcentajePromedio}%"
+                                Posicion = $"{porcentajeRedondeado}%"
                             },
-                            FechaUltimaEvaluacion = fechaUltimoVoto
+                            PorcentajeOrden = porcentajeExacto,
+                            TotalVotos = g.Count()
                         };
                     })
-                    // 🟢 ORDENAR POR FECHA MÁS RECIENTE PARA QUE LOS NUEVOS VOTOS APAREZCAN ARRIBA AL INSTANTE
-                    .OrderByDescending(x => x.FechaUltimaEvaluacion)
+                    .OrderByDescending(x => x.PorcentajeOrden)
+                    .ThenByDescending(x => x.TotalVotos)
                     .Select(x => x.Item)
-                    .Take(10)
                     .ToList();
-
-                return listaMovimientos;
             }
             catch (Exception ex)
             {

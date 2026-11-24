@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProyectoFinal.Negocio.DTOs.TblUsuario;
 using ProyectoFinal.Negocio.Interfaces;
@@ -23,15 +22,12 @@ namespace ProyectoFinal.Controllers
             _notificador = notificador;
         }
 
-      
-
         [HttpGet("ObtenerTodos")]
         public async Task<ActionResult<List<TblUsuarioReadDto>>> ObtenerTodos()
         {
             try
             {
                 var usuarios = await _tblUsuarioService.ObtenerTodos();
-
                 return Ok(usuarios);
             }
             catch (Exception ex)
@@ -43,7 +39,6 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-       
         [HttpGet("ObtenerPorId/{idUsuario}")]
         public async Task<ActionResult> ObtenerPorId(int idUsuario)
         {
@@ -70,7 +65,7 @@ namespace ProyectoFinal.Controllers
             }
         }
 
-      
+        [Authorize(Roles = "Super Administrador,Superadministrador,Administrador")]
         [HttpDelete("Eliminar")]
         public async Task<ActionResult> Eliminar(int idUsuario)
         {
@@ -84,11 +79,9 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-  
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Super Administrador,Superadministrador,Administrador")]
         [HttpPost("Crear")]
-        public async Task<ActionResult> Crear(
-            TblUsuarioCreateDto usuario)
+        public async Task<ActionResult> Crear(TblUsuarioCreateDto usuario)
         {
             await _tblUsuarioService.Crear(usuario);
 
@@ -100,11 +93,9 @@ namespace ProyectoFinal.Controllers
             });
         }
 
-    
-
+        [Authorize(Roles = "Super Administrador,Superadministrador,Administrador")]
         [HttpPut("Actualizar")]
-        public async Task<ActionResult> Actualizar(
-            TblUsuarioUpdateDto usuario)
+        public async Task<ActionResult> Actualizar(TblUsuarioUpdateDto usuario)
         {
             await _tblUsuarioService.Actualizar(usuario);
 
